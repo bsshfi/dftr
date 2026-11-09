@@ -3,7 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover,user-scalable=no">
-<title>دفتر</title>
+<title>دفتر | DFTR</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src https://script.google.com https://script.googleusercontent.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
 <meta name="description" content="دفتر — مصاريفي واستثماراتي والأسعار">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -481,7 +483,7 @@ textarea.fin{min-height:110px;font-size:14px;direction:rtl;text-align:right;font
 
 <header class="top">
   <img class="logo" src="icon-180.png" alt="">
-  <div class="ttl"><h1 id="ttl">دفتر</h1><span id="greet"></span></div>
+  <div class="ttl"><h1 id="ttl">دفتر | DFTR</h1><span id="greet"></span></div>
   <button id="eye" class="iconbtn" aria-label="إخفاء المبالغ"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button>
   <button id="refresh" class="iconbtn" aria-label="تحديث"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg></button>
   <button id="gear" class="iconbtn" aria-label="الإعدادات"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
@@ -499,14 +501,15 @@ textarea.fin{min-height:110px;font-size:14px;direction:rtl;text-align:right;font
 
 <div class="foot">
   <div id="updated"></div>
-  <div>دفتر <span class="num" id="ver"></span> · مصاريفي واستثماراتي والأسعار</div>
+  <div>دفتر | DFTR <span class="num" id="ver"></span> · مصاريفي واستثماراتي والأسعار</div>
   <div class="wamd">WAMD ARC <i>BS</i></div>
 </div>
 
 <script src="config.js"></script>
 <script>
 'use strict';
-const VERSION = 'v1.0.0';
+const VERSION = 'v1.2.0';
+const APP_NAME = 'دفتر | DFTR';
 const API_URL = String(window.DFTR_API_URL || '').trim();
 const LS = {
   get(k){ try { return localStorage.getItem(k); } catch(e){ return null; } },
@@ -528,7 +531,7 @@ const S = {
   view: 'home', sub: { exp:'sum', pr:'search', inv:'sum' },
   period: '', q: '', pq: '', loading: false
 };
-const PREFS_DEF = { theme:'auto', privacy:false, decimals:true };
+const PREFS_DEF = { theme:'auto', privacy:false, decimals:true, lock:true };
 let prefs = Object.assign({}, PREFS_DEF, (() => { try { return JSON.parse(LS.get('dftr:prefs') || '{}'); } catch(e){ return {}; } })());
 function savePrefs(){ LS.set('dftr:prefs', JSON.stringify(prefs)); }
 
@@ -742,6 +745,7 @@ function go(view, sub){
 const VIEWS = {};
 function render(){
   if(!session() && !DEMO) return;
+  if(!DEMO && prefs.lock && !UNLOCKED) return;
   document.body.classList.toggle('private', !!state_private);
   $('auth').style.display = 'none';
   $('app').style.display = '';
@@ -755,7 +759,7 @@ function render(){
   $('ver').textContent = VERSION;
   const h = new Date().getHours();
   $('greet').textContent = (h < 12 ? 'صباح الخير' : 'مساء الخير') + ' يا باسل';
-  $('ttl').textContent = { home:'دفتر', exp:'مصاريفي', pr:'الأسعار', inv:'استثماراتي', set:'الإعدادات' }[S.view] || 'دفتر';
+  $('ttl').textContent = { home:APP_NAME, exp:'مصاريفي', pr:'الأسعار', inv:'استثماراتي', set:'الإعدادات' }[S.view] || 'دفتر';
 }
 
 let state_private = prefs.privacy;
@@ -787,11 +791,11 @@ function showAuth(){
     if(r && r.ok && r.pinSet) return pinScreen('login');
     setupScreen();
   });
-  a.innerHTML = '<img class="alogo" src="icon-180.png" alt=""><h3>دفتر</h3><p>جاري الاتصال…</p>';
+  a.innerHTML = '<img class="alogo" src="icon-180.png" alt=""><h3>' + APP_NAME + '</h3><p>جاري الاتصال…</p>';
 }
 function setupScreen(){
   const a = $('auth');
-  a.innerHTML = '<img class="alogo" src="icon-180.png" alt=""><h3>أهلاً في دفتر</h3><p>أول مرة؟ حط «مفتاح دفتر» اللي طلع لك في السكربت، واختر رقم سري من 6 أرقام.</p>' +
+  a.innerHTML = '<img class="alogo" src="icon-180.png" alt=""><h3>أهلاً في ' + APP_NAME + '</h3><p>أول مرة؟ حط «مفتاح دفتر» اللي طلع لك في السكربت، واختر رقم سري من 6 أرقام.</p>' +
     '<div class="form"><label for="aKey">مفتاح دفتر</label><div class="field"><input id="aKey" autocomplete="off" placeholder="dftr_..."><button class="paste" id="aPaste">لصق</button></div>' +
     '<label for="aPin">الرقم السري الجديد</label><input id="aPin" class="pin" inputmode="numeric" maxlength="6" type="password">' +
     '<div class="msg" id="aMsg"></div><button class="btn" id="aGo">ابدأ</button>' +
@@ -804,13 +808,13 @@ function setupScreen(){
     $('aGo').disabled = true; $('aMsg').textContent = '';
     const r = await api('auth_setup', { key, pin });
     $('aGo').disabled = false;
-    if(r.ok){ LS.set('dftr:session', r.session); LS.set('dftr:setupDone', '1'); start(); }
+    if(r.ok){ LS.set('dftr:session', r.session); LS.set('dftr:setupDone', '1'); UNLOCKED = true; start(); }
     else $('aMsg').textContent = r.error === 'BadKey' ? 'المفتاح غلط' + (r.left ? ' (باقي ' + r.left + ' محاولات)' : '') : r.error === 'Locked' ? 'مقفل ' + r.minutes + ' دقيقة' : errText(r);
   };
 }
 function pinScreen(){
   const a = $('auth'); let pin = '';
-  a.innerHTML = '<img class="alogo" src="icon-180.png" alt=""><h3>دفتر</h3><p>اكتب رقمك السري</p><div class="dots" id="dots">' + '<i></i>'.repeat(6) + '</div><div class="msg" id="pMsg"></div>' +
+  a.innerHTML = '<img class="alogo" src="icon-180.png" alt=""><h3>' + APP_NAME + '</h3><p>اكتب رقمك السري</p><div class="dots" id="dots">' + '<i></i>'.repeat(6) + '</div><div class="msg" id="pMsg"></div>' +
     '<div class="pad">' + [1,2,3,4,5,6,7,8,9].map(n => '<button data-k="' + n + '">' + n + '</button>').join('') +
     '<button class="ghostk" data-k="forgot">نسيت؟</button><button data-k="0">0</button><button class="ghostk" data-k="del">⌫</button></div>';
   const dots = () => $('dots').querySelectorAll('i').forEach((d, i) => d.classList.toggle('f', i < pin.length));
@@ -823,7 +827,7 @@ function pinScreen(){
     if(pin.length === 6){
       $('pMsg').textContent = '';
       const r = await api('auth_login', { pin });
-      if(r.ok){ LS.set('dftr:session', r.session); start(); }
+      if(r.ok){ LS.set('dftr:session', r.session); UNLOCKED = true; start(); }
       else { pin = ''; dots(); $('dots').classList.add('shake'); setTimeout(() => $('dots').classList.remove('shake'), 400);
         $('pMsg').textContent = r.error === 'Locked' ? 'مقفل ' + r.minutes + ' دقيقة' : r.error === 'BadPin' ? 'الرقم غلط' + (r.left ? ' — باقي ' + r.left : '') : errText(r); }
     }
@@ -836,12 +840,25 @@ function start(){
   $('demoBar').hidden = !DEMO;
   if(DEMO){ Demo.load(); S.view = LS.get('dftr:view') || 'home'; render(); return; }
   if(!session()) return showAuth();
+  if(prefs.lock && !UNLOCKED) return lockScreen();
   S.view = LS.get('dftr:view') || 'home';
   if(loadCache()) setFresh('ok');
   render();
   sync(true);
 }
-document.addEventListener('visibilitychange', () => { if(document.visibilityState === 'visible' && session() && !DEMO && S.at){ const age = Date.now() - Date.parse(S.at.replace(' ', 'T') + '+03:00'); if(age > 3 * 60000) sync(true); } });
+/* قفل التطبيق: يطلب الرقم السري عند الفتح، وإذا رجعت له بعد 3 دقائق */
+let UNLOCKED = false, hiddenAt = 0;
+function lockScreen(){
+  closeSheet(); $('app').innerHTML = ''; $('app').style.display = 'none'; $('tabbar').style.display = 'none'; $('fab').style.display = 'none';
+  $('fresh').style.display = 'none';
+  $('auth').style.display = 'block'; pinScreen();
+}
+document.addEventListener('visibilitychange', () => {
+  if(DEMO || !session() || !prefs.lock) return;
+  if(document.visibilityState === 'hidden') hiddenAt = Date.now();
+  else if(UNLOCKED && hiddenAt && Date.now() - hiddenAt > 3 * 60000){ UNLOCKED = false; lockScreen(); }
+});
+document.addEventListener('visibilitychange', () => { if(document.visibilityState === 'visible' && session() && !DEMO && S.at && UNLOCKED){ const age = Date.now() - Date.parse(S.at.replace(' ', 'T') + '+03:00'); if(age > 3 * 60000) sync(true); } });
 
 /* =========================================================
    مصاريفي: الحسابات
@@ -1957,6 +1974,7 @@ const Demo = (() => {
       case 'product_merge': { const into = S.data.products.find(x => x.pid === p.into); S.data.prices.forEach(x => { if(x.pid === p.from){ x.pid = p.into; x.name = into.ar; } }); del('products', p.from); return { ok: true }; }
       case 'settings_save': Object.assign(S.settings, p.settings); return { ok: true, settings: S.settings };
       case 'ai_key': S.ai = true; return { ok: true, ai: true };
+      case 'auth_logout_all': return { ok: true };
       case 'key_show': return { ok: true, key: 'dftr_xxxxxxxxxxxxxxxxxxxx (يطلع لك بعد التركيب)' };
       case 'log': return { ok: true, log: { c: ['at','status','merchant','amount','message','raw'], r: [[todayKey() + ' 14:50','🔁 حوالة','M ALMUSHAYQIH',45,'صادرة — مقترح: 🍔 مطعم',''],[todayKey() + ' 13:40','✅ أضيفت','GREEN LEAF CAFE',38,'🍔 مطاعم ومقاهي','']] } };
       case 'sms_test': {
@@ -1992,6 +2010,7 @@ VIEWS.set = () => {
   H.push('<section class="card"><h2>🎨 المظهر</h2>' +
     '<div class="opt"><div class="ol">الوضع</div><div class="seg" id="pTheme">' + [['auto','تلقائي'],['light','فاتح'],['dark','داكن']].map(x => '<button data-th="' + x[0] + '" class="' + (prefs.theme === x[0] ? 'on' : '') + '">' + x[1] + '</button>').join('') + '</div></div>' +
     '<div class="opt"><div><div class="ol">إخفاء المبالغ عند الفتح</div><div class="os">تظهر بالضغط على 👁</div></div><input type="checkbox" class="tg" id="pPriv"' + (prefs.privacy ? ' checked' : '') + '></div>' +
+    '<div class="opt"><div><div class="ol">🔒 قفل التطبيق بالرقم السري</div><div class="os">يطلبه كل ما فتحت التطبيق أو رجعت له بعد 3 دقائق</div></div><input type="checkbox" class="tg" id="pLock"' + (prefs.lock ? ' checked' : '') + '></div>' +
     '<div class="opt"><div><div class="ol">الهللات</div><div class="os">12.50 أو 13</div></div><input type="checkbox" class="tg" id="pDec"' + (prefs.decimals ? ' checked' : '') + '></div></section>');
 
   H.push('<section class="card"><h2>🔁 الحوالات</h2><div class="opt" style="display:block"><div class="ol">اعتماد تلقائي</div><div class="os" style="margin-bottom:8px">إذا اخترت نفس الغرض لنفس الشخص كذا مرة، الحوالات الجاية منه تنعتمد لحالها</div><div class="seg" style="display:inline-flex" id="pAuto">' +
@@ -2011,6 +2030,7 @@ VIEWS.set = () => {
   H.push('<button class="btn ghost" id="sLog">📜 السجل</button>');
   H.push('<button class="btn ghost" id="sPin">🔑 تغيير الرقم السري</button>');
   H.push('<button class="btn ghost" id="sOut">🔒 تسجيل خروج من هذا الجهاز</button>');
+  H.push('<button class="btn ghost" id="sOutAll">🚪 تسجيل خروج من كل الأجهزة</button>');
   H.push('<button class="btn" id="sDone">تم</button>');
   return H.join('');
 };
@@ -2021,6 +2041,7 @@ VIEWS.set_after = root => {
   root.querySelectorAll('[data-th]').forEach(b => b.onclick = () => { prefs.theme = b.dataset.th; savePrefs(); applyTheme(); render(); });
   $('pPriv').onchange = () => { prefs.privacy = $('pPriv').checked; savePrefs(); };
   $('pDec').onchange = () => { prefs.decimals = $('pDec').checked; savePrefs(); };
+  $('pLock').onchange = () => { prefs.lock = $('pLock').checked; savePrefs(); };
   root.querySelectorAll('[data-au]').forEach(b => b.onclick = async () => { const r = await api('settings_save', { settings: { TRANSFER_AUTO_AFTER: b.dataset.au } }); if(r.ok){ S.settings = r.settings; saveCache(); toast('✅ انحفظ'); render(); } else toast('⚠️ ' + errText(r)); });
   $('gSave').onclick = async () => {
     const key = $('gKey').value.trim(); if(!key) return toast('الصق المفتاح');
@@ -2045,12 +2066,28 @@ VIEWS.set_after = root => {
   };
   $('sLog').onclick = logSheet;
   $('sPin').onclick = pinChange;
+  $('sOutAll').onclick = async () => {
+    const pin = await askPin('خروج من كل الأجهزة', 'كل الأجهزة المسجلة تحتاج الرقم السري من جديد، ومنها هذا الجهاز.'); if(!pin) return;
+    const r = await api('auth_logout_all', { pin });
+    if(r.ok){ LS.del('dftr:session'); LS.del('dftr:cache'); location.reload(); } else toast(pinErr(r));
+  };
   $('sOut').onclick = async () => { if(!await ask('تسجيل خروج؟', 'تحتاج الرقم السري للدخول مرة ثانية.', 'خروج')) return; await api('auth_logout', {}); LS.del('dftr:session'); LS.del('dftr:cache'); location.reload(); };
 };
 
+function pinErr(r){ return r.error === 'BadPin' ? 'الرقم السري غلط' + (r.left ? ' — باقي ' + r.left : '') : r.error === 'Locked' ? 'مقفل ' + r.minutes + ' دقيقة' : errText(r); }
+function askPin(title, text){
+  return new Promise(res => {
+    openSheet(sheetHead(esc(title)) + '<p class="hint">' + esc(text) + '</p><div class="form"><input id="gp" class="pin fin" inputmode="numeric" maxlength="6" type="password" autocomplete="off"></div><button class="btn" id="gpGo">تأكيد</button>', { onClose: () => res('') });
+    setTimeout(() => $('gp').focus(), 300);
+    $('gpGo').onclick = () => { const v = $('gp').value.trim(); if(!/^\d{6}$/.test(v)) return toast('6 أرقام'); sheetClose = null; closeSheet(); res(v); };
+  });
+}
 async function keySheet(){
+  const pin = DEMO ? '000000' : await askPin('🔑 مفتاح دفتر', 'المفتاح حساس، اكتب رقمك السري لعرضه.');
+  if(!pin) return;
   openSheet(sheetHead('🔑 مفتاح دفتر') + '<div class="hint">…</div>');
-  const r = await api('key_show', {});
+  const r = await api('key_show', { pin });
+  if(!r.ok){ closeSheet(); return toast(pinErr(r)); }
   const key = r.key || '';
   openSheet(sheetHead('🔑 مفتاح دفتر') +
     '<p class="hint">هذا المفتاح للاختصار (رسائل البنك) ولاستعادة الرقم السري. لا تشاركه.</p>' +
