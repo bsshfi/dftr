@@ -469,6 +469,19 @@ textarea.fin{min-height:110px;font-size:14px;direction:rtl;text-align:right;font
 .yrsel{display:flex;gap:6px;justify-content:center;margin:8px 0 0}
 
 #refresh{display:grid}
+.cum{margin:12px -4px 2px}
+.cum svg{width:100%;height:96px;display:block;overflow:visible}
+.cuml{display:flex;gap:14px;font-size:12px;color:rgba(255,255,255,.88);margin-top:4px}
+.cuml i{display:inline-block;width:14px;height:3px;border-radius:2px;background:#fff;vertical-align:middle;margin-inline-end:5px}
+.cuml i.d{background:transparent;border-top:2px dashed rgba(255,255,255,.7);height:0}
+.dwrap{position:relative;flex-shrink:0;display:grid;place-items:center}
+.dmid{position:absolute;text-align:center;line-height:1.1}
+.dmid b{display:block;font-size:22px} .dmid small{font-size:11px;color:var(--sub)}
+.avgl{position:absolute;left:0;right:0;border-top:2px dashed var(--accent);opacity:.55;z-index:1;pointer-events:none}
+.mbars{display:flex;align-items:flex-end;gap:5px;height:64px;margin:8px 0 12px}
+.mbars>div{flex:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:3px}
+.mbars i{display:block;width:100%;border-radius:5px 5px 2px 2px;background:linear-gradient(180deg,#4cc38a,#23895a)}
+.mbars span{font-size:9.5px;color:var(--faint);height:12px;white-space:nowrap}
 
 </style>
 </head>
@@ -915,13 +928,15 @@ function periods(){
    الرئيسية
    ========================================================= */
 VIEWS.home = () => {
-  const P = monthKey(), st = periodStats(P);
+  const P = monthKey(), st = periodStats(P), today = todayKey();
   const diff = st.prevTotal ? (st.total - st.prevTotal) / st.prevTotal * 100 : 0;
   const H = [];
+  /* البطاقة الرئيسية + منحنى تراكمي: هذا الشهر مقابل الماضي */
   H.push('<section class="card hero"><div class="label">مصروفك في ' + monthName(P) + ' حتى اليوم</div>' +
     '<div class="big"><span class="num">' + money0(st.total) + '</span><small>ر.س</small></div>' +
     (st.prevTotal ? '<span class="pill">' + (diff > 0 ? '▲ ' : '▼ ') + '<span class="num">' + Math.abs(diff).toFixed(0) + '%</span> عن نفس الفترة من ' + shortMonth(st.prevP) + '</span>' : '') +
-    '<div class="today"><div><small>اليوم</small><b class="num">' + money0(sum(txBase(S.data.tx.filter(t => t.date === todayKey())), t => num(t.amount))) + '</b></div>' +
+    cumChart(P) +
+    '<div class="today"><div><small>اليوم</small><b class="num">' + money0(sum(txBase(S.data.tx.filter(t => t.date === today)), t => num(t.amount))) + '</b></div>' +
     '<div><small>المتوسط اليومي</small><b class="num">' + money0(st.avg) + '</b></div><div><small>توقع نهاية الشهر</small><b class="num">' + money0(st.forecast) + '</b></div></div></section>');
 
   H.push('<div class="qa"><button data-q="tx"><i>🧾</i>مصروف يدوي</button><button data-q="rc"><i>📷</i>فاتورة جديدة</button><button data-q="pr"><i>🔎</i>كم سعره؟</button></div>');
@@ -933,11 +948,55 @@ VIEWS.home = () => {
       (rm.length ? '<div class="item"><div class="r1"><span class="n">🏪 ' + rm.length + ' تاجر يحتاج تصنيف</span><span class="go">صنّفهم ›</span></div></div>' : '') + '</div></section>');
   }
 
+  /* مؤشرات سريعة */
+  const last7 = txBase(S.data.tx.filter(t => t.date > addDays(today, -7) && t.date <= today)), prev7 = txBase(S.data.tx.filter(t => t.date > addDays(today, -14) && t.date <= addDays(today, -7)));
+  const w = sum(last7, t => num(t.amount)), pw = sum(prev7, t => num(t.amount));
+  const topM = st.merch[0];
+  H.push('<div class="grid">' +
+    kpi('🗓️ آخر 7 أيام', money0(w), pw ? (w > pw ? '▲ ' : '▼ ') + Math.abs((w - pw) / pw * 100).toFixed(0) + '% عن الأسبوع اللي قبله' : '') +
+    kpi('🧾 عمليات الشهر', st.count, st.activeDays + ' يوم صرف') +
+    kpi('🏆 أكبر عملية', st.largest ? money0(st.largest.amount) : '—', st.largest ? st.largest.merchant : '') +
+    kpi('🏪 أكثر تاجر', topM ? money0(topM.v) : '—', topM ? topM.n + ' · ' + st.merchCnt[topM.n] + ' مرة' : '') + '</div>');
+
+  /* التصنيفات */
+  if(st.cats.length){
+    const top = st.cats.slice(0, 5), rest = sum(st.cats.slice(5), c => c.v);
+    const parts = top.map((c, i) => ({ n: c.n, v: c.v, c: ['#f5841f','#2f7fd1','#23895a','#8b5cf6','#e05d9b'][i] })).concat(rest ? [{ n: 'الباقي', v: rest, c: '#9aa3b6' }] : []);
+    H.push('<section class="card" id="hCats" style="cursor:pointer"><h2>وين راحت فلوسك؟ <span>' + shortMonth(P) + ' ›</span></h2><div class="donut">' +
+      '<div class="dwrap">' + donut(parts, 132) + '<div class="dmid"><b class="num">' + st.cats.length + '</b><small>تصنيف</small></div></div>' +
+      '<div class="lgd">' + parts.map(c => '<div><i style="background:' + c.c + '"></i><span>' + esc(c.n) + '</span><b class="num">' + money0(c.v) + '</b></div>').join('') + '</div></div></section>');
+  }
+
+  /* آخر 6 أشهر مع المتوسط */
+  const tr = trend6(P), mx = Math.max.apply(null, tr.map(m => m.v).concat([1])), avg6 = sum(tr.slice(0, 5), m => m.v) / 5;
+  H.push('<section class="card trend" id="hTrend" style="cursor:pointer"><h2>آخر 6 أشهر <span>متوسط <b class="num">' + money0(avg6) + '</b></span></h2><div class="cols">' +
+    tr.map(m => '<div class="col' + (m.k === P ? ' on' : '') + '"><span class="v num">' + (m.v >= 1000 ? (m.v / 1000).toFixed(1) + 'k' : money0(m.v)) + '</span><div class="b" style="height:' + pct(m.v, mx) + '%"></div><span class="t">' + shortMonth(m.k) + '</span></div>').join('') + '</div></section>');
+
   H.push(budgetMini(st));
   H.push(invMini());
   H.push(priceMini());
   return H.join('');
 };
+
+/* منحنى المصروف التراكمي (من اليمين لليسار) */
+function cumChart(P){
+  const N = daysIn(P), prevP = shiftMonth(P, -1), PN = daysIn(prevP), today = todayKey();
+  const cum = (k, n, upto) => { const by = {}; txBase(txIn(k)).forEach(t => { const d = +String(t.date).slice(8, 10); by[d] = (by[d] || 0) + num(t.amount); }); const out = []; let c = 0; for(let d = 1; d <= n; d++){ c += by[d] || 0; if(d <= upto) out.push(c); } return out; };
+  const curUpto = P === monthKey() ? +today.slice(8, 10) : N;
+  const cur = cum(P, N, curUpto), prev = cum(prevP, PN, PN);
+  const W = 320, Hh = 92, mx = Math.max(1, cur[cur.length - 1] || 0, prev[prev.length - 1] || 0) * 1.08;
+  const X = (i, n) => W - i / Math.max(1, Math.max(N, n) - 1) * W, Y = v => Hh - v / mx * Hh;
+  const path = (a, n) => a.map((v, i) => (i ? 'L' : 'M') + X(i, n).toFixed(1) + ' ' + Y(v).toFixed(1)).join(' ');
+  if(!cur.length) return '';
+  const last = cur.length - 1;
+  const area = path(cur, N) + ' L' + X(last, N).toFixed(1) + ' ' + Hh + ' L' + W + ' ' + Hh + 'Z';
+  return '<div class="cum"><svg viewBox="-6 -8 ' + (W + 12) + ' ' + (Hh + 14) + '" preserveAspectRatio="none" aria-hidden="true">' +
+    '<path d="' + area + '" fill="#fff" fill-opacity=".16"/>' +
+    (prev.length ? '<path d="' + path(prev, PN) + '" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="2" stroke-dasharray="5 5" vector-effect="non-scaling-stroke"/>' : '') +
+    '<path d="' + path(cur, N) + '" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/>' +
+    '<circle cx="' + X(last, N).toFixed(1) + '" cy="' + Y(cur[last]).toFixed(1) + '" r="5" fill="#fff"/></svg>' +
+    '<div class="cuml"><span><i></i>' + shortMonth(P) + '</span><span><i class="d"></i>' + shortMonth(prevP) + ' <b class="num">' + money0(prev[prev.length - 1] || 0) + '</b></span></div></div>';
+}
 VIEWS.home_after = root => {
   root.querySelector('[data-q=tx]').onclick = () => txForm();
   root.querySelector('[data-q=rc]').onclick = () => receiptStart();
@@ -946,6 +1005,8 @@ VIEWS.home_after = root => {
   const b = $('hBud'); if(b) b.onclick = () => go('exp', 'bud');
   const iv = $('hInv'); if(iv) iv.onclick = () => go('inv', 'sum');
   const pr = $('hPr'); if(pr) pr.onclick = () => go('pr', 'rcpt');
+  const hc = $('hCats'); if(hc) hc.onclick = () => { S.period = monthKey(); go('exp', 'sum'); };
+  const ht = $('hTrend'); if(ht) ht.onclick = () => { S.period = monthKey(); go('exp', 'sum'); };
 };
 
 function budgetMini(st){
@@ -1276,9 +1337,19 @@ VIEWS.pr_after = root => {
 };
 
 function priceMini(){
+  const M = monthKey();
+  const rcM = S.data.receipts.filter(r => String(r.date).slice(0, 7) === M);
   const rc = S.data.receipts.slice().sort((a, b) => String(b.date + b.time).localeCompare(String(a.date + a.time)))[0];
+  const idx = prodIndex(), seen = {}, ch = [];
+  S.data.prices.slice().sort((a, b) => String(b.date + b.time).localeCompare(String(a.date + a.time))).forEach(r => {
+    if(!r.pid || seen[r.pid] || ch.length >= 3) return; seen[r.pid] = 1;
+    const g = idx[r.pid]; if(!g || g.buys.length < 2) return;
+    const prev = g.buys[1], c = (num(g.last.price) - num(prev.price)) / num(prev.price) * 100;
+    if(Math.abs(c) >= 3) ch.push({ g, c });
+  });
   return '<section class="card" id="hPr" style="cursor:pointer"><h2>🛒 الأسعار <span>' + S.data.products.length + ' منتج ›</span></h2>' +
-    (rc ? '<div class="item"><div class="r1"><span class="n">آخر فاتورة: ' + esc(rc.store) + '</span><span class="a num">' + money(rc.total) + '</span></div><div class="r2"><span>' + esc(dayLabel(rc.date)) + '</span><span>' + rc.count + ' منتج</span></div></div>' : '<div class="empty">ما فيه فواتير بعد</div>') + '</section>';
+    '<div class="grid" style="margin:0 0 8px">' + kpi('فواتير ' + shortMonth(M), rcM.length, money0(sum(rcM, r => num(r.total))) + ' ر.س') + kpi('آخر فاتورة', rc ? money0(rc.total) : '—', rc ? rc.store + ' · ' + dayLabel(rc.date) : '') + '</div>' +
+    (ch.length ? '<div class="flabel">آخر تغيّرات الأسعار</div><div class="list">' + ch.map(x => '<div class="item"><div class="r1"><span class="n">' + esc(x.g.title) + '</span><span class="a num chg ' + (x.c > 0 ? 'up' : 'down') + '">' + (x.c > 0 ? '▲' : '▼') + Math.abs(x.c).toFixed(0) + '%</span></div><div class="r2"><span>' + esc(x.g.last.store) + '</span><span class="num">' + money(x.g.last.price) + '</span></div></div>').join('') + '</div>' : '') + '</section>';
 }
 
 function cameraBox(){
@@ -1585,12 +1656,22 @@ function hawlInfo(){
   return { cur, prev, next, rec: S.data.zakat.find(z => String(z.hawl).slice(0, 4) === cur.slice(0, 4)), rate: num(S.settings.ZAKAT_RATE) || 0.025 };
 }
 
+/* التوزيعات الصافية لآخر 12 شهر */
+function distBars(st){
+  const ms = []; for(let i = 11; i >= 0; i--) ms.push(shiftMonth(monthKey(), -i));
+  const v = ms.map(k => sum(st.ops.filter(o => isDist(o.type) && String(o.date).slice(0, 7) === k), o => Math.abs(num(o.net)) || Math.abs(num(o.amount))));
+  const mx = Math.max.apply(null, v.concat([1]));
+  if(!sum(v)) return '';
+  return '<div class="flabel" style="margin-top:4px">التوزيعات آخر 12 شهر <b class="num">' + money0(sum(v)) + '</b></div><div class="mbars">' +
+    ms.map((k, i) => '<div title="' + esc(monthName(k)) + '"><i style="height:' + (v[i] ? Math.max(6, pct(v[i], mx)) : 0) + '%"></i><span>' + (i % 3 === 2 || i === 11 ? shortMonth(k).slice(0, 3) : '') + '</span></div>').join('') + '</div>';
+}
 function invMini(){
   if(!S.data.sukuk.length) return '';
   const st = invStats(), h = hawlInfo();
   const nx = st.upcoming[0];
   return '<section class="card" id="hInv" style="cursor:pointer"><h2>📈 استثماراتي <span>التفاصيل ›</span></h2>' +
     '<div class="grid" style="margin:0 0 8px">' + kpi('رأس المال القائم', money0(st.outstanding), st.sukuk.filter(s => s.outstanding > 0).length + ' صكوك') + kpi('توزيعات ' + todayKey().slice(0,4), money0(st.distYear), 'صافي') + '</div>' +
+    distBars(st) +
     (nx ? '<div class="item"><div class="r1"><span class="n">📅 القادم: ' + esc(nx.sukuk) + ' · ' + esc(nx.type) + '</span><span class="a num">' + money0(nx.amount) + '</span></div><div class="r2"><span>' + esc(dayLabel(nx.date)) + '</span><span>بعد ' + daysBetween(todayKey(), nx.date) + ' يوم</span></div></div>' : '') +
     (st.late.length ? '<div class="item"><div class="r1"><span class="n">⏰ متأخرات</span><span class="a num chg up">' + money0(sum(st.late, d => num(d.amount))) + '</span></div></div>' : '') +
     (!h.rec ? '<div class="item"><div class="r1"><span class="n">🕌 زكاة ' + h.cur.slice(0,4) + ' ما تسجّلت</span><span class="go">سجّلها ›</span></div></div>' : '') + '</section>';
