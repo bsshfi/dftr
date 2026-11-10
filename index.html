@@ -543,8 +543,6 @@ textarea.fin{min-height:110px;font-size:14px;direction:rtl;text-align:right;font
 body[data-view="inv"]{--accent:var(--c-inv);--accent2:var(--c-inv2);--accentbg:rgba(17,135,90,.12)}
 body[data-view="nwc"]{--accent:var(--c-wat);--accent2:var(--c-wat2);--accentbg:rgba(31,114,214,.12)}
 body[data-view="pr"]{--accent:var(--c-pr);--accent2:var(--c-pr2);--accentbg:rgba(106,69,232,.12)}
-body[data-view="set"]{--accent:var(--c-ink);--accent2:#3a3f4a;--accentbg:rgba(21,23,28,.08)}
-:root[data-theme="dark"] body[data-view="set"]{--accent:#F1F3F7;--accent2:#fff}
 
 html{background:var(--bg)}
 body{background:var(--bg)}
@@ -572,7 +570,10 @@ body{background:var(--bg)}
 #sheet .pn{background:var(--solid);border:0}
 .demo{background:var(--card);border:0}
 .whero{background:var(--c-wat)!important;box-shadow:none;border-radius:30px}
-#fab{background:var(--accent);border:0;box-shadow:0 10px 24px -8px var(--accent)}
+#fab{background:#15171C;border:3px solid #fff;box-shadow:0 10px 26px -6px rgba(0,0,0,.45)}
+#fab svg{stroke:#fff}
+:root[data-theme="dark"] #fab{background:#fff;border-color:#15171C;box-shadow:0 10px 26px -6px rgba(255,255,255,.25)}
+:root[data-theme="dark"] #fab svg{stroke:#15171C}
 
 /* ---------- الشريط السفلي الملون ---------- */
 #tabbar{left:50%;right:auto;transform:translateX(-50%);width:auto;max-width:calc(100% - 24px);background:#15171C;border:0;border-radius:99px;padding:7px;gap:4px;box-shadow:0 14px 30px -10px rgba(0,0,0,.45);justify-content:center}
@@ -637,6 +638,9 @@ body{background:var(--bg)}
 #tabbar button.on[data-tab="home"]{color:#15171C}
 #refresh{display:none}
 
+.qa.qa4{grid-template-columns:repeat(4,1fr);gap:8px}
+.qa.qa4 button{font-size:12.5px;padding:12px 2px 10px;background:var(--card2);border:0}
+
 </style>
 </head>
 <body>
@@ -676,7 +680,7 @@ body{background:var(--bg)}
 <script src="config.js"></script>
 <script>
 'use strict';
-const VERSION = 'v2.1.0';
+const VERSION = 'v2.1.1';
 const APP_NAME = 'دفتر | DFTR';
 const API_URL = String(window.DFTR_API_URL || '').trim();
 const LS = {
@@ -949,10 +953,11 @@ function fabAction(){
   if(S.view === 'inv') return opForm();
   if(S.view === 'nwc') return readingForm();
   const b = openSheet(sheetHead('إضافة') +
-    '<div class="qa" style="margin-top:8px"><button data-a="tx"><i>🧾</i>مصروف</button><button data-a="rc"><i>📷</i>فاتورة</button><button data-a="op"><i>📈</i>استثمار</button></div>');
+    '<div class="qa qa4" style="margin-top:8px"><button data-a="tx"><i style="background:rgba(242,107,29,.14)">🧾</i>مصروف</button><button data-a="rc"><i style="background:rgba(106,69,232,.14)">📷</i>فاتورة</button><button data-a="wt"><i style="background:rgba(31,114,214,.14)">💧</i>قراءة ماء</button><button data-a="op"><i style="background:rgba(17,135,90,.14)">📈</i>استثمار</button></div>');
   b.querySelector('[data-a=tx]').onclick = () => { closeSheet(); setTimeout(txForm, 280); };
   b.querySelector('[data-a=rc]').onclick = () => { closeSheet(); setTimeout(receiptStart, 280); };
   b.querySelector('[data-a=op]').onclick = () => { closeSheet(); setTimeout(opForm, 280); };
+  b.querySelector('[data-a=wt]').onclick = () => { closeSheet(); setTimeout(() => readingForm(), 280); };
 }
 
 /* ---------- الدخول ---------- */
