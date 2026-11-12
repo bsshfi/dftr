@@ -636,7 +636,6 @@ body{background:var(--bg)}
 .rrow .d.up{color:var(--up)} .rrow .d.down{color:var(--down)}
 
 #tabbar button.on[data-tab="home"]{color:#15171C}
-#refresh{display:none}
 
 .qa.qa4{grid-template-columns:repeat(4,1fr);gap:8px}
 .qa.qa4 button{font-size:12.5px;padding:12px 2px 10px;background:var(--card2);border:0}
@@ -792,6 +791,11 @@ details.omore summary{cursor:pointer;padding:6px 0}
 .di b{color:var(--ink);font-size:14.5px}
 .di b.em{font-size:13px;direction:ltr;unicode-bidi:isolate;word-break:break-all}
 .di a{color:var(--accent);font-weight:700;text-decoration:none;margin-top:2px}
+#refresh{display:grid}
+.dline{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--sub);margin:4px 2px 2px;font-weight:600}
+.dline .num{font-weight:600}
+.hero .hbtn{margin-top:14px;border:0;border-radius:99px;background:rgba(255,255,255,.22);color:#fff;font-weight:700;font-size:13.5px;padding:8px 16px}
+.hside .tile.light{margin-bottom:12px}
 
 </style>
 </head>
@@ -812,6 +816,7 @@ details.omore summary{cursor:pointer;padding:6px 0}
   <button id="refresh" class="iconbtn" aria-label="تحديث"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg></button>
   <button id="gear" class="iconbtn" aria-label="الإعدادات"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
 </header>
+<div id="dline" class="dline"></div>
 
 <div id="demoBar" class="demo" hidden>معاينة ببيانات تجريبية — التعديلات هنا ما تنحفظ</div>
 <div id="fresh" class="fresh" style="display:none"></div>
@@ -832,7 +837,7 @@ details.omore summary{cursor:pointer;padding:6px 0}
 <script src="config.js"></script>
 <script>
 'use strict';
-const VERSION = 'v2.2.1';
+const VERSION = 'V1.4.3';
 const APP_NAME = 'دفتر | DFTR';
 const API_URL = String(window.DFTR_API_URL || '').trim();
 const LS = {
@@ -1110,6 +1115,7 @@ function render(){
   $('ver').textContent = VERSION;
   const h = new Date().getHours();
   $('greet').textContent = (h < 12 ? 'صباح الخير' : 'مساء الخير') + ' يا باسل';
+  $('dline').innerHTML = dateLine();
   $('ttl').textContent = { home:APP_NAME, exp:'مصاريفي', pr:'الأسعار', inv:'استثماراتي', nwc:'المياه', set:'الإعدادات', inbox:'يحتاج إجراء' }[S.view] || 'دفتر';
   if(S.sel && S.view !== 'exp') S.sel = null;
   selBar();
@@ -1138,6 +1144,19 @@ function fabAction(){
   b.querySelector('[data-a=rc]').onclick = () => { closeSheet(); setTimeout(receiptStart, 280); };
   b.querySelector('[data-a=op]').onclick = () => { closeSheet(); setTimeout(opForm, 280); };
   b.querySelector('[data-a=wt]').onclick = () => { closeSheet(); setTimeout(() => readingForm(), 280); };
+}
+
+/* التاريخ الميلادي والهجري: الخميس 12 نوفمبر (11) 2026م · 21 جمادى الأولى (5) 1448هـ */
+function dateLine(){
+  const d = new Date();
+  const g = WEEK[d.getDay()] + ' ' + d.getDate() + ' ' + MONTHS[d.getMonth()] + ' <span class="num">(' + (d.getMonth() + 1) + ')</span> ' + d.getFullYear() + 'م';
+  let hj = '';
+  try {
+    const P = o => new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura-nu-latn', Object.assign({ timeZone: 'Asia/Riyadh' }, o)).formatToParts(d).reduce((a, x) => (a[x.type] = x.value, a), {});
+    const a = P({ day: 'numeric', month: 'long', year: 'numeric' }), n = P({ month: 'numeric' });
+    hj = a.day + ' ' + a.month + ' <span class="num">(' + n.month + ')</span> ' + String(a.year).replace(/\D/g, '') + 'هـ';
+  } catch(e){}
+  return '<span>📅 ' + g + '</span>' + (hj ? '<span>🌙 ' + hj + '</span>' : '');
 }
 
 /* ---------- الدخول ---------- */
@@ -1208,7 +1227,7 @@ function start(){
 let UNLOCKED = false, hiddenAt = 0;
 function lockScreen(){
   closeSheet(); $('app').innerHTML = ''; $('app').style.display = 'none'; $('tabbar').style.display = 'none'; $('fab').style.display = 'none';
-  $('fresh').style.display = 'none';
+  $('fresh').style.display = 'none'; $('dline').innerHTML = '';
   $('auth').style.display = 'block'; pinScreen();
 }
 document.addEventListener('visibilitychange', () => {
@@ -1300,6 +1319,8 @@ VIEWS.exp_after = root => {
   root.querySelectorAll('[data-tabs]').forEach(g => g.querySelectorAll('button').forEach(b => b.onclick = () => { S[g.dataset.tabs] = b.dataset.v; render(); }));
   const q = $('txq'); if(q){ q.oninput = () => { S.q = q.value; const pos = q.selectionStart; render(); const n = $('txq'); n.focus(); try { n.setSelectionRange(pos, pos); } catch(e){} }; }
   const be = $('budEdit'); if(be) be.onclick = budgetForm;
+  const be2 = $('budEdit2'); if(be2) be2.onclick = budgetForm;
+  root.querySelectorAll('[data-bed]').forEach(el => el.onclick = () => budgetOne(el.dataset.bed));
   const mq = $('mq'); if(mq){ mq.oninput = () => { S.mq = mq.value; const pos = mq.selectionStart; render(); const n = $('mq'); n.focus(); try { n.setSelectionRange(pos, pos); } catch(e){} }; }
   root.querySelectorAll('[data-trend]').forEach(el => el.onclick = () => { S.period = el.dataset.trend; render(); });
 };
@@ -1465,11 +1486,22 @@ function expBudget(){
   const p = pct(B.spent, B.tot), over = B.rows.filter(r => r.s > r.b).length, near = B.rows.filter(r => r.st.k === 'warn').length;
   H.push('<section class="card hero"><div class="label">الميزانية الشهرية · ' + monthName(B.P) + (SD() > 1 ? ' (' + cycleRange(B.P) + ')' : '') + '</div><div class="big"><span class="num">' + money0(B.tot - B.spent) + '</span><small>ر.س متبقي من ' + money0(B.tot) + '</small></div>' +
     '<div class="mbar"><i style="width:' + Math.min(100, p) + '%"></i><b style="right:' + B.dp + '%"></b></div><div class="mtxt"><span>صرفت <b class="num">' + money0(B.spent) + '</b> (' + Math.round(p) + '٪)</span><span>مر <span class="num">' + B.dp.toFixed(0) + '%</span> من الشهر</span></div>' +
-    '<div class="meta"><span>' + (over ? '🔴 ' + over + ' تجاوز' : '✅ ما فيه تجاوز') + '</span>' + (near ? '<span>🟠 ' + near + ' قريب من الحد</span>' : '') + '</div></section>');
-  H.push('<section class="card"><h2>حسب التصنيف <button class="link" id="budEdit" style="margin:0;padding:0">✏️ تعديل المبالغ</button></h2><p class="hint" style="margin:-6px 0 6px">الخط الصغير = وين المفروض تكون اليوم</p><div class="list">' + B.rows.map(r => budRow(r, B.dp)).join('') + '</div></section>');
+    '<div class="meta"><span>' + (over ? '🔴 ' + over + ' تجاوز' : '✅ ما فيه تجاوز') + '</span>' + (near ? '<span>🟠 ' + near + ' قريب من الحد</span>' : '') + '</div>' +
+    '<button class="hbtn" id="budEdit2">✏️ تعديل حدود الميزانية</button></section>');
+  H.push('<section class="card"><h2>حسب التصنيف <button class="link" id="budEdit" style="margin:0;padding:0">✏️ تعديل المبالغ</button></h2><p class="hint" style="margin:-6px 0 6px">الخط الصغير = وين المفروض تكون اليوم</p><div class="list">' + B.rows.map(r => '<div data-bed="' + esc(r.n) + '" style="cursor:pointer">' + budRow(r, B.dp) + '</div>').join('') + '</div><p class="hint">اضغط أي تصنيف تعدّل حده</p></section>');
   const unb = B.st.cats.filter(c => !B.rows.find(x => x.n === c.n));
   if(unb.length) H.push('<section class="card"><h2>بدون ميزانية <span>هذا الشهر</span></h2><div class="list">' + unb.map(c => '<div class="item"><div class="r1"><span class="n">' + esc(c.n) + '</span><span class="a num">' + money0(c.v) + '</span></div></div>').join('') + '</div></section>');
   return H.join('');
+}
+function budgetOne(name){
+  const c = S.data.categories.find(x => x.name === name); if(!c) return;
+  const avg = sum([1, 2, 3].map(i => (periodStats(shiftMonth(cycleKey(), -i)).cats.find(x => x.n === name) || { v: 0 }).v)) / 3;
+  openSheet(sheetHead('🎯 حد ' + esc(name)) + '<p class="hint">الحد الشهري الثابت لهذا التصنيف' + (avg ? ' · متوسط صرفك آخر 3 أشهر <b class="num">' + money0(avg) + '</b>' : '') + '</p>' +
+    '<input id="b1" class="fin big" inputmode="decimal" value="' + (num(c.budget) || '') + '" placeholder="0">' +
+    '<div class="btns"><button class="btn danger" id="b1Del">بدون حد</button><button class="btn" id="b1Go">حفظ</button></div>');
+  setTimeout(() => $('b1').focus(), 300);
+  $('b1Go').onclick = () => { const v = num($('b1').value); closeSheet(); save('categories', { name, budget: v || '' }, ['categories'], '✅ حد ' + name + ': ' + money0(v)); };
+  $('b1Del').onclick = () => { closeSheet(); save('categories', { name, budget: '' }, ['categories'], 'انشال الحد'); };
 }
 function budgetForm(){
   const cats = S.data.categories.filter(c => c.scope !== 'أسعار');
@@ -2594,11 +2626,12 @@ VIEWS.home = () => {
 
   /* الميزانية الثابتة */
   const BR = budgetRows();
-  if(BR.rows.length) H.push('<button class="tile light wide hbud" data-go="bud" style="min-height:0"><div class="secttl"><span>🎯 الميزانية الشهرية</span><span style="font-size:12.5px;color:var(--sub);font-weight:600">باقي <b class="num">' + money0(BR.tot - BR.spent) + '</b> من ' + money0(BR.tot) + '</span></div><div class="list" style="margin-top:6px">' + BR.rows.slice(0, 5).map(r => budRow(r, BR.dp)).join('') + '</div>' + (BR.rows.length > 5 ? '<div class="ts" style="text-align:center;margin-top:4px">+' + (BR.rows.length - 5) + ' تصنيف ›</div>' : '') + '</button>');
+  const SIDE = [];
+  if(BR.rows.length) SIDE.push('<button class="tile light wide hbud" data-go="bud" style="min-height:0"><div class="secttl"><span>🎯 الميزانية الشهرية</span><span style="font-size:12.5px;color:var(--sub);font-weight:600">باقي <b class="num">' + money0(BR.tot - BR.spent) + '</b> من ' + money0(BR.tot) + '</span></div><div class="list" style="margin-top:6px">' + BR.rows.slice(0, 5).map(r => budRow(r, BR.dp)).join('') + '</div>' + (BR.rows.length > 5 ? '<div class="ts" style="text-align:center;margin-top:4px">+' + (BR.rows.length - 5) + ' تصنيف ›</div>' : '') + '</button>');
 
   /* أقرب الضمانات انتهاءً */
   const WL = S.data.items.filter(i => i.wEnd && String(i.wEnd) >= today).sort((a, b) => String(a.wEnd).localeCompare(String(b.wEnd))).slice(0, 5);
-  if(WL.length) H.push('<div class="tile light wide" style="min-height:0;cursor:default"><div class="secttl"><span>🛡️ أقرب الضمانات انتهاءً</span><button data-go="own">الكل ›</button></div><div class="wlist">' + WL.map(i => {
+  if(WL.length) SIDE.unshift('<div class="tile light wide" style="min-height:0;cursor:default"><div class="secttl"><span>🛡️ أقرب الضمانات انتهاءً</span><button data-go="own">الكل ›</button></div><div class="wlist">' + WL.map(i => {
     const left = daysBetween(today, i.wEnd), all = Math.max(1, daysBetween(i.date || today, i.wEnd)), rd = num(S.settings.WARRANTY_REMIND_DAYS) || 30;
     return '<div class="wl" data-own="' + esc(i.id) + '"><div class="r1"><span>' + catIcon(i.category) + ' ' + esc(i.name) + '</span><em class="' + (left <= rd ? 'soon' : '') + '">' + (left === 0 ? 'اليوم' : left < 60 ? 'باقي ' + left + ' يوم' : 'باقي ' + Math.round(left / 30) + ' شهر') + '</em></div><div class="bbar ' + (left <= rd ? 'warn' : '') + '"><i style="width:' + Math.max(3, 100 - pct(left, all)) + '%"></i></div><small>' + esc([i.store, 'ينتهي ' + dayLabel(i.wEnd)].filter(Boolean).join(' · ')) + '</small></div>';
   }).join('') + '</div></div>');
@@ -2616,7 +2649,7 @@ VIEWS.home = () => {
   const tr = trend6(P), mx = Math.max.apply(null, tr.map(m => m.v).concat([1])), avg6 = sum(tr.slice(0, 5), m => m.v) / 5;
   H.push('<div class="tile light wide" id="hTrend" style="min-height:0"><div class="secttl"><span>آخر 6 أشهر</span><span style="font-size:12px;color:var(--sub);font-weight:600">متوسط <b class="num">' + money0(avg6) + '</b></span></div>' +
     '<div style="display:flex;align-items:flex-end;gap:10px;height:120px;margin-top:14px">' + tr.map(m => '<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;height:100%;justify-content:flex-end"><span class="num" style="font-size:10.5px;color:var(--sub)">' + (m.v >= 1000 ? (m.v / 1000).toFixed(1) + 'k' : money0(m.v)) + '</span><div style="width:100%;height:' + Math.max(3, pct(m.v, mx) * 0.8) + '%;border-radius:12px;background:' + (m.k === P ? 'var(--c-exp)' : 'var(--bar)') + '"></div><span style="font-size:11px;color:' + (m.k === P ? 'var(--ink)' : 'var(--sub)') + ';font-weight:' + (m.k === P ? 700 : 400) + '">' + shortMonth(m.k) + '</span></div>').join('') + '</div></div>');
-  return '<div class="hgrid"><aside class="hside">' + yesterdayHTML() + inboxHTML(false) + '</aside><div class="hmain">' + H.join('') + '</div></div>';
+  return '<div class="hgrid"><aside class="hside">' + yesterdayHTML() + inboxHTML(false) + SIDE.join('') + '</aside><div class="hmain">' + H.join('') + '</div></div>';
 };
 VIEWS.home_after = root => {
   bindInbox(root);
