@@ -837,7 +837,7 @@ details.omore summary{cursor:pointer;padding:6px 0}
 <script src="config.js"></script>
 <script>
 'use strict';
-const VERSION = 'V1.4.4';
+const VERSION = 'V1.4.5';
 const APP_NAME = 'دفتر | DFTR';
 const API_URL = String(window.DFTR_API_URL || '').trim();
 const LS = {
@@ -1152,15 +1152,11 @@ function dateLine(){
   const g = WEEK[d.getDay()] + ' ' + d.getDate() + ' ' + MONTHS[d.getMonth()] + ' <span class="num">(' + (d.getMonth() + 1) + ')</span> ' + d.getFullYear() + 'م';
   let hj = '';
   try {
-    /* كل جزء بنداء مستقل (سفاري الآيفون يخلط الأجزاء أحياناً) + تحويل الأرقام العربية */
-    const F = o => new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura-nu-latn', Object.assign({ timeZone: 'Asia/Riyadh' }, o)).format(d).replace(/[٠-٩]/g, c => '٠١٢٣٤٥٦٧٨٩'.indexOf(c));
-    const dd = +F({ day: 'numeric' }).replace(/\D/g, ''); let mm = +F({ month: 'numeric' }).replace(/\D/g, ''); const yy = +F({ year: 'numeric' }).replace(/\D/g, '');
-    let mn = F({ month: 'long' }).replace(/[\d\s]*هـ?$/g, '').replace(/\d/g, '').trim();
+    /* بالإنجليزي الرقمي (6/2/1448 AH) لأنه ثابت في كل المتصفحات، واسم الشهر من قائمتنا */
+    const t = new Intl.DateTimeFormat('en-US-u-ca-islamic-umalqura-nu-latn', { timeZone: 'Asia/Riyadh', day: 'numeric', month: 'numeric', year: 'numeric' }).format(d);
+    const m = t.match(/(\d+)\D+(\d+)\D+(\d+)/);
     const HM = ['محرم','صفر','ربيع الأول','ربيع الآخر','جمادى الأولى','جمادى الآخرة','رجب','شعبان','رمضان','شوال','ذو القعدة','ذو الحجة'];
-    /* سفاري يرجّع اسم الشهر بدل رقمه: نطلع الرقم من الاسم */
-    if(!(mm >= 1 && mm <= 12)){ const k = x => String(x).replace(/[أإآ]/g, 'ا').replace(/ى/g, 'ي').replace(/\s+/g, ''); const AL = [['محرم'],['صفر'],['ربيع الأول','ربيع الاول'],['ربيع الآخر','ربيع الثاني'],['جمادى الأولى','جمادى الاولى'],['جمادى الآخرة','جمادى الثانية','جمادى الآخر'],['رجب'],['شعبان'],['رمضان'],['شوال'],['ذو القعدة'],['ذو الحجة']]; const t = k(mn + ' ' + F({ month: 'numeric' })); const i = AL.findIndex(L => L.some(h => t.indexOf(k(h)) !== -1)); mm = i + 1; }
-    if(mm >= 1 && mm <= 12) mn = HM[mm - 1];
-    if(dd && mm && yy) hj = dd + ' ' + mn + ' <span class="num">(' + mm + ')</span> ' + yy + 'هـ';
+    if(m && +m[1] >= 1 && +m[1] <= 12 && +m[3] > 1300) hj = +m[2] + ' ' + HM[+m[1] - 1] + ' <span class="num">(' + +m[1] + ')</span> ' + m[3] + 'هـ';
   } catch(e){}
   return '<span>📅 ' + g + '</span>' + (hj ? '<span class="sep">·</span><span>🌙 ' + hj + '</span>' : '');
 }
