@@ -760,6 +760,39 @@ kbd{font-family:var(--nf);font-size:12px;background:var(--card2);border:1px soli
 }
 body:has(#selbar) #toast{bottom:calc(env(safe-area-inset-bottom) + 146px)}
 
+/* ---------- تثبيت الصفحة أفقياً (الجوال) ---------- */
+html,body{overflow-x:hidden;overscroll-behavior-x:none}
+#app,#sheet .pn{overflow-x:hidden}
+#sheet .pn{touch-action:pan-y;overscroll-behavior:contain}
+input,select,textarea{max-width:100%;min-width:0}
+input[type=date],input[type=time]{-webkit-appearance:none;appearance:none;display:block;min-width:0;width:100%;min-height:46px}
+.row2>*{min-width:0;overflow:hidden}
+details.omore{margin-top:12px;font-size:13px;color:var(--sub)}
+details.omore summary{cursor:pointer;padding:6px 0}
+
+/* ---------- الميزانية والضمانات بالرئيسية ---------- */
+.hbud{text-align:right}
+.hbud .bud-r{padding:9px 0}
+.bud-r .a small{color:var(--sub);font-weight:600;font-size:12px}
+.wlist{display:flex;flex-direction:column;gap:12px;margin-top:12px}
+.wl{cursor:pointer}
+.wl .r1{display:flex;justify-content:space-between;gap:10px;font-weight:700;font-size:14px}
+.wl .r1 span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.wl em{font-style:normal;font-size:12.5px;color:var(--down);white-space:nowrap}
+.wl em.soon{color:var(--up)}
+.wl .bbar{height:7px;margin-top:6px}
+.wl small{display:block;color:var(--sub);font-size:12px;margin-top:4px}
+.secttl button{font-size:13px;font-weight:700;color:var(--c-pr);background:none;border:0}
+
+/* ---------- معلومات Drive ---------- */
+.dinfo{display:flex;flex-direction:column;gap:10px;margin-bottom:6px}
+.di{display:flex;gap:12px;background:var(--card2);border-radius:18px;padding:12px}
+.di>i{font-style:normal;font-size:22px;line-height:1.2}
+.di>div{display:flex;flex-direction:column;gap:2px;min-width:0;font-size:13px;color:var(--sub)}
+.di b{color:var(--ink);font-size:14.5px}
+.di b.em{font-size:13px;direction:ltr;unicode-bidi:isolate;word-break:break-all}
+.di a{color:var(--accent);font-weight:700;text-decoration:none;margin-top:2px}
+
 </style>
 </head>
 <body>
@@ -799,7 +832,7 @@ body:has(#selbar) #toast{bottom:calc(env(safe-area-inset-bottom) + 146px)}
 <script src="config.js"></script>
 <script>
 'use strict';
-const VERSION = 'v2.2.0';
+const VERSION = 'v2.2.1';
 const APP_NAME = 'دفتر | DFTR';
 const API_URL = String(window.DFTR_API_URL || '').trim();
 const LS = {
@@ -1099,7 +1132,7 @@ function fabAction(){
   if(S.view === 'nwc') return readingForm();
   const b = openSheet(sheetHead('إضافة') +
     '<div class="qa qa4" style="margin-top:8px"><button data-a="tx"><i style="background:rgba(242,107,29,.14)">🧾</i>مصروف</button><button data-a="rc"><i style="background:rgba(106,69,232,.14)">📷</i>فاتورة</button><button data-a="wt"><i style="background:rgba(31,114,214,.14)">💧</i>قراءة ماء</button><button data-a="op"><i style="background:rgba(17,135,90,.14)">📈</i>استثمار</button></div>' +
-    '<button class="btn ghost" data-a="it">🛡️ غرض للبيت (فاتورة / ضمان)</button>');
+    '<button class="btn ghost" data-a="it">🛡️ ضمان أو فاتورة مهمة</button>');
   b.querySelector('[data-a=it]').onclick = () => { closeSheet(); setTimeout(itemStart, 280); };
   b.querySelector('[data-a=tx]').onclick = () => { closeSheet(); setTimeout(txForm, 280); };
   b.querySelector('[data-a=rc]').onclick = () => { closeSheet(); setTimeout(receiptStart, 280); };
@@ -1247,7 +1280,7 @@ VIEWS.exp = () => {
   const pend = pendingCount();
   const tabs = [['sum','الملخص'],['tx','العمليات'],['bud','الميزانية'],['rev','المراجعة' + (pend ? '<span class="bd">' + pend + '</span>' : '')],['mer','التجار']];
   let h = '<div class="subnav">' + tabs.map(t => '<button data-sub="' + t[0] + '" class="' + (S.sub.exp === t[0] ? 'on' : '') + '">' + t[1] + '</button>').join('') + '</div>';
-  if(S.sub.exp === 'sum' || S.sub.exp === 'bud') h += periodBar();
+  if(S.sub.exp === 'sum') h += periodBar();
   h += ({ sum: expSummary, tx: expTx, bud: expBudget, rev: expReview, mer: expMerchants }[S.sub.exp] || expSummary)();
   return h;
 };
@@ -1364,7 +1397,7 @@ function txSheet(id){
       .filter(x => x[1]).map(x => '<div class="kv"><span>' + x[0] + '</span><span>' + esc(x[1]) + '</span></div>').join('') +
     '<div class="btns"><button class="btn danger" id="tDel">حذف</button><button class="btn" id="tEdit">تعديل</button></div>' +
     (t.merchant ? '<button class="btn ghost" id="tMer">🏪 كل عمليات ' + esc(t.merchant) + '</button>' : '') +
-    '<button class="btn ghost" id="tOwn">🛡️ أضفها لمقتنيات البيت</button>');
+    '<button class="btn ghost" id="tOwn">🛡️ أضفها للضمانات والفواتير</button>');
   $('tOwn').onclick = () => { closeSheet(); setTimeout(() => itemForm(null, { name: '', store: t.merchant, price: num(t.amount), date: t.date, note: t.note || '' }), 280); };
   $('tEdit').onclick = () => { closeSheet(); setTimeout(() => txForm(t), 280); };
   $('tDel').onclick = async () => { closeSheet(); await sleep(280); if(await ask('حذف العملية؟', esc(t.merchant) + ' — ' + money(t.amount), 'احذف', true)) remove('tx', t.id, ['tx']); };
@@ -1409,31 +1442,39 @@ function txForm(t){
 }
 
 /* ---------- الميزانية ---------- */
+/* الميزانية ثابتة: نفس الحد كل شهر، ونقارن صرف الشهر الحالي (من يوم الراتب) فيه */
+function budgetRows(){
+  const P = cycleKey(), st = periodStats(P), dp = st.days / st.fullDays * 100;
+  const rows = S.data.categories.filter(c => num(c.budget) > 0).map(c => {
+    const b = num(c.budget), s = (st.cats.find(x => x.n === c.name) || { v: 0 }).v, q = s / b * 100, fc = s / Math.max(1, st.days) * st.fullDays;
+    const stt = s > b ? { k: 'over', l: 'تجاوزت', c: 'var(--up)' } : q >= 80 ? { k: 'warn', l: 'قريب من الحد', c: 'var(--c-bud)' } : q > dp + 10 ? { k: 'warn', l: 'أسرع من المفروض', c: 'var(--c-bud)' } : { k: '', l: 'ضمن الحد', c: 'var(--down)' };
+    return { n: c.name, b, s, q, fc, st: stt };
+  }).sort((x, y) => y.q - x.q);
+  return { P, st, dp, rows, tot: sum(rows, r => r.b), spent: sum(rows, r => r.s) };
+}
+function budRow(r, dp){
+  return '<div class="item bud-r"><div class="r1"><span class="n">' + esc(r.n) + '</span><span class="a num">' + money0(r.s) + ' <small>/ ' + money0(r.b) + '</small></span></div><div class="bbar ' + r.st.k + '"><i style="width:' + Math.min(100, r.q) + '%"></i><b style="right:' + dp + '%"></b></div>' +
+    '<div class="r2"><span style="color:' + r.st.c + ';font-weight:700">' + r.st.l + ' · ' + (r.s > r.b ? 'زيادة <span class="num">' + money0(r.s - r.b) + '</span>' : 'باقي <span class="num">' + money0(r.b - r.s) + '</span>') + '</span><span>' + (r.s > r.b || r.fc <= r.b ? '' : 'بهالوتيرة توصل <span class="num">' + money0(r.fc) + '</span>') + '</span></div></div>';
+}
 function expBudget(){
-  const P = S.period.length === 4 ? cycleKey() : S.period, st = periodStats(P);
-  const cats = S.data.categories.filter(c => num(c.budget) > 0);
-  const H = [];
-  if(!cats.length){
-    H.push('<section class="card" style="text-align:center;padding:28px 18px"><div style="font-size:44px">🎯</div><h3 style="margin:8px 0 4px">حدّد ميزانيتك الشهرية</h3><p style="color:var(--sub);margin:0">لكل تصنيف حد، وتشوف وين وصلت كل شهر.</p><button class="btn" id="budEdit">ابدأ</button></section>');
+  const B = budgetRows(), H = [];
+  if(!B.rows.length){
+    H.push('<section class="card" style="text-align:center;padding:28px 18px"><div style="font-size:44px">🎯</div><h3 style="margin:8px 0 4px">حدّد ميزانيتك الشهرية</h3><p style="color:var(--sub);margin:0">حط مبلغ لكل تصنيف مرة وحدة، ويبقى ثابت كل شهر — وتشوف وين وصلت.</p><button class="btn" id="budEdit">ابدأ</button></section>');
     return H.join('');
   }
-  const tot = sum(cats, c => num(c.budget));
-  const rows = cats.map(c => ({ n: c.name, b: num(c.budget), s: (st.cats.find(x => x.n === c.name) || { v: 0 }).v })).sort((a, b) => b.s / b.b - a.s / a.b);
-  const spent = sum(rows, r => r.s), dp = st.days / st.fullDays * 100, p = pct(spent, tot);
-  H.push('<section class="card hero"><div class="label">ميزانية ' + monthName(P) + '</div><div class="big"><span class="num">' + money0(tot - spent) + '</span><small>ر.س متبقي</small></div>' +
-    '<div class="mbar"><i style="width:' + Math.min(100, p) + '%"></i><b style="right:' + dp + '%"></b></div><div class="mtxt"><span>صرفت <b class="num">' + money0(spent) + '</b> من <b class="num">' + money0(tot) + '</b></span><span>مر <span class="num">' + dp.toFixed(0) + '%</span> من الشهر</span></div></section>');
-  H.push('<section class="card"><h2>حسب التصنيف <button class="link" id="budEdit" style="margin:0;padding:0">✏️ تعديل</button></h2><div class="list">' + rows.map(r => {
-    const q = pct(r.s, r.b), cls = r.s > r.b ? 'over' : q > dp + 10 ? 'warn' : '';
-    return '<div class="item"><div class="r1"><span class="n">' + esc(r.n) + '</span><span class="a num">' + money0(r.s) + ' / ' + money0(r.b) + '</span></div><div class="bbar ' + cls + '"><i style="width:' + Math.min(100, q) + '%"></i><b style="right:' + dp + '%"></b></div><div class="r2"><span>' + (r.s > r.b ? 'تجاوزت بـ <span class="num">' + money0(r.s - r.b) + '</span>' : 'باقي <span class="num">' + money0(r.b - r.s) + '</span>') + '</span><span class="num">' + q.toFixed(0) + '%</span></div></div>';
-  }).join('') + '</div></section>');
-  const unb = st.cats.filter(c => !cats.find(x => x.name === c.n));
-  if(unb.length) H.push('<section class="card"><h2>بدون ميزانية</h2><div class="list">' + unb.map(c => '<div class="item"><div class="r1"><span class="n">' + esc(c.n) + '</span><span class="a num">' + money0(c.v) + '</span></div></div>').join('') + '</div></section>');
+  const p = pct(B.spent, B.tot), over = B.rows.filter(r => r.s > r.b).length, near = B.rows.filter(r => r.st.k === 'warn').length;
+  H.push('<section class="card hero"><div class="label">الميزانية الشهرية · ' + monthName(B.P) + (SD() > 1 ? ' (' + cycleRange(B.P) + ')' : '') + '</div><div class="big"><span class="num">' + money0(B.tot - B.spent) + '</span><small>ر.س متبقي من ' + money0(B.tot) + '</small></div>' +
+    '<div class="mbar"><i style="width:' + Math.min(100, p) + '%"></i><b style="right:' + B.dp + '%"></b></div><div class="mtxt"><span>صرفت <b class="num">' + money0(B.spent) + '</b> (' + Math.round(p) + '٪)</span><span>مر <span class="num">' + B.dp.toFixed(0) + '%</span> من الشهر</span></div>' +
+    '<div class="meta"><span>' + (over ? '🔴 ' + over + ' تجاوز' : '✅ ما فيه تجاوز') + '</span>' + (near ? '<span>🟠 ' + near + ' قريب من الحد</span>' : '') + '</div></section>');
+  H.push('<section class="card"><h2>حسب التصنيف <button class="link" id="budEdit" style="margin:0;padding:0">✏️ تعديل المبالغ</button></h2><p class="hint" style="margin:-6px 0 6px">الخط الصغير = وين المفروض تكون اليوم</p><div class="list">' + B.rows.map(r => budRow(r, B.dp)).join('') + '</div></section>');
+  const unb = B.st.cats.filter(c => !B.rows.find(x => x.n === c.n));
+  if(unb.length) H.push('<section class="card"><h2>بدون ميزانية <span>هذا الشهر</span></h2><div class="list">' + unb.map(c => '<div class="item"><div class="r1"><span class="n">' + esc(c.n) + '</span><span class="a num">' + money0(c.v) + '</span></div></div>').join('') + '</div></section>');
   return H.join('');
 }
 function budgetForm(){
   const cats = S.data.categories.filter(c => c.scope !== 'أسعار');
   const avg = {}; for(let i = 1; i <= 3; i++){ periodStats(shiftMonth(cycleKey(), -i)).cats.forEach(c => { avg[c.n] = (avg[c.n] || 0) + c.v / 3; }); }
-  const b = openSheet(sheetHead('الميزانية الشهرية') + '<p class="hint">الرقم الرمادي = متوسط آخر 3 أشهر. اتركه فاضي = بدون ميزانية.</p><div class="bform">' +
+  const b = openSheet(sheetHead('🎯 الميزانية الشهرية الثابتة') + '<p class="hint">حط الحد الشهري لكل تصنيف مرة وحدة — يتكرر كل شهر. الرقم الرمادي = متوسط صرفك آخر 3 أشهر. اتركه فاضي = بدون ميزانية.</p><div class="bform">' +
     cats.map((c, i) => '<div class="brow"><span>' + esc(c.name) + (avg[c.name] ? ' <small class="num" style="color:var(--faint)">' + money0(avg[c.name]) + '</small>' : '') + '</span><input inputmode="decimal" data-bi="' + i + '" value="' + (num(c.budget) || '') + '" placeholder="—"></div>').join('') +
     '</div><button class="btn" id="bSave">حفظ</button>');
   $('bSave').onclick = async () => {
@@ -1550,7 +1591,7 @@ function prodSearch(q, limit){
 }
 
 VIEWS.pr = () => {
-  const tabs = [['search','كم سعره؟'],['rcpt','الفواتير'],['prod','المنتجات'],['own','🛡️ المقتنيات']];
+  const tabs = [['search','كم سعره؟'],['rcpt','الفواتير'],['prod','المنتجات'],['own','🛡️ الضمانات']];
   let h = '<div class="subnav">' + tabs.map(t => '<button data-sub="' + t[0] + '" class="' + (S.sub.pr === t[0] ? 'on' : '') + '">' + t[1] + '</button>').join('') + '</div>';
   h += ({ search: prSearch, rcpt: prReceipts, prod: prProducts, own: prOwn }[S.sub.pr] || prSearch)();
   return h;
@@ -1688,7 +1729,7 @@ function receiptSheet(id){
   openSheet(sheetHead(esc(r.store)) + '<div class="hint">' + esc(dayLabel(r.date)) + (r.time ? ' · ' + r.time : '') + (r.invoice ? ' · فاتورة ' + esc(r.invoice) : '') + '</div>' +
     '<div class="list" style="margin-top:8px">' + items.map(x => '<div class="item" data-prod="' + esc(x.pid) + '" style="cursor:pointer"><div class="r1"><span class="n">' + esc(x.name) + '</span><span class="a num">' + money(num(x.price) * (num(x.qty) || 1)) + '</span></div><div class="r2"><span>' + (num(x.qty) !== 1 ? '×' + x.qty + ' · ' : '') + '<span class="num">' + money(x.price) + '</span> للحبة</span><span>' + esc(x.category) + '</span></div></div>').join('') + '</div>' +
     '<div class="sumbox ok"><span>الإجمالي</span><span class="num">' + money(r.total) + '</span></div>' +
-    '<button class="btn ghost" id="rOwn">🛡️ أضف منتج منها لمقتنيات البيت</button>' +
+    '<button class="btn ghost" id="rOwn">🛡️ أضف منتج منها للضمانات</button>' +
     '<button class="btn ghost" id="rDel">🗑️ حذف الفاتورة وأسعارها</button>');
   $('rOwn').onclick = () => receiptToItems(id);
   $('sheetBody').querySelectorAll('[data-prod]').forEach(el => el.onclick = () => productSheet(el.dataset.prod));
@@ -2531,7 +2572,7 @@ VIEWS.home = () => {
   const rc = S.data.receipts.slice().sort((a, b) => String(b.date).localeCompare(String(a.date)))[0];
   H.push('<button class="tile t-pr short" data-go="prs">' + ico('pr') + '<div class="tt">كم سعره؟</div><div class="tv ar">' + S.data.products.length + ' منتج</div><div class="ts">' + (rc ? 'آخر فاتورة ' + esc(rc.store) : '') + '</div></button>');
   const own = S.data.items, wAct = own.filter(i => i.wEnd && String(i.wEnd) >= today);
-  H.push('<button class="tile t-ink short" data-go="own">' + ico('shield') + '<div class="tt">مقتنيات البيت</div><div class="tv ar">' + (own.length ? own.length + ' غرض' : 'أضف أول غرض') + '</div><div class="ts">' + (own.length ? wAct.length + ' ضمان ساري' : 'فواتير وضمانات أغراضك') + '</div></button>');
+  H.push('<button class="tile t-ink short" data-go="own">' + ico('shield') + '<div class="tt">الضمانات والفواتير</div><div class="tv ar">' + (own.length ? own.length + ' غرض' : 'أضف أول غرض') + '</div><div class="ts">' + (own.length ? wAct.length + ' ضمان ساري' : 'فواتير وضمانات أغراضك') + '</div></button>');
   H.push('</div>');
 
   /* الأسبوع الجاي */
@@ -2550,6 +2591,17 @@ VIEWS.home = () => {
   H.push('<button class="tile t-free short" data-go="exptx">' + ico('leaf') + '<div class="tt">أيام بدون صرف</div><div class="tv ar">' + Math.max(0, freeDays) + ' من ' + st.days + '</div><div class="ts">هذا الشهر</div></button>');
   H.push('<button class="tile t-ink short" data-go="rpt">' + ico('rpt') + '<div class="tt">التقرير الشهري</div><div class="tv ar">' + MONTHS[+prevM.slice(5) - 1] + '</div><div class="ts">جاهز · اضغط للقراءة</div></button>');
   H.push('</div>');
+
+  /* الميزانية الثابتة */
+  const BR = budgetRows();
+  if(BR.rows.length) H.push('<button class="tile light wide hbud" data-go="bud" style="min-height:0"><div class="secttl"><span>🎯 الميزانية الشهرية</span><span style="font-size:12.5px;color:var(--sub);font-weight:600">باقي <b class="num">' + money0(BR.tot - BR.spent) + '</b> من ' + money0(BR.tot) + '</span></div><div class="list" style="margin-top:6px">' + BR.rows.slice(0, 5).map(r => budRow(r, BR.dp)).join('') + '</div>' + (BR.rows.length > 5 ? '<div class="ts" style="text-align:center;margin-top:4px">+' + (BR.rows.length - 5) + ' تصنيف ›</div>' : '') + '</button>');
+
+  /* أقرب الضمانات انتهاءً */
+  const WL = S.data.items.filter(i => i.wEnd && String(i.wEnd) >= today).sort((a, b) => String(a.wEnd).localeCompare(String(b.wEnd))).slice(0, 5);
+  if(WL.length) H.push('<div class="tile light wide" style="min-height:0;cursor:default"><div class="secttl"><span>🛡️ أقرب الضمانات انتهاءً</span><button data-go="own">الكل ›</button></div><div class="wlist">' + WL.map(i => {
+    const left = daysBetween(today, i.wEnd), all = Math.max(1, daysBetween(i.date || today, i.wEnd)), rd = num(S.settings.WARRANTY_REMIND_DAYS) || 30;
+    return '<div class="wl" data-own="' + esc(i.id) + '"><div class="r1"><span>' + catIcon(i.category) + ' ' + esc(i.name) + '</span><em class="' + (left <= rd ? 'soon' : '') + '">' + (left === 0 ? 'اليوم' : left < 60 ? 'باقي ' + left + ' يوم' : 'باقي ' + Math.round(left / 30) + ' شهر') + '</em></div><div class="bbar ' + (left <= rd ? 'warn' : '') + '"><i style="width:' + Math.max(3, 100 - pct(left, all)) + '%"></i></div><small>' + esc([i.store, 'ينتهي ' + dayLabel(i.wEnd)].filter(Boolean).join(' · ')) + '</small></div>';
+  }).join('') + '</div></div>');
 
   /* التصنيفات */
   if(st.cats.length){
@@ -2575,6 +2627,7 @@ VIEWS.home_after = root => {
     exptx: () => { S.q = ''; go('exp', 'tx'); }, own: () => go('pr', 'own'), yday: () => daySheet(addDays(todayKey(), -1)), inbox: () => go('inbox'), rpt: () => reportSheet(shiftMonth(cycleKey(), -1))
   };
   root.querySelectorAll('[data-go]').forEach(b => b.onclick = () => act[b.dataset.go] && act[b.dataset.go]());
+  root.querySelectorAll('[data-own]').forEach(el => el.onclick = () => itemSheet(el.dataset.own));
   root.querySelectorAll('[data-up]').forEach(el => el.onclick = () => { const e = S._up[+el.dataset.up]; if(e && e.go) e.go(); });
   const hc = $('hCats'); if(hc) hc.onclick = act.exp;
   const ht = $('hTrend'); if(ht) ht.onclick = act.exp;
@@ -2878,7 +2931,7 @@ function prOwn(){
   L.sort((a, b) => String(b.date).localeCompare(String(a.date)));
   const tot = sum(S.data.items, i => num(i.price) * (num(i.qty) || 1));
   const H = [];
-  H.push('<section class="card hero"><div class="label">🛡️ مقتنيات البيت</div><div class="big"><span class="num">' + money0(tot) + '</span><small>ر.س قيمة ' + S.data.items.length + ' غرض</small></div>' +
+  H.push('<section class="card hero"><div class="label">🛡️ الضمانات والفواتير المهمة</div><div class="big"><span class="num">' + money0(tot) + '</span><small>ر.س قيمة ' + S.data.items.length + ' غرض</small></div>' +
     '<div class="meta"><span><b class="num">' + cnt.on + '</b> ضمان ساري</span>' + (cnt.soon ? '<span><b class="num">' + cnt.soon + '</b> ينتهي قريب</span>' : '') + '<span><b class="num">' + cnt.none + '</b> بدون ضمان</span></div></section>');
   H.push('<section class="card"><label class="camera">📷 صوّر فاتورة الغرض أو كرت الضمان<small>' + (S.ai || DEMO ? 'Gemini يعبّي البيانات، والصورة تنحفظ مع الغرض' : '⚠️ حط مفتاح Gemini من الإعدادات أول') + '</small><input type="file" accept="image/*,application/pdf" id="itCam"></label><button class="btn ghost" id="itMan">✍️ إدخال يدوي</button></section>');
   H.push('<div class="search"><input id="oq" type="search" placeholder="🔎 ابحث: تلفزيون، ايكيا، رقم تسلسلي…" value="' + esc(S.oq || '') + '" autocomplete="off"></div>');
@@ -2947,7 +3000,7 @@ function itemForm(it, pre, pending){
         keep.map(id => '<div class="att" data-kf="' + esc(id) + '">' + attThumb(id) + '<button type="button" class="ax" data-rmk="' + esc(id) + '">✕</button></div>').join('') +
         add.map((a, i) => '<div class="att">' + (a.url ? '<img src="' + a.url + '" alt="">' : '<span class="pdf">PDF</span>') + '<button type="button" class="ax" data-rma="' + i + '">✕</button></div>').join('') +
         '<label class="att addf">＋<input type="file" accept="image/*,application/pdf" id="oFile" multiple></label></div>' +
-      '<details class="raw"' + (v.place || v.serial || v.invoice || v.note ? ' open' : '') + '><summary>تفاصيل أكثر: المكان، الرقم التسلسلي، ملاحظات</summary>' +
+      '<details class="omore"' + (v.place || v.serial || v.invoice || v.note ? ' open' : '') + '><summary>تفاصيل أكثر: المكان، الرقم التسلسلي، ملاحظات</summary>' +
         '<div class="flabel">المكان</div><input id="oPlace" class="fin rtl" list="oPlL" value="' + esc(v.place) + '"><datalist id="oPlL">' + places.map(x => '<option value="' + esc(x) + '">').join('') + '</datalist>' +
         '<div class="row2"><div><div class="flabel">الرقم التسلسلي</div><input id="oSer" class="fin" value="' + esc(v.serial) + '"></div><div><div class="flabel">رقم الفاتورة</div><input id="oInv" class="fin" value="' + esc(v.invoice) + '"></div></div>' +
         '<div class="flabel">ملاحظات</div><input id="oNote" class="fin rtl" value="' + esc(v.note) + '"></details>' +
@@ -3030,14 +3083,14 @@ async function viewFile(id){
 /* ---------- من فاتورة المشتريات ---------- */
 function receiptToItems(rid){
   const items = S.data.prices.filter(p => p.rid === rid), r = S.data.receipts.find(x => x.id === rid) || {};
-  openSheet(sheetHead('🛡️ أضف للمقتنيات') + '<p class="hint">اختر المنتج اللي تبي تحفظه مع ضمانه</p><div class="list">' + items.map((x, i) => '<div class="item act" data-ri="' + i + '"><div class="r1"><span class="n">' + esc(x.name) + '</span><span class="a num">' + money(x.price) + '</span></div><div class="r2"><span>' + esc(x.category) + '</span><span class="go">أضفه ›</span></div></div>').join('') + '</div>');
+  openSheet(sheetHead('🛡️ أضف للضمانات') + '<p class="hint">اختر المنتج اللي تبي تحفظه مع ضمانه</p><div class="list">' + items.map((x, i) => '<div class="item act" data-ri="' + i + '"><div class="r1"><span class="n">' + esc(x.name) + '</span><span class="a num">' + money(x.price) + '</span></div><div class="r2"><span>' + esc(x.category) + '</span><span class="go">أضفه ›</span></div></div>').join('') + '</div>');
   $('sheetBody').querySelectorAll('[data-ri]').forEach(el => el.onclick = () => { const x = items[+el.dataset.ri]; itemForm(null, { name: x.name, price: num(x.price), qty: num(x.qty) || 1, store: r.store || x.store, date: x.date, invoice: x.invoice || r.invoice || '', warranty: /إلكترون|كهرب|أجهز/.test(x.category || '') ? 24 : 0, category: /إلكترون/.test(x.category || '') ? '📺 إلكترونيات' : /أجهز|كهرب/.test(x.category || '') ? '🔌 أجهزة منزلية' : '' }); });
 }
 function offerItemsFromReceipt(rid){
   if(!rid) return;
   const n = S.data.prices.filter(p => p.rid === rid && /إلكترون|كهرب|أجهز|أدوات/.test(p.category || '')).length;
   if(!n) return;
-  setTimeout(async () => { if(await ask('🛡️ فيه ' + n + ' جهاز بالفاتورة', 'تبي تحفظه بمقتنيات البيت مع الضمان؟', 'أضفه')) receiptToItems(rid); }, 900);
+  setTimeout(async () => { if(await ask('🛡️ فيه ' + n + ' جهاز بالفاتورة', 'تبي تحفظه بالضمانات مع الضمان؟', 'أضفه')) receiptToItems(rid); }, 900);
 }
 
 /* =========================================================
@@ -3195,7 +3248,7 @@ const Demo = (() => {
       case 'settings_save': Object.assign(S.settings, p.settings); return { ok: true, settings: S.settings };
       case 'ai_key': S.ai = true; return { ok: true, ai: true };
       case 'auth_logout_all': return { ok: true };
-      case 'backup_info': case 'backup_toggle': case 'backup_now': { if(a === 'backup_toggle') Demo._bkw = p.on; if(a === 'backup_now') Demo._bkl = todayKey() + ' ' + nowHM(); const w = Demo._bkw !== false, l = Demo._bkl || addDays(todayKey(), -4) + ' 03:00'; return { ok: true, weekly: w, last: l, keep: 8, files: [{ name: 'Bs-Dftr نسخة', at: l, url: 'https://drive.google.com/' }, { name: 'Bs-Dftr نسخة', at: addDays(todayKey(), -11) + ' 03:00', url: 'https://drive.google.com/' }] }; }
+      case 'backup_info': case 'backup_toggle': case 'backup_now': { if(a === 'backup_toggle') Demo._bkw = p.on; if(a === 'backup_now') Demo._bkl = todayKey() + ' ' + nowHM(); const w = Demo._bkw !== false, l = Demo._bkl || addDays(todayKey(), -4) + ' 03:00'; return { ok: true, weekly: w, last: l, keep: 8, folderUrl: 'https://drive.google.com/', drive: { email: 'you@gmail.com', files: S.data.items.reduce((n, i) => n + String(i.files || '').split('|').filter(Boolean).length, 0), size: 2400000, url: 'https://drive.google.com/', folder: 'دفتر — مرفقات' }, files: [{ name: 'Bs-Dftr نسخة', at: l, url: 'https://drive.google.com/' }, { name: 'Bs-Dftr نسخة', at: addDays(todayKey(), -11) + ' 03:00', url: 'https://drive.google.com/' }] }; }
       case 'water_reading': { upsert('wmeter', { date: p.date, time: p.time, value: num(p.reading), note: p.note || '', source: 'تطبيق' }); return { ok: true, message: '✅ سُجلت ' + f3(num(p.reading)) + ' م³' }; }
       case 'water_close': { const o = S.data.wbills.find(b => b.status === 'جارية'); const D2 = wData(); const ob = D2.bills.find(b => b.start === o.start); o.end = p.date; o.eRead = r2(ob.eReadC); o.status = 'بانتظار الفاتورة'; upsert('wbills', { start: p.date, end: shiftMonth(p.date.slice(0, 7), 1) + p.date.slice(7), sRead: o.eRead, eRead: '', status: 'جارية' }); return { ok: true }; }
       case 'item_read': return { ok: true, draft: { store: 'اكسترا', date: todayKey(), invoice: 'EX-20391', total: 1899, warranty: 24, serial: 'R58T90XKZ', items: [{ name: 'مكنسة دايسون V12', price: 1899, qty: 1, category: '🔌 أجهزة منزلية' }, { name: 'حامل جداري للمكنسة', price: 99, qty: 1, category: '🔌 أجهزة منزلية' }] } };
@@ -3402,7 +3455,11 @@ async function backupBox(r){
   if(!$('bkBox')) return;
   if(!r.ok){ box.innerHTML = '<div class="pres bad">' + (/getFoldersByName|DriveApp|permission|صلاحي|ScriptApp/i.test(r.error || '') ? 'شغّل setupBackup من محرر السكربت مرة وحدة عشان يعطي صلاحية Drive' : esc(errText(r))) + '</div>'; return; }
   const ago = r.last ? daysBetween(r.last.slice(0, 10), todayKey()) : null;
-  box.innerHTML = '<div class="appst"><b>' + (r.weekly ? '✅' : '⚠️') + '</b><div><div style="font-weight:700">' + (r.weekly ? 'نسخة تلقائية كل جمعة 3 الفجر' : 'النسخ التلقائي موقف') + '</div><div class="hint" style="margin:0">آخر نسخة: ' + (r.last ? esc(r.last) + ' (' + (ago === 0 ? 'اليوم' : 'قبل ' + ago + ' يوم') + ')' : 'ما فيه') + ' · نحتفظ بآخر ' + r.keep + '</div></div></div>' +
+  const dv = r.drive || {}, mb = n => n >= 1048576 ? (n / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(n / 1024)) + ' KB';
+  box.innerHTML = '<div class="dinfo">' +
+    '<div class="di"><i>🛟</i><div><b>آخر نسخة احتياطية</b><span>' + (r.last ? esc(dayLabel(r.last.slice(0, 10))) + ' · ' + esc(r.last.slice(11)) + ' (' + (ago === 0 ? 'اليوم' : ago === 1 ? 'أمس' : 'قبل ' + ago + ' يوم') + ')' : 'ما انأخذت نسخة بعد') + '</span><span>في Google Drive' + (dv.email ? ' بحساب <b class="em">' + esc(dv.email) + '</b>' : '') + ' — مجلد «دفتر — نسخ احتياطية»</span>' + (r.folderUrl ? '<a href="' + esc(r.folderUrl) + '" target="_blank" rel="noopener">فتح المجلد ›</a>' : '') + '</div></div>' +
+    '<div class="di"><i>🧾</i><div><b>الفواتير والضمانات المرفوعة</b><span>' + (dv.files ? '<span class="num">' + dv.files + '</span> ملف · ' + mb(dv.size) : 'ما فيه مرفقات بعد') + '</span><span>في Google Drive' + (dv.email ? ' بحساب <b class="em">' + esc(dv.email) + '</b>' : '') + ' — مجلد «' + esc(dv.folder || 'دفتر — مرفقات') + '»</span>' + (dv.url ? '<a href="' + esc(dv.url) + '" target="_blank" rel="noopener">فتح المجلد ›</a>' : '') + '</div></div></div>' +
+    '<div class="appst"><b>' + (r.weekly ? '✅' : '⚠️') + '</b><div><div style="font-weight:700">' + (r.weekly ? 'نسخة تلقائية كل جمعة 3 الفجر' : 'النسخ التلقائي موقف') + '</div><div class="hint" style="margin:0">نحتفظ بآخر ' + r.keep + ' نسخ</div></div></div>' +
     '<div class="opt"><div><div class="ol">النسخ الأسبوعي</div><div class="os">في Drive: مجلد «دفتر — نسخ احتياطية»</div></div><input type="checkbox" class="tg" id="bkW"' + (r.weekly ? ' checked' : '') + '></div>' +
     '<button class="btn" id="bkNow">🛟 خذ نسخة الحين</button>' +
     (r.files.length ? '<div class="flabel">النسخ المحفوظة</div><div class="list">' + r.files.map(f => '<a class="item" href="' + esc(f.url) + '" target="_blank" rel="noopener" style="display:block;text-decoration:none;color:inherit"><div class="r1"><span class="n">' + esc(dayLabel(f.at.slice(0, 10))) + ' · ' + esc(f.at.slice(11)) + '</span><span class="go">فتح ›</span></div></a>').join('') + '</div><p class="hint">للاسترجاع: افتح النسخة، وانسخ التبويب اللي تحتاجه (⋮ ← Copy to ← Bs-Dftr).</p>' : '');
