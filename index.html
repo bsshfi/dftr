@@ -838,7 +838,7 @@ details.omore summary{cursor:pointer;padding:6px 0}
 <script src="config.js"></script>
 <script>
 'use strict';
-const VERSION = 'V1.4.6';
+const VERSION = 'V1.4.7';
 const APP_NAME = 'دفتر | DFTR';
 const API_URL = String(window.DFTR_API_URL || '').trim();
 const LS = {
@@ -3343,8 +3343,8 @@ VIEWS.set = () => {
     '<div class="opt" style="display:block"><div class="ol">ذكّرني قبل نهاية الضمان</div><div class="seg" style="display:inline-flex;margin-top:8px" id="pWR">' + [['14','أسبوعين'],['30','شهر'],['60','شهرين'],['90','3 أشهر']].map(x => '<button data-wr="' + x[0] + '" class="' + (String(num(S.settings.WARRANTY_REMIND_DAYS) || 30) === x[0] ? 'on' : '') + '">' + x[1] + '</button>').join('') + '</div></div>' +
     '<p class="hint">على الكمبيوتر: اضغط <kbd>?</kbd> تشوف اختصارات الكيبورد.</p></section>');
 
-  H.push('<section class="card"><h2>🔁 الحوالات</h2><div class="opt" style="display:block"><div class="ol">اعتماد تلقائي</div><div class="os" style="margin-bottom:8px">إذا اخترت نفس الغرض لنفس الشخص كذا مرة، الحوالات الجاية منه تنعتمد لحالها</div><div class="seg" style="display:inline-flex" id="pAuto">' +
-    [['0','إيقاف'],['2','بعد 2'],['3','بعد 3'],['5','بعد 5']].map(x => '<button data-au="' + x[0] + '" class="' + (String(num(S.settings.TRANSFER_AUTO_AFTER)) === x[0] ? 'on' : '') + '">' + x[1] + '</button>').join('') + '</div></div></section>');
+  H.push('<section class="card"><h2>🔁 الحوالات والتصنيف</h2><div class="opt" style="display:block"><div class="ol">كل حوالة تنتظر اعتمادك</div><div class="os">ما فيه اعتماد تلقائي للحوالات — حتى «بين حساباتك» وشحن المحافظ بالبطاقة (STC Bank، urpay…) تروح «يحتاج إجراء» مع اقتراح.</div></div>' +
+    '<div class="opt" style="display:block"><div class="ol">تصنيف التاجر</div><div class="os">يتصنف تلقائي بس إذا كان نفس التاجر اللي اعتمدته (أرقام الفروع ما تفرق). إذا يشبهه بكلمة وحدة مثل CENOMI يجيك اقتراح للمراجعة، ولما تعتمده يتطبق على عملياته الجاية.</div></div></section>');
 
   RULE_KINDS.forEach(k => {
     const list = S.data.rules.filter(r => r.kind === k[0]);
@@ -3373,7 +3373,7 @@ VIEWS.set_after = root => {
   $('pPriv').onchange = () => { prefs.privacy = $('pPriv').checked; savePrefs(); };
   $('pDec').onchange = () => { prefs.decimals = $('pDec').checked; savePrefs(); };
   $('pLock').onchange = () => { prefs.lock = $('pLock').checked; savePrefs(); };
-  root.querySelectorAll('[data-au]').forEach(b => b.onclick = async () => { const r = await api('settings_save', { settings: { TRANSFER_AUTO_AFTER: b.dataset.au } }); if(r.ok){ S.settings = r.settings; saveCache(); toast('✅ انحفظ'); render(); } else toast('⚠️ ' + errText(r)); });
+  if(false) root.querySelectorAll('[data-au]').forEach(b => b.onclick = async () => { const r = await api('settings_save', { settings: { TRANSFER_AUTO_AFTER: b.dataset.au } }); if(r.ok){ S.settings = r.settings; saveCache(); toast('✅ انحفظ'); render(); } else toast('⚠️ ' + errText(r)); });
   const setS = async o => { const r = await api('settings_save', { settings: o }); if(r.ok){ S.settings = r.settings; saveCache(); toast('✅ انحفظ'); render(); } else toast('⚠️ ' + errText(r)); };
   $('pSD').onchange = () => { S.period = ''; setS({ MONTH_START_DAY: $('pSD').value }); };
   root.querySelectorAll('[data-wr]').forEach(b => b.onclick = () => setS({ WARRANTY_REMIND_DAYS: b.dataset.wr }));
