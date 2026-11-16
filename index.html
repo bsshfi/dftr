@@ -838,7 +838,7 @@ details.omore summary{cursor:pointer;padding:6px 0}
 <script src="config.js"></script>
 <script>
 'use strict';
-const VERSION = 'V1.4.4';
+const VERSION = 'V1.4.5';
 const APP_NAME = 'دفتر | DFTR';
 const API_URL = String(window.DFTR_API_URL || '').trim();
 const LS = {
@@ -1846,8 +1846,8 @@ function receiptReview(d){
       (d.items.length ? '<div class="sumbox ' + (ok ? 'ok' : 'bad') + '"><span>' + (ok ? '✓ المجموع' : '⚠️ المجموع ما يطابق إجمالي الفاتورة ' + money(d.total)) + '</span><span class="num">' + money(s) + '</span></div>' : '') +
       '<button class="btn" id="rSave"' + (d.items.length ? '' : ' disabled') + '>حفظ ' + d.items.length + ' منتج</button>';
     const keep = () => { d.store = $('rStore').value.trim(); d.date = $('rDate').value; d.invoice = $('rInv').value.trim(); };
-    $('sheetBody').querySelectorAll('[data-it]').forEach(el => el.onclick = () => { keep(); itemForm(d, +el.dataset.it, draw); });
-    $('rAdd').onclick = () => { keep(); itemForm(d, -1, draw); };
+    $('sheetBody').querySelectorAll('[data-it]').forEach(el => el.onclick = () => { keep(); rcptItemForm(d, +el.dataset.it, draw); });
+    $('rAdd').onclick = () => { keep(); rcptItemForm(d, -1, draw); };
     $('rSave').onclick = async () => {
       keep();
       if(!d.store) return toast('اكتب اسم المحل');
@@ -1863,7 +1863,7 @@ function receiptReview(d){
   draw();
 }
 
-function itemForm(d, i, back){
+function rcptItemForm(d, i, back){
   const it = i >= 0 ? Object.assign({}, d.items[i]) : { name: '', ar: '', qty: 1, lineTotal: '', category: '', pid: '', pidSet: false };
   const cats = catsFor('أسعار');
   const curName = () => (S.data.products.find(p => p.pid === it.pid) || {}).ar || '';
