@@ -798,6 +798,39 @@ details.omore summary{cursor:pointer;padding:6px 0}
 .hside .tile.light{margin-bottom:12px}
 @media (max-width:600px){.dline .sep{display:none}}
 
+/* ---------- التقويم ---------- */
+body[data-view="cal"]{--accent:#D63A73;--accent2:#F0508A;--accentbg:rgba(214,58,115,.12)}
+.calhd{display:flex;align-items:center;justify-content:center;gap:18px;padding:12px}
+.calhd>div{display:flex;flex-direction:column;align-items:center}
+.calhd b{font-size:26px;font-weight:800}
+.calhd small{color:var(--sub);font-size:12px}
+.cnav{width:42px;height:42px;border-radius:50%;border:0;background:var(--card2);font-size:22px;color:var(--ink);line-height:1}
+.calleg .chip{display:inline-flex;align-items:center;gap:6px;cursor:default}
+.calleg .chip i{width:9px;height:9px;border-radius:50%}
+.months{display:grid;grid-template-columns:1fr;gap:0}
+@media (min-width:700px){.months{grid-template-columns:1fr 1fr;gap:0 14px}}
+@media (min-width:1024px){body[data-view="cal"] #app{max-width:1160px!important}.months{grid-template-columns:repeat(3,1fr)}}
+.mon h3{margin:0 0 10px;font-size:17px;display:flex;justify-content:space-between;align-items:baseline}
+.mon h3 small{color:var(--sub);font-size:12px;font-weight:600}
+.mon.cur{box-shadow:inset 0 0 0 2px var(--accent)}
+.cg{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cg>b{font-size:11px;color:var(--sub);text-align:center;font-weight:700;padding-bottom:2px}
+.cd{aspect-ratio:1;border:0;border-radius:10px;background:var(--card2);color:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:0;font:inherit;font-size:13px;font-weight:700;min-width:0}
+.cd.x{background:transparent}
+.cd.we{color:var(--sub)}
+.cd.p{opacity:.55}
+.cd.has{background:color-mix(in srgb,var(--kc) 16%,var(--card2));opacity:1}
+.cd.t{background:var(--accent);color:#fff;opacity:1}
+.cd em{display:flex;gap:2px;height:5px}
+.cd em i{width:5px;height:5px;border-radius:50%}
+.cd.t em i{box-shadow:0 0 0 1px #fff}
+.item.task{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+.item.task .tm{flex:1;min-width:0}
+.item.task.done .n{text-decoration:line-through;color:var(--sub)}
+.tchk{width:24px;height:24px;flex-shrink:0;border-radius:8px;border:2px solid var(--kc);background:transparent;color:#fff;font-weight:900;font-size:13px;display:grid;place-items:center;padding:0;margin-top:2px}
+.item.task.done .tchk{background:var(--kc)}
+.twk .list{margin-top:6px}
+
 </style>
 </head>
 <body>
@@ -838,7 +871,7 @@ details.omore summary{cursor:pointer;padding:6px 0}
 <script src="config.js"></script>
 <script>
 'use strict';
-const VERSION = 'V1.4.5';
+const VERSION = 'V1.4.6';
 const APP_NAME = 'دفتر | DFTR';
 const API_URL = String(window.DFTR_API_URL || '').trim();
 const LS = {
@@ -856,7 +889,7 @@ const DEMO = !/^https:\/\/script\.google\.com\/.+\/exec$/.test(API_URL) || /[?&#
 
 /* ---------- الحالة ---------- */
 const S = {
-  data: { tx:[], merchants:[], categories:[], transfers:[], trules:[], rules:[], prices:[], products:[], stores:[], receipts:[], sukuk:[], ops:[], dues:[], zakat:[], wmeter:[], wbills:[], items:[] },
+  data: { tx:[], merchants:[], categories:[], transfers:[], trules:[], rules:[], prices:[], products:[], stores:[], receipts:[], sukuk:[], ops:[], dues:[], zakat:[], wmeter:[], wbills:[], items:[], tasks:[] },
   settings: {}, purposes: [], ai: false, at: '',
   view: 'home', sub: { exp:'sum', pr:'search', inv:'sum', nwc:'now' }, sel: null,
   period: '', q: '', pq: '', loading: false
@@ -1075,14 +1108,15 @@ function applyTheme(){
 }
 try { matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyTheme); } catch(e){}
 
-const TAB_C = { home: '#F1F2F5', exp: '#FF8A45', pr: '#9B82FF', inv: '#2FC48A', nwc: '#4FA3FF' };
+const TAB_C = { home: '#F1F2F5', exp: '#FF8A45', pr: '#9B82FF', inv: '#2FC48A', nwc: '#4FA3FF', cal: '#F0508A' };
 document.title = APP_NAME;
 const TABS = [
   ['home','الرئيسية','<path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/>'],
   ['exp','مصاريفي','<rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10h18"/><path d="M7 15h4"/>'],
   ['pr','الأسعار','<path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.5"/>'],
   ['inv','استثماراتي','<path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/>'],
-  ['nwc','المياه','<path d="M12 3s-6 6.5-6 11a6 6 0 0 0 12 0c0-4.5-6-11-6-11z"/>']
+  ['nwc','المياه','<path d="M12 3s-6 6.5-6 11a6 6 0 0 0 12 0c0-4.5-6-11-6-11z"/>'],
+  ['cal','التقويم','<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/>']
 ];
 function drawTabbar(){
   const pend = pendingCount();
@@ -1117,7 +1151,7 @@ function render(){
   const h = new Date().getHours();
   $('greet').textContent = (h < 12 ? 'صباح الخير' : 'مساء الخير') + ' يا باسل';
   $('dline').innerHTML = dateLine();
-  $('ttl').textContent = { home:APP_NAME, exp:'مصاريفي', pr:'الأسعار', inv:'استثماراتي', nwc:'المياه', set:'الإعدادات', inbox:'يحتاج إجراء' }[S.view] || 'دفتر';
+  $('ttl').textContent = { home:APP_NAME, exp:'مصاريفي', pr:'الأسعار', inv:'استثماراتي', nwc:'المياه', set:'الإعدادات', inbox:'يحتاج إجراء', cal:'التقويم' }[S.view] || 'دفتر';
   if(S.sel && S.view !== 'exp') S.sel = null;
   selBar();
 }
@@ -1137,9 +1171,11 @@ function fabAction(){
   if(S.view === 'pr') return S.sub.pr === 'own' ? itemStart() : receiptStart();
   if(S.view === 'inv') return opForm();
   if(S.view === 'nwc') return readingForm();
+  if(S.view === 'cal') return taskForm(null, todayKey());
   const b = openSheet(sheetHead('إضافة') +
     '<div class="qa qa4" style="margin-top:8px"><button data-a="tx"><i style="background:rgba(242,107,29,.14)">🧾</i>مصروف</button><button data-a="rc"><i style="background:rgba(106,69,232,.14)">📷</i>فاتورة</button><button data-a="wt"><i style="background:rgba(31,114,214,.14)">💧</i>قراءة ماء</button><button data-a="op"><i style="background:rgba(17,135,90,.14)">📈</i>استثمار</button></div>' +
-    '<button class="btn ghost" data-a="it">🛡️ ضمان أو فاتورة مهمة</button>');
+    '<div class="btns"><button class="btn ghost" data-a="tk">📅 مهمة</button><button class="btn ghost" data-a="it">🛡️ ضمان أو فاتورة</button></div>');
+  b.querySelector('[data-a=tk]').onclick = () => { closeSheet(); setTimeout(() => taskForm(null, todayKey()), 280); };
   b.querySelector('[data-a=it]').onclick = () => { closeSheet(); setTimeout(itemStart, 280); };
   b.querySelector('[data-a=tx]').onclick = () => { closeSheet(); setTimeout(txForm, 280); };
   b.querySelector('[data-a=rc]').onclick = () => { closeSheet(); setTimeout(receiptStart, 280); };
@@ -2652,15 +2688,16 @@ VIEWS.home = () => {
   const tr = trend6(P), mx = Math.max.apply(null, tr.map(m => m.v).concat([1])), avg6 = sum(tr.slice(0, 5), m => m.v) / 5;
   H.push('<div class="tile light wide" id="hTrend" style="min-height:0"><div class="secttl"><span>آخر 6 أشهر</span><span style="font-size:12px;color:var(--sub);font-weight:600">متوسط <b class="num">' + money0(avg6) + '</b></span></div>' +
     '<div style="display:flex;align-items:flex-end;gap:10px;height:120px;margin-top:14px">' + tr.map(m => '<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;height:100%;justify-content:flex-end"><span class="num" style="font-size:10.5px;color:var(--sub)">' + (m.v >= 1000 ? (m.v / 1000).toFixed(1) + 'k' : money0(m.v)) + '</span><div style="width:100%;height:' + Math.max(3, pct(m.v, mx) * 0.8) + '%;border-radius:12px;background:' + (m.k === P ? 'var(--c-exp)' : 'var(--bar)') + '"></div><span style="font-size:11px;color:' + (m.k === P ? 'var(--ink)' : 'var(--sub)') + ';font-weight:' + (m.k === P ? 700 : 400) + '">' + shortMonth(m.k) + '</span></div>').join('') + '</div></div>');
-  return '<div class="hgrid"><aside class="hside">' + yesterdayHTML() + inboxHTML(false) + SIDE.join('') + '</aside><div class="hmain">' + H.join('') + '</div></div>';
+  return '<div class="hgrid"><aside class="hside">' + yesterdayHTML() + inboxHTML(false) + tasksWeekHTML() + SIDE.join('') + '</aside><div class="hmain">' + H.join('') + '</div></div>';
 };
 VIEWS.home_after = root => {
-  bindInbox(root);
+  bindInbox(root); bindTaskRows(root);
+  const tw = $('twAdd'); if(tw) tw.onclick = () => taskForm(null, todayKey());
   const act = {
     exp: () => { S.period = cycleKey(); go('exp', 'sum'); }, inv: () => go('inv', 'sum'), nwc: () => go('nwc', 'now'),
     prs: () => { S.sub.pr = 'search'; go('pr'); setTimeout(() => { const i = $('pq'); if(i) i.focus(); }, 60); },
     rev: () => go('exp', 'rev'), bud: () => { S.period = cycleKey(); go('exp', 'bud'); }, subs: () => subsSheet(),
-    exptx: () => { S.q = ''; go('exp', 'tx'); }, own: () => go('pr', 'own'), yday: () => daySheet(addDays(todayKey(), -1)), inbox: () => go('inbox'), rpt: () => reportSheet(shiftMonth(cycleKey(), -1))
+    exptx: () => { S.q = ''; go('exp', 'tx'); }, own: () => go('pr', 'own'), cal: () => go('cal'), yday: () => daySheet(addDays(todayKey(), -1)), inbox: () => go('inbox'), rpt: () => reportSheet(shiftMonth(cycleKey(), -1))
   };
   root.querySelectorAll('[data-go]').forEach(b => b.onclick = () => act[b.dataset.go] && act[b.dataset.go]());
   root.querySelectorAll('[data-own]').forEach(el => el.onclick = () => itemSheet(el.dataset.own));
@@ -2860,7 +2897,7 @@ function weekHTML(){
   const out = sum(wk.filter(e => e.a < 0), e => -e.a), inn = sum(wk.filter(e => e.a > 0), e => e.a);
   S._up = up;
   return '<div class="tile light wide wk" style="min-height:0;cursor:default"><div class="secttl"><span>📅 الأسبوع الجاي</span><span class="wkt">' + (out ? '<em class="o num">−' + money0(out) + '</em>' : '') + (inn ? '<em class="i num">+' + money0(inn) + '</em>' : '') + '</span></div>' +
-    '<div class="wks">' + days.map(d => { const ev = up.filter(e => e.d === d); return '<div class="wkd' + (d === today ? ' t' : '') + '"><small>' + (d === today ? 'اليوم' : WEEK[new Date(d + 'T12:00:00').getDay()].replace('ال', '')) + '</small><b class="num">' + +d.slice(8) + '</b><span>' + ev.slice(0, 3).map(e => '<i style="background:' + e.c + '"></i>').join('') + '</span></div>'; }).join('') + '</div>' +
+    '<div class="wks">' + days.map(d => { const ev = up.filter(e => e.d === d); return '<div class="wkd' + (d === today ? ' t' : '') + '"><small>' + (d === today ? 'اليوم' : WEEK[new Date(d + 'T12:00:00').getDay()].replace('ال', '')) + '</small><b class="num">' + +d.slice(8) + '</b><span>' + ev.slice(0, 3).map(e => '<i style="background:' + e.c + '"></i>').join('') + tasksOn(d).slice(0, 2).map(t => '<i style="background:' + kindColor(t.kind) + '"></i>').join('') + '</span></div>'; }).join('') + '</div>' +
     (up.length ? '<div class="mini-list">' + up.slice(0, 6).map((e, i) => '<div class="mr" data-up="' + i + '" style="cursor:pointer"><i style="background:' + e.c + '"></i><span>' + esc(e.t) + '</span>' + (e.a != null ? '<b style="color:' + (e.a < 0 ? 'var(--ink)' : 'var(--c-inv)') + '">' + (e.a > 0 ? '+' : '') + money0(e.a) + '</b>' : '') + '<em>' + (e.d === today ? 'اليوم' : e.d === addDays(today, 1) ? 'بكرة' : 'بعد ' + daysBetween(today, e.d) + ' ي') + '</em></div>').join('') + '</div>' : '<div class="ts" style="margin-top:8px">ما فيه شي قريب</div>') + '</div>';
 }
 
@@ -2907,7 +2944,7 @@ document.addEventListener('keydown', e => {
   if((e.ctrlKey && e.key.toLowerCase() === 'z') || (!e.ctrlKey && e.key === 'u')){ e.preventDefault(); return undoLast(); }
   if(e.ctrlKey || sheetOn) return;
   const k = e.key;
-  const tabs = { '1': 'home', '2': 'exp', '3': 'pr', '4': 'inv', '5': 'nwc' };
+  const tabs = { '1': 'home', '2': 'exp', '3': 'pr', '4': 'inv', '5': 'nwc', '6': 'cal' };
   if(tabs[k]){ e.preventDefault(); return go(tabs[k]); }
   if(k === '/'){ e.preventDefault(); return searchSheet(); }
   if(k === 'n'){ e.preventDefault(); return fabAction(); }
@@ -2929,7 +2966,7 @@ document.addEventListener('keydown', e => {
   rows[IBF].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
 });
 function keysSheet(){
-  const K = [['1 – 5','التبويبات'],['i','يحتاج إجراء'],['j / k','تنقل بين العناصر'],['Enter','افتح العنصر'],['a','اعتمد / الإجراء الأول'],['x','تجاهل'],['u أو Ctrl+Z','تراجع عن آخر عملية'],['n','إضافة'],['/','بحث'],['r','تحديث'],['Esc','إغلاق']];
+  const K = [['1 – 6','التبويبات'],['i','يحتاج إجراء'],['j / k','تنقل بين العناصر'],['Enter','افتح العنصر'],['a','اعتمد / الإجراء الأول'],['x','تجاهل'],['u أو Ctrl+Z','تراجع عن آخر عملية'],['n','إضافة'],['/','بحث'],['r','تحديث'],['Esc','إغلاق']];
   openSheet(sheetHead('⌨️ اختصارات الكيبورد') + K.map(x => '<div class="kvl"><span>' + x[1] + '</span><b><kbd>' + x[0] + '</kbd></b></div>').join(''));
 }
 
@@ -3130,10 +3167,111 @@ function offerItemsFromReceipt(rid){
 }
 
 /* =========================================================
+   التقويم السنوي + المهام
+   ========================================================= */
+const TASK_KINDS = [['📚 دراسة', '#1F72D6'], ['📝 اختبار', '#D63A73'], ['🏖️ إجازة', '#11875A'], ['💼 عمل', '#6A45E8'], ['👨‍👩‍👧 عائلة', '#E8A317'], ['📌 أخرى', '#5D636F']];
+const WD1 = ['ح', 'ن', 'ث', 'ر', 'خ', 'ج', 'س'];
+function kindColor(k){ const x = TASK_KINDS.find(t => t[0] === k); return x ? x[1] : '#5D636F'; }
+function taskDone(t){ return /^(1|true|نعم|✓|✅)$/i.test(String(t.done || '').trim()); }
+function tasksOn(d){ return S.data.tasks.filter(t => String(t.date) === d).sort((a, b) => String(a.time || '99').localeCompare(String(b.time || '99'))); }
+function taskTime(t){ return t.time ? (t.end ? t.time + ' – ' + t.end : t.time) : 'طول اليوم'; }
+function hm12(s){ if(!s) return ''; const p = String(s).split(':'), h = +p[0]; return (h % 12 || 12) + (p[1] && p[1] !== '00' ? ':' + p[1] : '') + (h < 12 ? 'ص' : 'م'); }
+function taskTime12(t){ return t.time ? hm12(t.time) + (t.end ? ' – ' + hm12(t.end) : '') : 'طول اليوم'; }
+
+VIEWS.cal = () => {
+  const today = todayKey(), Y = S.calY || +today.slice(0, 4), H = [];
+  const up = S.data.tasks.filter(t => String(t.date) >= today && !taskDone(t)).sort((a, b) => (a.date + (a.time || '')).localeCompare(b.date + (b.time || ''))).slice(0, 6);
+  H.push('<section class="card calhd"><button class="cnav" data-cy="-1">›</button><div><b class="num">' + Y + '</b><small>' + S.data.tasks.filter(t => String(t.date).slice(0, 4) === String(Y)).length + ' مهمة</small></div><button class="cnav" data-cy="1">‹</button>' +
+    (Y !== +today.slice(0, 4) ? '<button class="chip" id="cToday">اليوم</button>' : '') + '</section>');
+  H.push('<div class="chips hscroll calleg">' + TASK_KINDS.map(k => '<span class="chip"><i style="background:' + k[1] + '"></i>' + k[0] + '</span>').join('') + '</div>');
+  if(up.length) H.push('<section class="card"><h2>⏭️ القادم</h2><div class="list">' + up.map(t => taskRow(t)).join('') + '</div></section>');
+  H.push('<div class="months">');
+  for(let m = 1; m <= 12; m++){
+    const P = Y + '-' + String(m).padStart(2, '0'), first = new Date(Y, m - 1, 1).getDay(), n = daysIn(P);
+    let g = '';
+    for(let i = 0; i < first; i++) g += '<i class="cd x"></i>';
+    for(let d = 1; d <= n; d++){
+      const k = P + '-' + String(d).padStart(2, '0'), ts = tasksOn(k), wd = (first + d - 1) % 7;
+      g += '<button class="cd' + (k === today ? ' t' : '') + (k < today ? ' p' : '') + (wd === 5 || wd === 6 ? ' we' : '') + (ts.length ? ' has' : '') + '" data-day="' + k + '"' + (ts.length ? ' style="--kc:' + kindColor(ts[0].kind) + '"' : '') + '><span class="num">' + d + '</span>' +
+        (ts.length ? '<em>' + ts.slice(0, 3).map(t => '<i style="background:' + kindColor(t.kind) + (taskDone(t) ? ';opacity:.35' : '') + '"></i>').join('') + '</em>' : '') + '</button>';
+    }
+    H.push('<section class="card mon' + (P === today.slice(0, 7) ? ' cur' : '') + '" id="m' + P + '"><h3>' + MONTHS[m - 1] + ' <small class="num">' + m + '</small></h3><div class="cg">' + WD1.map(w => '<b>' + w + '</b>').join('') + g + '</div></section>');
+  }
+  H.push('</div>');
+  return H.join('');
+};
+VIEWS.cal_after = root => {
+  root.querySelectorAll('[data-cy]').forEach(b => b.onclick = () => { S.calY = (S.calY || +todayKey().slice(0, 4)) + +b.dataset.cy; render(); });
+  const ct = $('cToday'); if(ct) ct.onclick = () => { S.calY = 0; render(); setTimeout(scrollToMonth, 50); };
+  root.querySelectorAll('[data-day]').forEach(b => b.onclick = () => calDaySheet(b.dataset.day));
+  bindTaskRows(root);
+  if(!S._calScrolled){ S._calScrolled = 1; setTimeout(scrollToMonth, 60); }
+};
+function scrollToMonth(){ const el = $('m' + todayKey().slice(0, 7)); if(el) el.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
+
+function taskRow(t, short){
+  return '<div class="item task' + (taskDone(t) ? ' done' : '') + '" data-task="' + esc(t.id) + '"><button class="tchk" data-tdone="' + esc(t.id) + '" aria-label="منجزة" style="--kc:' + kindColor(t.kind) + '">' + (taskDone(t) ? '✓' : '') + '</button>' +
+    '<div class="tm"><div class="r1"><span class="n">' + esc(t.title) + '</span></div><div class="r2"><span>' + (short ? '' : esc(WEEK[new Date(t.date + 'T12:00:00').getDay()]) + ' ' + esc(dayLabel(t.date)) + ' · ') + esc(taskTime12(t)) + '</span><span style="color:' + kindColor(t.kind) + ';font-weight:700">' + esc(String(t.kind || '').split(' ')[0]) + '</span></div>' + (t.note ? '<div class="r2"><span>' + esc(t.note) + '</span></div>' : '') + '</div></div>';
+}
+function bindTaskRows(root){
+  root.querySelectorAll('[data-tdone]').forEach(b => b.onclick = e => { e.stopPropagation(); const t = S.data.tasks.find(x => x.id === b.dataset.tdone); if(t) save('tasks', { id: t.id, done: taskDone(t) ? '' : '✓' }, ['tasks'], taskDone(t) ? '↩️ رجعت مفتوحة' : '✅ أحسنت!'); });
+  root.querySelectorAll('[data-task]').forEach(el => el.onclick = () => { const t = S.data.tasks.find(x => x.id === el.dataset.task); if(t) taskForm(t); });
+}
+
+function calDaySheet(d){
+  const ts = tasksOn(d), dt = new Date(d + 'T12:00:00');
+  const b = openSheet(sheetHead(WEEK[dt.getDay()] + ' ' + dayLabel(d)) + '<div class="hint" style="margin-top:-6px">' + (typeof dateLine === 'function' ? '' : '') + hijriOf(dt) + '</div>' +
+    '<div class="list">' + (ts.length ? ts.map(t => taskRow(t, true)).join('') : '<div class="empty">ما فيه مهام بهاليوم</div>') + '</div>' +
+    '<button class="btn" id="cAdd">➕ مهمة بهاليوم</button>');
+  bindTaskRows(b);
+  $('cAdd').onclick = () => taskForm(null, d);
+}
+function hijriOf(d){
+  try {
+    const t = new Intl.DateTimeFormat('en-US-u-ca-islamic-umalqura-nu-latn', { timeZone: 'Asia/Riyadh', day: 'numeric', month: 'numeric', year: 'numeric' }).format(d);
+    const m = t.match(/(\d+)\D+(\d+)\D+(\d+)/), HM = ['محرم','صفر','ربيع الأول','ربيع الآخر','جمادى الأولى','جمادى الآخرة','رجب','شعبان','رمضان','شوال','ذو القعدة','ذو الحجة'];
+    return m ? '🌙 ' + +m[2] + ' ' + HM[+m[1] - 1] + ' ' + m[3] + 'هـ' : '';
+  } catch(e){ return ''; }
+}
+
+function taskForm(t, date){
+  const isNew = !t;
+  const v = Object.assign({ title: '', date: date || todayKey(), time: '', end: '', kind: '📌 أخرى', note: '', done: '' }, t || {});
+  const b = openSheet(sheetHead(isNew ? '➕ مهمة جديدة' : 'تعديل المهمة') +
+    '<div class="flabel">المهمة</div><input id="kT" class="fin rtl" value="' + esc(v.title) + '" placeholder="مثلاً: اختبار المالية">' +
+    '<div class="flabel">النوع</div>' + catChips(TASK_KINDS.map(k => k[0]), v.kind, 'data-kk') +
+    '<div class="flabel">التاريخ</div><input id="kD" type="date" class="fin" value="' + esc(v.date) + '">' +
+    '<div class="row2"><div><div class="flabel">من</div><input id="kF" type="time" class="fin" value="' + esc(v.time) + '"></div><div><div class="flabel">إلى</div><input id="kE" type="time" class="fin" value="' + esc(v.end) + '"></div></div>' +
+    '<div class="hint">اتركها فاضية = طول اليوم</div>' +
+    '<div class="flabel">ملاحظات</div><input id="kN" class="fin rtl" value="' + esc(v.note) + '">' +
+    (isNew ? '<button class="btn" id="kSave">حفظ</button>' : '<label class="chk"><input type="checkbox" id="kDone"' + (taskDone(v) ? ' checked' : '') + '> منجزة</label><div class="btns"><button class="btn danger" id="kDel">حذف</button><button class="btn" id="kSave">حفظ</button></div>'));
+  bindChips(b, 'data-kk', k => { v.kind = k; });
+  if(isNew) setTimeout(() => $('kT').focus(), 300);
+  $('kSave').onclick = () => {
+    const row = { id: t && t.id, title: $('kT').value.trim(), date: $('kD').value, time: $('kF').value, end: $('kE').value, kind: v.kind, note: $('kN').value.trim() };
+    if(!row.title) return toast('اكتب المهمة');
+    if(!row.date) return toast('اختر التاريخ');
+    if(!isNew) row.done = $('kDone').checked ? '✓' : '';
+    closeSheet(); save('tasks', row, ['tasks'], isNew ? '📅 انضافت' : '✅ انحفظت');
+  };
+  const dl = $('kDel'); if(dl) dl.onclick = () => { closeSheet(); remove('tasks', t.id, ['tasks']); };
+}
+
+/* ---------- مهام الأسبوع بالرئيسية ---------- */
+function tasksWeekHTML(){
+  const today = todayKey(), end = addDays(today, 6);
+  const L = S.data.tasks.filter(t => String(t.date) >= today && String(t.date) <= end).sort((a, b) => (a.date + (a.time || '')).localeCompare(b.date + (b.time || '')));
+  const late = S.data.tasks.filter(t => String(t.date) < today && String(t.date) >= addDays(today, -7) && !taskDone(t) && !/إجازة|دراسة|اختبار/.test(t.kind || ''));
+  return '<div class="tile light wide twk" style="min-height:0;cursor:default"><div class="secttl"><span>📋 مهام الأسبوع</span><button data-go="cal">التقويم ›</button></div>' +
+    (L.length || late.length ? '<div class="list">' + late.map(t => taskRow(t)).join('') + L.map(t => taskRow(t)).join('') + '</div>' : '<div class="ts" style="margin:8px 0 4px">ما فيه مهام هالأسبوع</div>') +
+    '<button class="link" id="twAdd" style="margin:4px 0 0;padding:0">➕ مهمة</button></div>';
+}
+
+/* =========================================================
    وضع المعاينة: بيانات تجريبية + محاكاة السكربت محلياً
    ========================================================= */
 const Demo = (() => {
-  const KEYS = { wmeter:'id', wbills:'start', tx:'id', merchants:'name', categories:'name', transfers:'id', trules:'key', rules:'id', prices:'id', products:'pid', stores:'key', receipts:'id', sukuk:'id', ops:'id', dues:'id', zakat:'id', items:'id' };
+  const KEYS = { wmeter:'id', wbills:'start', tx:'id', merchants:'name', categories:'name', transfers:'id', trules:'key', rules:'id', prices:'id', products:'pid', stores:'key', receipts:'id', sukuk:'id', ops:'id', dues:'id', zakat:'id', items:'id', tasks:'id' };
   let seed = 7;
   const rnd = () => { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; };
   const pick = a => a[Math.floor(rnd() * a.length)];
@@ -3213,6 +3351,8 @@ const Demo = (() => {
     let md = addDays(monthKey() + '-01', -40), mv = wv - 38;
     while(md <= todayKey()){ const step = 1 + Math.floor(rnd() * 4); mv += step * (0.8 + rnd() * 0.3); if(md >= monthKey() + '-01' && mv < wv) mv = wv + 0.3; D.wmeter.push({ id: nid('M'), date: md, time: '20:00', value: Math.round(mv * 1000) / 1000, note: '', source: 'اختصار' }); md = addDays(md, step); }
     S.settings.WATER_ACCOUNT = '0000000000'; S.settings.MONTH_START_DAY = '1'; S.settings.WARRANTY_REMIND_DAYS = '30';
+    const tk = (o, a, ti, k, f, e) => ({ id: nid('K'), date: addDays(today, o), time: f || '', end: e || '', title: ti, kind: k, note: '', done: a ? '✓' : '', added: today });
+    D.tasks = [tk(0, 0, 'محاضرات اونلاين', '📚 دراسة', '16:00', '22:00'), tk(2, 0, 'تجديد الإقامة للعاملة', '📌 أخرى'), tk(4, 0, 'إجازة', '🏖️ إجازة'), tk(11, 0, 'اختبار المالية الشهري', '📝 اختبار', '12:00', '21:00'), tk(-2, 0, 'دفع فاتورة الكهرباء', '📌 أخرى')];
     /* مقتنيات البيت */
     const it = (n, c, st, d, p, w, pl, f) => ({ id: nid('I'), name: n, category: c, place: pl || '', store: st, date: d, price: p, qty: 1, warranty: w || '', wEnd: w ? addMonthsC(d, w) : '', serial: '', invoice: '', files: f || '', note: '', added: d });
     const img = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==';
