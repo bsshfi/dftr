@@ -664,8 +664,8 @@ body{background:var(--bg)}
 .ibz div{width:48px;height:48px;border-radius:50%;background:var(--c-inv);color:#fff;display:grid;place-items:center;font-size:24px;font-weight:800;margin-bottom:6px}
 .ibz span{font-size:12.5px;color:var(--sub)}
 .ibmore{display:block;margin:6px auto 0}
-@media (max-width:1023px){ .ibx:not(.full) .ibr.more{display:none} }
-@media (min-width:1024px){ .ibmore{display:none!important} }
+.ibx:not(.full) .ibr.more{display:none}
+
 
 /* ---------- أمس ---------- */
 .yday{min-height:0;padding:14px 16px;margin-bottom:12px}
@@ -831,6 +831,48 @@ body[data-view="cal"]{--accent:#D63A73;--accent2:#F0508A;--accentbg:rgba(214,58,
 .item.task.done .tchk{background:var(--kc)}
 .twk .list{margin-top:6px}
 
+/* ================= الرئيسية v2: ترتيب أوضح ================= */
+.hg{display:grid;grid-template-columns:minmax(0,1fr);gap:0 18px;align-items:start}
+.hg>div{min-width:0}
+.pulse{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.kp{border:0;border-radius:22px;background:var(--card);padding:13px 14px;text-align:right;display:flex;flex-direction:column;gap:2px;font:inherit;color:var(--ink);min-width:0;cursor:pointer}
+.kp>span{font-size:12.5px;color:var(--sub);font-weight:600;white-space:nowrap}
+.kp b{font-size:24px;font-weight:800;line-height:1.2}
+.kp small{font-size:11.5px;color:var(--sub);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kp.hot{background:var(--c-exp);color:#fff}
+.kp.hot>span,.kp.hot small{color:rgba(255,255,255,.88)}
+.kp.ok b{color:var(--c-inv)}
+.kp:active{transform:scale(.98)}
+.agenda h2{display:flex;justify-content:space-between;align-items:center}
+.agd{padding:6px 0;border-top:1px solid var(--line)}
+.agd:first-of-type{border-top:0}
+.agd>b{display:block;font-size:12.5px;color:var(--sub);margin:4px 0 2px}
+.agd .item.task{padding:7px 0;border:0}
+.age{display:flex;align-items:center;gap:10px;padding:7px 2px;font-size:14px;cursor:pointer}
+.age i{width:9px;height:9px;border-radius:50%;flex-shrink:0;margin-inline:7px 5px}
+.age span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.age b{font-weight:800;font-size:14px}
+.hc2 .bento .tile{min-height:112px;padding:14px}
+.hc2 .bento .tile .tv{font-size:22px}
+.hc2 .hbig{padding:16px 18px}
+.hc2 .hbig .hnum b{font-size:38px}
+.hc2 .hbig .dbars{height:64px}
+.qrow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:12px}
+.qc{border:0;border-radius:18px;background:var(--card);padding:10px 4px 9px;display:flex;flex-direction:column;align-items:center;gap:3px;font:inherit;color:var(--ink);min-width:0;cursor:pointer}
+.qc i{width:34px;height:34px;border-radius:12px;display:grid;place-items:center}
+.qc i svg{width:18px;height:18px;stroke:#fff;stroke-width:2;fill:none}
+.qc span{font-size:12px;font-weight:700}
+.qc b{font-size:10.5px;color:var(--sub);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+@media (min-width:760px){
+  .hg{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"a b" "a c"}
+  .hc1{grid-area:a} .hc2{grid-area:b} .hc3{grid-area:c}
+}
+@media (min-width:1024px){
+  body[data-view="home"]{max-width:1440px}
+  .hg{grid-template-columns:minmax(330px,1fr) minmax(0,1.25fr) minmax(300px,1fr);grid-template-areas:"a b c"}
+  .hc1{position:sticky;top:14px;max-height:calc(100vh - 28px);overflow-y:auto;scrollbar-width:thin;padding-bottom:6px}
+}
+
 </style>
 </head>
 <body>
@@ -871,7 +913,7 @@ body[data-view="cal"]{--accent:#D63A73;--accent2:#F0508A;--accentbg:rgba(214,58,
 <script src="config.js"></script>
 <script>
 'use strict';
-const VERSION = 'V1.4.6';
+const VERSION = 'V1.4.7';
 const APP_NAME = 'دفتر | DFTR';
 const API_URL = String(window.DFTR_API_URL || '').trim();
 const LS = {
@@ -2628,11 +2670,13 @@ VIEWS.home = () => {
   const diff = st.prevTotal ? (st.total - st.prevTotal) / st.prevTotal * 100 : 0;
   const H = [];
   const dayMax = Math.max.apply(null, st.daily.map(d => d.v).concat([1]));
-  H.push('<button class="tile t-exp wide hbig" data-go="exp">' +
+  const HERO = [];
+  HERO.push('<button class="tile t-exp wide hbig" data-go="exp">' +
     '<div class="hhead"><span>مصاريفي · ' + shortMonth(P) + '</span>' + (st.prevTotal ? '<span class="tbadge" style="position:static">' + (diff > 0 ? '▲ ' : '▼ ') + Math.abs(diff).toFixed(0) + '٪</span>' : '') + '</div>' +
     '<div class="hnum"><b>' + money0(st.total) + '</b><small>ر.س</small></div>' +
     '<div class="dbars">' + st.daily.map(d => '<i class="' + (d.k === today ? 't' : d.k > today ? 'f' : '') + '" style="height:' + Math.max(4, pct(d.v, dayMax)) + '%"></i>').join('') + '</div>' +
     '<div class="hstats"><span>اليوم<b>' + money0(sum(txBase(S.data.tx.filter(t => t.date === today)), t => num(t.amount))) + '</b></span><span>يومياً<b>' + money0(st.avg) + '</b></span><span>المتوقع<b>' + money0(st.forecast) + '</b></span></div></button>');
+  H.push(HERO.join(''));
 
   /* الأقسام */
   const iv = S.data.sukuk.length ? invStats() : null;
@@ -2646,8 +2690,6 @@ VIEWS.home = () => {
   H.push('<button class="tile t-ink short" data-go="own">' + ico('shield') + '<div class="tt">الضمانات والفواتير</div><div class="tv ar">' + (own.length ? own.length + ' غرض' : 'أضف أول غرض') + '</div><div class="ts">' + (own.length ? wAct.length + ' ضمان ساري' : 'فواتير وضمانات أغراضك') + '</div></button>');
   H.push('</div>');
 
-  /* الأسبوع الجاي */
-  H.push(weekHTML());
 
   /* اشتراكات + ميزانية + أيام بدون صرف + التقرير */
   const subs = subscriptions(), subT = sum(subs, s => s.avg);
@@ -2656,43 +2698,57 @@ VIEWS.home = () => {
   const bTot = sum(bc, x => num(x.budget)), bSp = sum(bc, x => (st.cats.find(y => y.n === x.name) || { v: 0 }).v);
   const spentDays = uniq(txBase(txIn(P)).map(t => t.date)), freeDays = st.days - spentDays.filter(d => d <= today).length;
   const prevM = shiftMonth(P, -1);
-  H.push('<div class="bento">');
-  H.push('<button class="tile t-sub" data-go="subs">' + ico('sub') + '<div class="tt">اشتراكات متكررة</div><div class="tv">' + money0(subT) + '</div><div class="ts">' + subs.length + ' اشتراك · شهرياً</div></button>');
-  H.push('<button class="tile t-bud" data-go="bud">' + ico('bud') + '<div class="tt">الميزانية</div>' + (bc.length ? '<div class="tv">' + Math.round(pct(bSp, bTot)) + '٪</div><div class="ts">' + (over.length ? over.length + ' تصنيف تجاوز' : 'ضمن الحد ✓') + '</div>' : '<div class="tv ar">حدّدها</div><div class="ts">لكل تصنيف حد شهري</div>') + '</button>');
-  H.push('<button class="tile t-free short" data-go="exptx">' + ico('leaf') + '<div class="tt">أيام بدون صرف</div><div class="tv ar">' + Math.max(0, freeDays) + ' من ' + st.days + '</div><div class="ts">هذا الشهر</div></button>');
-  H.push('<button class="tile t-ink short" data-go="rpt">' + ico('rpt') + '<div class="tt">التقرير الشهري</div><div class="tv ar">' + MONTHS[+prevM.slice(5) - 1] + '</div><div class="ts">جاهز · اضغط للقراءة</div></button>');
-  H.push('</div>');
+  const Q = [
+    ['subs', 'sub', 'var(--c-sub)', 'اشتراكات', money0(subT) + '/شهر'],
+    ['bud', 'bud', 'var(--c-bud)', 'الميزانية', bc.length ? Math.round(pct(bSp, bTot)) + '٪' + (over.length ? ' · ' + over.length + ' تجاوز' : '') : 'حدّدها'],
+    ['exptx', 'leaf', 'var(--c-free)', 'بدون صرف', Math.max(0, freeDays) + ' من ' + st.days + ' يوم'],
+    ['rpt', 'rpt', 'var(--c-ink)', 'التقرير', MONTHS[+prevM.slice(5) - 1]]];
+  H.push('<div class="qrow">' + Q.map(q => '<button class="qc" data-go="' + q[0] + '"><i style="background:' + q[2] + '"><svg viewBox="0 0 24 24">' + ICON[q[1]] + '</svg></i><span>' + q[3] + '</span><b>' + esc(q[4]) + '</b></button>').join('') + '</div>');
 
   /* الميزانية الثابتة */
   const BR = budgetRows();
   const SIDE = [];
-  if(BR.rows.length) SIDE.push('<button class="tile light wide hbud" data-go="bud" style="min-height:0"><div class="secttl"><span>🎯 الميزانية الشهرية</span><span style="font-size:12.5px;color:var(--sub);font-weight:600">باقي <b class="num">' + money0(BR.tot - BR.spent) + '</b> من ' + money0(BR.tot) + '</span></div><div class="list" style="margin-top:6px">' + BR.rows.slice(0, 5).map(r => budRow(r, BR.dp)).join('') + '</div>' + (BR.rows.length > 5 ? '<div class="ts" style="text-align:center;margin-top:4px">+' + (BR.rows.length - 5) + ' تصنيف ›</div>' : '') + '</button>');
+  if(BR.rows.length) SIDE.push('<button class="tile light wide hbud" data-go="bud" style="min-height:0"><div class="secttl"><span>🎯 الميزانية الشهرية</span><span style="font-size:12.5px;color:var(--sub);font-weight:600">باقي <b class="num">' + money0(BR.tot - BR.spent) + '</b> من ' + money0(BR.tot) + '</span></div><div class="list" style="margin-top:6px">' + BR.rows.slice(0, 3).map(r => budRow(r, BR.dp)).join('') + '</div>' + (BR.rows.length > 3 ? '<div class="ts" style="text-align:center;margin-top:4px">+' + (BR.rows.length - 3) + ' تصنيف ›</div>' : '') + '</button>');
 
   /* أقرب الضمانات انتهاءً */
-  const WL = S.data.items.filter(i => i.wEnd && String(i.wEnd) >= today).sort((a, b) => String(a.wEnd).localeCompare(String(b.wEnd))).slice(0, 5);
-  if(WL.length) SIDE.unshift('<div class="tile light wide" style="min-height:0;cursor:default"><div class="secttl"><span>🛡️ أقرب الضمانات انتهاءً</span><button data-go="own">الكل ›</button></div><div class="wlist">' + WL.map(i => {
+  const WL = S.data.items.filter(i => i.wEnd && String(i.wEnd) >= today).sort((a, b) => String(a.wEnd).localeCompare(String(b.wEnd))).slice(0, 3);
+  if(WL.length) SIDE.push('<div class="tile light wide" style="min-height:0;cursor:default"><div class="secttl"><span>🛡️ أقرب الضمانات انتهاءً</span><button data-go="own">الكل ›</button></div><div class="wlist">' + WL.map(i => {
     const left = daysBetween(today, i.wEnd), all = Math.max(1, daysBetween(i.date || today, i.wEnd)), rd = num(S.settings.WARRANTY_REMIND_DAYS) || 30;
     return '<div class="wl" data-own="' + esc(i.id) + '"><div class="r1"><span>' + catIcon(i.category) + ' ' + esc(i.name) + '</span><em class="' + (left <= rd ? 'soon' : '') + '">' + (left === 0 ? 'اليوم' : left < 60 ? 'باقي ' + left + ' يوم' : 'باقي ' + Math.round(left / 30) + ' شهر') + '</em></div><div class="bbar ' + (left <= rd ? 'warn' : '') + '"><i style="width:' + Math.max(3, 100 - pct(left, all)) + '%"></i></div><small>' + esc([i.store, 'ينتهي ' + dayLabel(i.wEnd)].filter(Boolean).join(' · ')) + '</small></div>';
   }).join('') + '</div></div>');
 
   /* التصنيفات */
+  const CH = [];
   if(st.cats.length){
     const cols = ['var(--c-exp)','var(--c-wat)','var(--c-inv)','var(--c-pr)','var(--c-sub)'];
     const top = st.cats.slice(0, 5), rest = sum(st.cats.slice(5), x => x.v);
     const parts = top.map((x, i) => ({ n: x.n, v: x.v, c: ['#F26B1D','#1F72D6','#11875A','#6A45E8','#D63A73'][i], cv: cols[i] })).concat(rest ? [{ n: 'الباقي', v: rest, c: '#9aa3b6', cv: '#9aa3b6' }] : []);
-    H.push('<div class="tile light wide" id="hCats" style="min-height:0"><div class="secttl"><span>وين راحت فلوسك؟</span><span style="color:var(--c-exp);font-size:13px">التفاصيل ›</span></div><div class="donut" style="margin-top:10px"><div class="dwrap">' + donut(parts, 126) + '<div class="dmid"><b class="num">' + st.cats.length + '</b><small>تصنيف</small></div></div>' +
+    CH.push('<div class="tile light wide" id="hCats" style="min-height:0"><div class="secttl"><span>وين راحت فلوسك؟</span><span style="color:var(--c-exp);font-size:13px">التفاصيل ›</span></div><div class="donut" style="margin-top:10px"><div class="dwrap">' + donut(parts, 126) + '<div class="dmid"><b class="num">' + st.cats.length + '</b><small>تصنيف</small></div></div>' +
       '<div class="mini-list" style="flex:1;margin:0">' + parts.map(p => '<div class="mr"><i style="background:' + p.c + '"></i><span>' + esc(p.n) + '</span><b>' + money0(p.v) + '</b></div>').join('') + '</div></div></div>');
   }
 
   /* 6 أشهر */
   const tr = trend6(P), mx = Math.max.apply(null, tr.map(m => m.v).concat([1])), avg6 = sum(tr.slice(0, 5), m => m.v) / 5;
-  H.push('<div class="tile light wide" id="hTrend" style="min-height:0"><div class="secttl"><span>آخر 6 أشهر</span><span style="font-size:12px;color:var(--sub);font-weight:600">متوسط <b class="num">' + money0(avg6) + '</b></span></div>' +
+  CH.push('<div class="tile light wide" id="hTrend" style="min-height:0"><div class="secttl"><span>آخر 6 أشهر</span><span style="font-size:12px;color:var(--sub);font-weight:600">متوسط <b class="num">' + money0(avg6) + '</b></span></div>' +
     '<div style="display:flex;align-items:flex-end;gap:10px;height:120px;margin-top:14px">' + tr.map(m => '<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;height:100%;justify-content:flex-end"><span class="num" style="font-size:10.5px;color:var(--sub)">' + (m.v >= 1000 ? (m.v / 1000).toFixed(1) + 'k' : money0(m.v)) + '</span><div style="width:100%;height:' + Math.max(3, pct(m.v, mx) * 0.8) + '%;border-radius:12px;background:' + (m.k === P ? 'var(--c-exp)' : 'var(--bar)') + '"></div><span style="font-size:11px;color:' + (m.k === P ? 'var(--ink)' : 'var(--sub)') + ';font-weight:' + (m.k === P ? 700 : 400) + '">' + shortMonth(m.k) + '</span></div>').join('') + '</div></div>');
-  return '<div class="hgrid"><aside class="hside">' + yesterdayHTML() + inboxHTML(false) + tasksWeekHTML() + SIDE.join('') + '</aside><div class="hmain">' + H.join('') + '</div></div>';
+  /* البلوك الأول: نبض اليوم */
+  const IB = inboxItems(), y = addDays(today, -1), yl = txBase(S.data.tx.filter(t => t.date === y && num(t.amount) > 0));
+  const tt = tasksOn(today).filter(t => !taskDone(t)), nt = S.data.tasks.filter(t => String(t.date) >= today && !taskDone(t)).sort((a, b) => (a.date + (a.time || '')).localeCompare(b.date + (b.time || '')))[0];
+  const newM = uniq(yl.filter(t => t.merchant && !S.data.tx.some(x => x.merchant === t.merchant && String(x.date) < y)).map(t => t.merchant));
+  const kpi = (go, lab, val, sub, cls) => '<button class="kp' + (cls ? ' ' + cls : '') + '" data-go="' + go + '"><span>' + lab + '</span><b>' + val + '</b><small>' + sub + '</small></button>';
+  const PULSE = '<section class="pulse">' +
+    kpi('inbox', '📥 يحتاج إجراء', IB.length ? '<span class="num">' + IB.length + '</span>' : '✓', IB.length ? 'اضغط تراجعها' : 'كل شي تمام', IB.length ? 'hot' : 'ok') +
+    kpi('cal', '📋 مهام اليوم', '<span class="num">' + tt.length + '</span>', nt ? esc((nt.date === today ? '' : dayLabel(nt.date) + ' · ') + nt.title) : 'ما فيه مهام', '') +
+    (BR.rows.length ? kpi('bud', '🎯 باقي من الميزانية', '<span class="num">' + money0(BR.tot - BR.spent) + '</span>', Math.round(pct(BR.spent, BR.tot)) + '٪ مصروف · مر ' + Math.round(BR.dp) + '٪ من الشهر', BR.spent > BR.tot ? 'hot' : '')
+      : kpi('exp', '💳 ' + shortMonth(P), '<span class="num">' + money0(st.total) + '</span>', st.prevTotal ? (diff > 0 ? '▲ ' : '▼ ') + Math.abs(diff).toFixed(0) + '٪ عن الشهر الماضي' : 'ر.س', '')) +
+    kpi('yday', '☀️ أمس', '<span class="num">' + money0(sum(yl, t => num(t.amount))) + '</span>', yl.length ? yl.length + ' عملية' + (newM.length ? ' · 🆕 ' + newM.length + ' تاجر جديد' : '') : 'ما صرفت شي 🌿', '') + '</section>';
+  const C1 = PULSE + (IB.length ? inboxHTML(false) : '') + agendaHTML();
+  return '<div class="hg"><div class="hc1">' + C1 + '</div><div class="hc2">' + H.join('') + (CH[1] || '') + '</div><div class="hc3">' + SIDE.join('') + (CH.length > 1 ? CH[0] : '') + '</div></div>';
 };
 VIEWS.home_after = root => {
   bindInbox(root); bindTaskRows(root);
-  const tw = $('twAdd'); if(tw) tw.onclick = () => taskForm(null, todayKey());
+  root.querySelectorAll('[data-ag]').forEach(el => el.onclick = () => { const e = S._ag[+el.dataset.ag]; if(e && e.go) e.go(); });
+  const ta = $('agAdd'); if(ta) ta.onclick = () => taskForm(null, todayKey());
   const act = {
     exp: () => { S.period = cycleKey(); go('exp', 'sum'); }, inv: () => go('inv', 'sum'), nwc: () => go('nwc', 'now'),
     prs: () => { S.sub.pr = 'search'; go('pr'); setTimeout(() => { const i = $('pq'); if(i) i.focus(); }, 60); },
@@ -2772,6 +2828,25 @@ function searchSheet(){
   setTimeout(() => $('gq').focus(), 300);
 }
 
+
+/* ---------- أجندتي: المهام + المواعيد المالية لسبعة أيام ---------- */
+function agendaHTML(){
+  const today = todayKey(), days = [], up = upcoming(7);
+  for(let i = 0; i < 7; i++) days.push(addDays(today, i));
+  S._ag = [];
+  let rows = '', n = 0;
+  days.forEach(d => {
+    const ts = tasksOn(d), ev = up.filter(e => e.d === d);
+    if(!ts.length && !ev.length) return;
+    const lab = d === today ? 'اليوم' : d === addDays(today, 1) ? 'بكرة' : WEEK[new Date(d + 'T12:00:00').getDay()] + ' ' + (+d.slice(8));
+    rows += '<div class="agd"><b>' + lab + '</b>' + ts.map(t => taskRow(t, true)).join('') +
+      ev.map(e => { S._ag.push(e); return '<div class="age" data-ag="' + (S._ag.length - 1) + '"><i style="background:' + e.c + '"></i><span>' + esc(e.t) + '</span>' + (e.a != null ? '<b class="num" style="color:' + (e.a < 0 ? 'var(--ink)' : 'var(--c-inv)') + '">' + (e.a > 0 ? '+' : '') + money0(e.a) + '</b>' : '') + '</div>'; }).join('') + '</div>';
+    n += ts.length + ev.length;
+  });
+  return '<section class="card agenda"><h2><span>🗓️ أجندتي · 7 أيام</span><button class="link" data-go="cal" style="margin:0;padding:0">التقويم ›</button></h2>' +
+    (n ? rows : '<div class="ts" style="padding:6px 0">ما فيه شي خلال الأسبوع</div>') + '<button class="link" id="agAdd" style="margin:6px 0 0;padding:0">➕ مهمة</button></section>';
+}
+
 /* =========================================================
    صندوق «يحتاج إجراء» + ملخص أمس + الأسبوع الجاي + التحديد الجماعي + الكيبورد
    ========================================================= */
@@ -2847,11 +2922,11 @@ function inboxHTML(full){
   let h = '<section class="card ibx' + (full ? ' full' : '') + '"><h2><span class="ibt">📥 يحتاج إجراء' + (L.length ? ' <b class="ibn">' + L.length + '</b>' : '') + '</span>' +
     (quick.length > 1 ? '<button class="link" id="ibAll" style="margin:0;padding:0">✓ اعتمد المقترحات (' + quick.length + ')</button>' : '') + '</h2>';
   if(!L.length) return h + '<div class="ibz"><div>✓</div><b>ما عندك شي اليوم</b><span>كل العمليات مراجعة ومصنفة</span></div></section>';
-  h += '<div class="ibl">' + L.map((x, i) => '<div class="ibr' + (!full && i >= 4 ? ' more' : '') + '" data-ib="' + i + '" tabindex="-1">' +
+  h += '<div class="ibl">' + L.map((x, i) => '<div class="ibr' + (!full && i >= 3 ? ' more' : '') + '" data-ib="' + i + '" tabindex="-1">' +
     '<i class="ibi" style="background:' + x.c + '">' + x.ic + '</i><div class="ibm"><div class="ib1"><span>' + esc(x.t) + '</span>' + (x.a != null && x.a !== '' ? '<b class="num">' + money(x.a) + '</b>' : '') + '</div><div class="ib2">' + esc(x.s) + '</div>' +
     '<div class="iba">' + (x.quick ? '<button class="ibq" data-ibq="' + i + '">✓ ' + esc(x.ql) + '</button>' : '') + x.acts.map((a, j) => '<button data-iba="' + i + ':' + j + '">' + esc(a.l) + '</button>').join('') +
     (x.snooze ? '<button class="ibx-x" data-ibx="' + i + '" aria-label="تجاهل">تجاهل</button>' : '') + '</div></div></div>').join('') + '</div>';
-  if(!full && L.length > 4) h += '<button class="link ibmore" data-go="inbox">عرض الكل (' + L.length + ') ›</button>';
+  if(!full && L.length > 3) h += '<button class="link ibmore" data-go="inbox">عرض الكل (' + L.length + ') ›</button>';
   return h + '</section>';
 }
 function bindInbox(root){
