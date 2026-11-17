@@ -983,6 +983,80 @@ html.ds-glass #fab svg{stroke:var(--bg)}
   html.ds-glass .top{margin-bottom:14px}
 }
 
+/* ================= التقويم v2 ================= */
+.calhd{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px}
+.calseg{flex:1;min-width:210px}
+.calnav{display:flex;align-items:center;gap:10px}
+.ctitle b{font-size:19px;font-weight:800;white-space:nowrap}
+.cnav{width:38px;height:38px;border-radius:50%;border:0;background:var(--card2);font-size:20px;color:var(--ink);line-height:1}
+.ctoday{margin:0}
+.calk .chip{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.calk .chip i{width:9px;height:9px;border-radius:50%}
+.calk .chip.on[style]{background:var(--kc)!important;color:#fff!important}
+.kindcard{box-shadow:inset 4px 0 0 var(--kc),var(--gl-sh)!important}
+.kindcard h2{display:flex;justify-content:space-between;align-items:baseline}
+.ygrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:12px}
+@media (min-width:600px){.ygrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (min-width:1024px){.ygrid{grid-template-columns:repeat(4,minmax(0,1fr))} body[data-view="cal"] #app{max-width:1160px!important}}
+.ym{border:1px solid var(--edge);background:var(--card);border-radius:22px;padding:11px 10px 10px;font:inherit;color:var(--ink);text-align:right;cursor:pointer;box-shadow:var(--gl-sh);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
+.ym.past{opacity:.72}
+.ym.cur{box-shadow:inset 0 0 0 2px var(--accent),var(--gl-sh)}
+.ymh{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.ymh b{font-size:14.5px}
+.ymh em{font-style:normal;font-size:11px;font-weight:800;background:var(--accent);color:#fff;border-radius:99px;padding:1px 8px}
+.ymg{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.ymg i{font-style:normal;font-size:9.5px;text-align:center;line-height:17px;border-radius:5px;color:var(--sub);font-family:var(--nf)}
+.ymg i.h{background:var(--kc);color:#fff;font-weight:700}
+.ymg i.t{box-shadow:inset 0 0 0 1.5px var(--accent);color:var(--ink);font-weight:800}
+.mgrid-card{padding:10px}
+.mgrid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.mgrid>b{font-size:11px;color:var(--sub);text-align:center;padding:2px 0 4px}
+.md{min-height:62px;border:0;border-radius:12px;background:var(--card2);color:var(--ink);font:inherit;padding:4px 3px;display:flex;flex-direction:column;align-items:stretch;gap:2px;text-align:right;min-width:0;cursor:pointer;overflow:hidden}
+.md.x{background:transparent}
+.md>span{font-size:12.5px;font-weight:700;padding-inline:3px}
+.md.we>span{color:var(--sub)}
+.md.p{opacity:.6}
+.md.t{box-shadow:inset 0 0 0 2px var(--accent)}
+.md.t>span{color:var(--accent)}
+.md em{font-style:normal;font-size:9.5px;line-height:1.35;background:var(--kc);color:#fff;border-radius:5px;padding:1px 4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.md em.dn{opacity:.4;text-decoration:line-through}
+.md small{font-size:9.5px;color:var(--sub);padding-inline:3px}
+@media (max-width:600px){.md em{font-size:0;height:5px;padding:0;border-radius:3px}.md{min-height:50px}}
+@media (min-width:1024px){.md{min-height:92px}.md em{font-size:11px}}
+.item.task .r1{display:flex;justify-content:space-between;gap:8px}
+.item.task .kb{font-size:14px}
+.tchk{border-color:var(--kc)!important}
+.item.task.done .tchk{background:var(--kc)!important}
+.big2{font-size:17px!important;font-weight:700}
+.kchip.on{background:var(--kc)!important;color:#fff!important;border-color:transparent!important}
+.picker{background:var(--card2);border-radius:20px;padding:10px;margin-top:8px}
+.pnav{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.pnav button{width:34px;height:34px;border-radius:50%;border:0;background:var(--solid);color:var(--ink);font-size:18px}
+.pgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.pgrid b{font-size:11px;color:var(--sub);text-align:center}
+.pd{aspect-ratio:1;border:0;border-radius:11px;background:transparent;color:var(--ink);font:inherit;font-size:14px;font-weight:600;font-family:var(--nf);position:relative}
+.pd.h::after{content:"";position:absolute;bottom:4px;left:50%;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:var(--sub)}
+.pd.t{box-shadow:inset 0 0 0 1.5px var(--accent)}
+.pd.on{background:var(--accent);color:#fff}
+.tpick{display:flex;align-items:center;gap:8px;margin-top:10px}
+.tpick .fsel{width:auto;margin:0;padding:9px 14px;font-size:16px}
+.tpick .seg{margin:0}
+.krow{display:grid;grid-template-columns:62px 1fr 38px;gap:8px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.krow .fin{margin:0}
+.kic{text-align:center;font-size:20px}
+.kx{height:38px;border:0;border-radius:12px;background:var(--card2);color:var(--sub);font-weight:700}
+.kx.sure{background:var(--up);color:#fff;font-size:11px}
+.kcols{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap}
+.kc{width:28px;height:28px;border-radius:50%;border:0;box-shadow:0 0 0 2px var(--card) inset}
+.kc.on{box-shadow:0 0 0 2px var(--card) inset,0 0 0 2px var(--ink)}
+.calhd .calseg{display:flex!important;flex-direction:row!important;flex:1 1 100%;width:100%;margin:0}
+.calhd .calseg button{flex:1}
+.calhd .calnav{flex:1;justify-content:flex-start}
+.tpick .seg{display:flex;flex-direction:row;width:auto}
+.tpick .seg button{padding:8px 14px}
+.calhd>.calnav{flex-direction:row!important;align-items:center}
+.calhd>.calseg{flex-direction:row!important}
+
 </style>
 </head>
 <body>
@@ -1023,7 +1097,7 @@ html.ds-glass #fab svg{stroke:var(--bg)}
 <script src="config.js"></script>
 <script>
 'use strict';
-const VERSION = 'V1.4.8';
+const VERSION = 'V1.4.9';
 const APP_NAME = 'دفتر | DFTR';
 const API_URL = String(window.DFTR_API_URL || '').trim();
 const LS = {
@@ -2844,7 +2918,7 @@ VIEWS.home = () => {
     '<div style="display:flex;align-items:flex-end;gap:10px;height:120px;margin-top:14px">' + tr.map(m => '<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;height:100%;justify-content:flex-end"><span class="num" style="font-size:10.5px;color:var(--sub)">' + (m.v >= 1000 ? (m.v / 1000).toFixed(1) + 'k' : money0(m.v)) + '</span><div style="width:100%;height:' + Math.max(3, pct(m.v, mx) * 0.8) + '%;border-radius:12px;background:' + (m.k === P ? 'var(--c-exp)' : 'var(--bar)') + '"></div><span style="font-size:11px;color:' + (m.k === P ? 'var(--ink)' : 'var(--sub)') + ';font-weight:' + (m.k === P ? 700 : 400) + '">' + shortMonth(m.k) + '</span></div>').join('') + '</div></div>');
   /* البلوك الأول: نبض اليوم */
   const IB = inboxItems(), y = addDays(today, -1), yl = txBase(S.data.tx.filter(t => t.date === y && num(t.amount) > 0));
-  const tt = tasksOn(today).filter(t => !taskDone(t)), nt = S.data.tasks.filter(t => String(t.date) >= today && !taskDone(t)).sort((a, b) => (a.date + (a.time || '')).localeCompare(b.date + (b.time || '')))[0];
+  const tt = tasksOn(today, true).filter(t => !taskDone(t)), nt = S.data.tasks.filter(t => String(t.date) >= today && !taskDone(t)).sort((a, b) => (a.date + (a.time || '')).localeCompare(b.date + (b.time || '')))[0];
   const newM = uniq(yl.filter(t => t.merchant && !S.data.tx.some(x => x.merchant === t.merchant && String(x.date) < y)).map(t => t.merchant));
   const kpi = (go, lab, val, sub, cls) => '<button class="kp' + (cls ? ' ' + cls : '') + '" data-go="' + go + '"><span>' + lab + '</span><b>' + val + '</b><small>' + sub + '</small></button>';
   const PULSE = '<section class="pulse">' +
@@ -2947,7 +3021,7 @@ function agendaHTML(){
   S._ag = [];
   let rows = '', n = 0;
   days.forEach(d => {
-    const ts = tasksOn(d), ev = up.filter(e => e.d === d);
+    const ts = tasksOn(d, true), ev = up.filter(e => e.d === d);
     if(!ts.length && !ev.length) return;
     const lab = d === today ? 'اليوم' : d === addDays(today, 1) ? 'بكرة' : WEEK[new Date(d + 'T12:00:00').getDay()] + ' ' + (+d.slice(8));
     rows += '<div class="agd"><b>' + lab + '</b>' + ts.map(t => taskRow(t, true)).join('') +
@@ -3083,7 +3157,7 @@ function weekHTML(){
   const out = sum(wk.filter(e => e.a < 0), e => -e.a), inn = sum(wk.filter(e => e.a > 0), e => e.a);
   S._up = up;
   return '<div class="tile light wide wk" style="min-height:0;cursor:default"><div class="secttl"><span>📅 الأسبوع الجاي</span><span class="wkt">' + (out ? '<em class="o num">−' + money0(out) + '</em>' : '') + (inn ? '<em class="i num">+' + money0(inn) + '</em>' : '') + '</span></div>' +
-    '<div class="wks">' + days.map(d => { const ev = up.filter(e => e.d === d); return '<div class="wkd' + (d === today ? ' t' : '') + '"><small>' + (d === today ? 'اليوم' : WEEK[new Date(d + 'T12:00:00').getDay()].replace('ال', '')) + '</small><b class="num">' + +d.slice(8) + '</b><span>' + ev.slice(0, 3).map(e => '<i style="background:' + e.c + '"></i>').join('') + tasksOn(d).slice(0, 2).map(t => '<i style="background:' + kindColor(t.kind) + '"></i>').join('') + '</span></div>'; }).join('') + '</div>' +
+    '<div class="wks">' + days.map(d => { const ev = up.filter(e => e.d === d); return '<div class="wkd' + (d === today ? ' t' : '') + '"><small>' + (d === today ? 'اليوم' : WEEK[new Date(d + 'T12:00:00').getDay()].replace('ال', '')) + '</small><b class="num">' + +d.slice(8) + '</b><span>' + ev.slice(0, 3).map(e => '<i style="background:' + e.c + '"></i>').join('') + tasksOn(d, true).slice(0, 2).map(t => '<i style="background:' + kindColor(t.kind) + '"></i>').join('') + '</span></div>'; }).join('') + '</div>' +
     (up.length ? '<div class="mini-list">' + up.slice(0, 6).map((e, i) => '<div class="mr" data-up="' + i + '" style="cursor:pointer"><i style="background:' + e.c + '"></i><span>' + esc(e.t) + '</span>' + (e.a != null ? '<b style="color:' + (e.a < 0 ? 'var(--ink)' : 'var(--c-inv)') + '">' + (e.a > 0 ? '+' : '') + money0(e.a) + '</b>' : '') + '<em>' + (e.d === today ? 'اليوم' : e.d === addDays(today, 1) ? 'بكرة' : 'بعد ' + daysBetween(today, e.d) + ' ي') + '</em></div>').join('') + '</div>' : '<div class="ts" style="margin-top:8px">ما فيه شي قريب</div>') + '</div>';
 }
 
@@ -3353,51 +3427,121 @@ function offerItemsFromReceipt(rid){
 }
 
 /* =========================================================
-   التقويم السنوي + المهام
+   التقويم: سنة ← شهر ← يوم، فئات قابلة للتعديل، ومنتقي تاريخ ووقت سهل
    ========================================================= */
-const TASK_KINDS = [['📚 دراسة', '#1F72D6'], ['📝 اختبار', '#D63A73'], ['🏖️ إجازة', '#11875A'], ['💼 عمل', '#6A45E8'], ['👨‍👩‍👧 عائلة', '#E8A317'], ['📌 أخرى', '#5D636F']];
+const KIND_DEF = [['📚 دراسة', '#3A86D1'], ['📝 اختبار', '#C9577D'], ['🏖️ إجازة', '#1F8F75'], ['💼 عمل', '#7A62D6'], ['👨‍👩‍👧 عائلة', '#D19A2B'], ['📌 أخرى', '#6E7385']];
+const KIND_COLORS = ['#3A86D1', '#C9577D', '#1F8F75', '#7A62D6', '#D19A2B', '#E2674F', '#2A9DA3', '#6E7385'];
 const WD1 = ['ح', 'ن', 'ث', 'ر', 'خ', 'ج', 'س'];
-function kindColor(k){ const x = TASK_KINDS.find(t => t[0] === k); return x ? x[1] : '#5D636F'; }
+function kinds(){
+  try { const k = JSON.parse(S.settings.TASK_KINDS || ''); if(Array.isArray(k) && k.length) return k.filter(x => x && x[0]); } catch(e){}
+  return KIND_DEF;
+}
+function kindColor(k){ const x = kinds().find(t => t[0] === k); return x ? x[1] : '#9AA0AE'; }
+function kindIcon(k){ return (String(k || '').match(/^\p{Extended_Pictographic}[️‍\p{Extended_Pictographic}]*/u) || ['•'])[0]; }
 function taskDone(t){ return /^(1|true|نعم|✓|✅)$/i.test(String(t.done || '').trim()); }
-function tasksOn(d){ return S.data.tasks.filter(t => String(t.date) === d).sort((a, b) => String(a.time || '99').localeCompare(String(b.time || '99'))); }
-function taskTime(t){ return t.time ? (t.end ? t.time + ' – ' + t.end : t.time) : 'طول اليوم'; }
-function hm12(s){ if(!s) return ''; const p = String(s).split(':'), h = +p[0]; return (h % 12 || 12) + (p[1] && p[1] !== '00' ? ':' + p[1] : '') + (h < 12 ? 'ص' : 'م'); }
+function calTasks(){ return S.calK ? S.data.tasks.filter(t => t.kind === S.calK) : S.data.tasks; }
+function tasksOn(d, all){ return (all ? S.data.tasks : calTasks()).filter(t => String(t.date) === d).sort((a, b) => String(a.time || '99').localeCompare(String(b.time || '99'))); }
+function hm12(s){ if(!s) return ''; const p = String(s).split(':'), h = +p[0]; return (h % 12 || 12) + (p[1] && p[1] !== '00' ? ':' + p[1] : '') + (h < 12 ? ' ص' : ' م'); }
 function taskTime12(t){ return t.time ? hm12(t.time) + (t.end ? ' – ' + hm12(t.end) : '') : 'طول اليوم'; }
+function dayName(d){ return WEEK[new Date(d + 'T12:00:00').getDay()]; }
+function relDay(d){ const t = todayKey(); return d === t ? 'اليوم' : d === addDays(t, 1) ? 'بكرة' : d === addDays(t, -1) ? 'أمس' : dayName(d) + ' ' + dayLabel(d); }
 
+/* ---------- الصفحة ---------- */
 VIEWS.cal = () => {
-  const today = todayKey(), Y = S.calY || +today.slice(0, 4), H = [];
-  const up = S.data.tasks.filter(t => String(t.date) >= today && !taskDone(t)).sort((a, b) => (a.date + (a.time || '')).localeCompare(b.date + (b.time || ''))).slice(0, 6);
-  H.push('<section class="card calhd"><button class="cnav" data-cy="-1">›</button><div><b class="num">' + Y + '</b><small>' + S.data.tasks.filter(t => String(t.date).slice(0, 4) === String(Y)).length + ' مهمة</small></div><button class="cnav" data-cy="1">‹</button>' +
-    (Y !== +today.slice(0, 4) ? '<button class="chip" id="cToday">اليوم</button>' : '') + '</section>');
-  H.push('<div class="chips hscroll calleg">' + TASK_KINDS.map(k => '<span class="chip"><i style="background:' + k[1] + '"></i>' + k[0] + '</span>').join('') + '</div>');
-  if(up.length) H.push('<section class="card"><h2>⏭️ القادم</h2><div class="list">' + up.map(t => taskRow(t)).join('') + '</div></section>');
-  H.push('<div class="months">');
-  for(let m = 1; m <= 12; m++){
-    const P = Y + '-' + String(m).padStart(2, '0'), first = new Date(Y, m - 1, 1).getDay(), n = daysIn(P);
-    let g = '';
-    for(let i = 0; i < first; i++) g += '<i class="cd x"></i>';
-    for(let d = 1; d <= n; d++){
-      const k = P + '-' + String(d).padStart(2, '0'), ts = tasksOn(k), wd = (first + d - 1) % 7;
-      g += '<button class="cd' + (k === today ? ' t' : '') + (k < today ? ' p' : '') + (wd === 5 || wd === 6 ? ' we' : '') + (ts.length ? ' has' : '') + '" data-day="' + k + '"' + (ts.length ? ' style="--kc:' + kindColor(ts[0].kind) + '"' : '') + '><span class="num">' + d + '</span>' +
-        (ts.length ? '<em>' + ts.slice(0, 3).map(t => '<i style="background:' + kindColor(t.kind) + (taskDone(t) ? ';opacity:.35' : '') + '"></i>').join('') + '</em>' : '') + '</button>';
-    }
-    H.push('<section class="card mon' + (P === today.slice(0, 7) ? ' cur' : '') + '" id="m' + P + '"><h3>' + MONTHS[m - 1] + ' <small class="num">' + m + '</small></h3><div class="cg">' + WD1.map(w => '<b>' + w + '</b>').join('') + g + '</div></section>');
-  }
-  H.push('</div>');
+  const today = todayKey(), mode = S.calMode || 'year';
+  if(!S.calM) S.calM = today.slice(0, 7);
+  const Y = S.calY || +today.slice(0, 4), M = S.calM;
+  const H = [];
+  const title = mode === 'year' ? '<b class="num">' + Y + '</b>' : mode === 'month' ? '<b>' + MONTHS[+M.slice(5) - 1] + ' <span class="num">' + M.slice(0, 4) + '</span></b>' : '<b>القائمة</b>';
+  H.push('<section class="card calhd"><div class="seg calseg">' + [['year', 'السنة'], ['month', 'الشهر'], ['list', 'القائمة']].map(x => '<button data-cm="' + x[0] + '" class="' + (mode === x[0] ? 'on' : '') + '">' + x[1] + '</button>').join('') + '</div>' +
+    (mode !== 'list' ? '<div class="calnav"><button class="cnav" data-cn="-1" aria-label="السابق">›</button><div class="ctitle">' + title + '</div><button class="cnav" data-cn="1" aria-label="التالي">‹</button></div>' : '') +
+    '<button class="chip ctoday" id="cToday">اليوم</button></section>');
+  const yearTasks = S.data.tasks.filter(t => String(t.date).slice(0, 4) === String(Y));
+  H.push('<div class="chips hscroll calk"><button class="chip' + (!S.calK ? ' on' : '') + '" data-ck="">الكل <span class="num">' + S.data.tasks.length + '</span></button>' +
+    kinds().map(k => '<button class="chip' + (S.calK === k[0] ? ' on' : '') + '" data-ck="' + esc(k[0]) + '" style="--kc:' + k[1] + '"><i style="background:' + k[1] + '"></i>' + esc(k[0]) + ' <span class="num">' + S.data.tasks.filter(t => t.kind === k[0]).length + '</span></button>').join('') +
+    '<button class="chip" id="ckEdit">⚙️ الفئات</button></div>');
+  if(S.calK) H.push(kindListHTML(S.calK));
+  if(mode === 'year') H.push(yearHTML(Y));
+  else if(mode === 'month') H.push(monthHTML(M));
+  else H.push(listHTML());
   return H.join('');
 };
+
+function yearHTML(Y){
+  const today = todayKey();
+  let h = '<div class="ygrid">';
+  for(let m = 1; m <= 12; m++){
+    const P = Y + '-' + String(m).padStart(2, '0'), first = new Date(Y, m - 1, 1).getDay(), n = daysIn(P);
+    const cnt = calTasks().filter(t => String(t.date).slice(0, 7) === P).length;
+    let g = '';
+    for(let i = 0; i < first; i++) g += '<i></i>';
+    for(let d = 1; d <= n; d++){
+      const k = P + '-' + String(d).padStart(2, '0'), ts = tasksOn(k);
+      g += '<i class="d' + (k === today ? ' t' : '') + (ts.length ? ' h' : '') + '"' + (ts.length ? ' style="--kc:' + kindColor(ts[0].kind) + '"' : '') + '>' + d + '</i>';
+    }
+    h += '<button class="ym' + (P === today.slice(0, 7) ? ' cur' : '') + (P < today.slice(0, 7) ? ' past' : '') + '" data-ym="' + P + '"><div class="ymh"><b>' + MONTHS[m - 1] + '</b>' + (cnt ? '<em class="num">' + cnt + '</em>' : '') + '</div><div class="ymg">' + g + '</div></button>';
+  }
+  return h + '</div>';
+}
+
+function monthHTML(P){
+  const today = todayKey(), Y = +P.slice(0, 4), m = +P.slice(5), first = new Date(Y, m - 1, 1).getDay(), n = daysIn(P);
+  let g = WD1.map(w => '<b>' + w + '</b>').join('');
+  for(let i = 0; i < first; i++) g += '<i class="md x"></i>';
+  for(let d = 1; d <= n; d++){
+    const k = P + '-' + String(d).padStart(2, '0'), ts = tasksOn(k), wd = (first + d - 1) % 7;
+    g += '<button class="md' + (k === today ? ' t' : '') + (k < today ? ' p' : '') + (wd >= 5 ? ' we' : '') + '" data-day="' + k + '"><span class="num">' + d + '</span>' +
+      ts.slice(0, 3).map(t => '<em style="--kc:' + kindColor(t.kind) + '"' + (taskDone(t) ? ' class="dn"' : '') + '>' + esc(String(t.title).slice(0, 22)) + '</em>').join('') + (ts.length > 3 ? '<small>+' + (ts.length - 3) + '</small>' : '') + '</button>';
+  }
+  const list = calTasks().filter(t => String(t.date).slice(0, 7) === P).sort((a, b) => (a.date + (a.time || '')).localeCompare(b.date + (b.time || '')));
+  return '<section class="card mgrid-card"><div class="mgrid">' + g + '</div></section>' +
+    '<section class="card"><h2>مواعيد ' + MONTHS[m - 1] + ' <span class="num">' + list.length + '</span></h2>' + groupByDay(list) + '<button class="btn ghost" id="cAddM">➕ موعد جديد</button></section>';
+}
+
+function listHTML(){
+  const today = todayKey(), all = calTasks().slice().sort((a, b) => (a.date + (a.time || '')).localeCompare(b.date + (b.time || '')));
+  const up = all.filter(t => String(t.date) >= today), past = all.filter(t => String(t.date) < today).reverse();
+  return '<section class="card"><h2>القادم <span class="num">' + up.length + '</span></h2>' + (up.length ? groupByDay(up) : '<div class="empty">ما فيه مواعيد قادمة</div>') + '<button class="btn ghost" id="cAddM">➕ موعد جديد</button></section>' +
+    (past.length ? '<section class="card"><details class="omore"><summary>السابقة (' + past.length + ')</summary>' + groupByDay(past.slice(0, 60)) + '</details></section>' : '');
+}
+
+function kindListHTML(k){
+  const today = todayKey(), L = S.data.tasks.filter(t => t.kind === k).sort((a, b) => (a.date + (a.time || '')).localeCompare(b.date + (b.time || '')));
+  const up = L.filter(t => String(t.date) >= today);
+  return '<section class="card kindcard" style="--kc:' + kindColor(k) + '"><h2><span>' + esc(k) + '</span><span class="num" style="color:var(--sub);font-size:13px">' + up.length + ' قادم · ' + (L.length - up.length) + ' سابق</span></h2>' +
+    (up.length ? groupByDay(up) : '<div class="empty">ما فيه مواعيد قادمة بهالفئة</div>') + '</section>';
+}
+
+function groupByDay(list){
+  let h = '', cur = '';
+  list.forEach(t => {
+    if(t.date !== cur){ if(cur) h += '</div>'; cur = t.date; h += '<div class="agd"><b>' + relDay(t.date) + '</b>'; }
+    h += taskRow(t, true);
+  });
+  return h + (cur ? '</div>' : '');
+}
+
 VIEWS.cal_after = root => {
-  root.querySelectorAll('[data-cy]').forEach(b => b.onclick = () => { S.calY = (S.calY || +todayKey().slice(0, 4)) + +b.dataset.cy; render(); });
-  const ct = $('cToday'); if(ct) ct.onclick = () => { S.calY = 0; render(); setTimeout(scrollToMonth, 50); };
+  root.querySelectorAll('[data-cm]').forEach(b => b.onclick = () => { S.calMode = b.dataset.cm; render(); });
+  root.querySelectorAll('[data-cn]').forEach(b => b.onclick = () => {
+    const d = +b.dataset.cn;
+    if((S.calMode || 'year') === 'year') S.calY = (S.calY || +todayKey().slice(0, 4)) + d;
+    else { S.calM = shiftMonth(S.calM, d); S.calY = +S.calM.slice(0, 4); }
+    render();
+  });
+  $('cToday').onclick = () => { S.calY = 0; S.calM = todayKey().slice(0, 7); if(S.calMode === 'list') S.calMode = 'month'; render(); };
+  root.querySelectorAll('[data-ck]').forEach(b => b.onclick = () => { S.calK = S.calK === b.dataset.ck ? '' : b.dataset.ck; render(); });
+  $('ckEdit').onclick = kindsSheet;
+  root.querySelectorAll('[data-ym]').forEach(b => b.onclick = () => { S.calM = b.dataset.ym; S.calMode = 'month'; render(); window.scrollTo(0, 0); });
   root.querySelectorAll('[data-day]').forEach(b => b.onclick = () => calDaySheet(b.dataset.day));
+  const am = $('cAddM'); if(am) am.onclick = () => taskForm(null, S.calMode === 'month' && S.calM !== todayKey().slice(0, 7) ? S.calM + '-01' : todayKey());
   bindTaskRows(root);
-  if(!S._calScrolled){ S._calScrolled = 1; setTimeout(scrollToMonth, 60); }
+  if(!S._calScrolled && (S.calMode || 'year') === 'year'){ S._calScrolled = 1; setTimeout(() => { const c = root.querySelector('.ym.cur'); if(c) c.scrollIntoView({ block: 'center', behavior: 'smooth' }); }, 80); }
 };
-function scrollToMonth(){ const el = $('m' + todayKey().slice(0, 7)); if(el) el.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
 
 function taskRow(t, short){
-  return '<div class="item task' + (taskDone(t) ? ' done' : '') + '" data-task="' + esc(t.id) + '"><button class="tchk" data-tdone="' + esc(t.id) + '" aria-label="منجزة" style="--kc:' + kindColor(t.kind) + '">' + (taskDone(t) ? '✓' : '') + '</button>' +
-    '<div class="tm"><div class="r1"><span class="n">' + esc(t.title) + '</span></div><div class="r2"><span>' + (short ? '' : esc(WEEK[new Date(t.date + 'T12:00:00').getDay()]) + ' ' + esc(dayLabel(t.date)) + ' · ') + esc(taskTime12(t)) + '</span><span style="color:' + kindColor(t.kind) + ';font-weight:700">' + esc(String(t.kind || '').split(' ')[0]) + '</span></div>' + (t.note ? '<div class="r2"><span>' + esc(t.note) + '</span></div>' : '') + '</div></div>';
+  return '<div class="item task' + (taskDone(t) ? ' done' : '') + '" data-task="' + esc(t.id) + '" style="--kc:' + kindColor(t.kind) + '"><button class="tchk" data-tdone="' + esc(t.id) + '" aria-label="منجزة">' + (taskDone(t) ? '✓' : '') + '</button>' +
+    '<div class="tm"><div class="r1"><span class="n">' + esc(t.title) + '</span><span class="kb">' + kindIcon(t.kind) + '</span></div><div class="r2"><span>' + (short ? '' : esc(relDay(t.date)) + ' · ') + esc(taskTime12(t)) + (t.note ? ' · ' + esc(t.note) : '') + '</span></div></div></div>';
 }
 function bindTaskRows(root){
   root.querySelectorAll('[data-tdone]').forEach(b => b.onclick = e => { e.stopPropagation(); const t = S.data.tasks.find(x => x.id === b.dataset.tdone); if(t) save('tasks', { id: t.id, done: taskDone(t) ? '' : '✓' }, ['tasks'], taskDone(t) ? '↩️ رجعت مفتوحة' : '✅ أحسنت!'); });
@@ -3405,10 +3549,10 @@ function bindTaskRows(root){
 }
 
 function calDaySheet(d){
-  const ts = tasksOn(d), dt = new Date(d + 'T12:00:00');
-  const b = openSheet(sheetHead(WEEK[dt.getDay()] + ' ' + dayLabel(d)) + '<div class="hint" style="margin-top:-6px">' + (typeof dateLine === 'function' ? '' : '') + hijriOf(dt) + '</div>' +
-    '<div class="list">' + (ts.length ? ts.map(t => taskRow(t, true)).join('') : '<div class="empty">ما فيه مهام بهاليوم</div>') + '</div>' +
-    '<button class="btn" id="cAdd">➕ مهمة بهاليوم</button>');
+  const ts = tasksOn(d, true);
+  const b = openSheet(sheetHead(dayName(d) + ' ' + dayLabel(d)) + '<div class="hint" style="margin-top:-6px">' + hijriOf(new Date(d + 'T12:00:00')) + '</div>' +
+    '<div class="list">' + (ts.length ? ts.map(t => taskRow(t, true)).join('') : '<div class="empty">ما فيه مواعيد بهاليوم</div>') + '</div>' +
+    '<button class="btn" id="cAdd">➕ موعد بهاليوم</button>');
   bindTaskRows(b);
   $('cAdd').onclick = () => taskForm(null, d);
 }
@@ -3420,38 +3564,99 @@ function hijriOf(d){
   } catch(e){ return ''; }
 }
 
+/* ---------- نموذج الموعد: منتقي تاريخ ووقت بالضغط ---------- */
+function addMin(hm, mins){ const p = hm.split(':').map(Number), t = (p[0] * 60 + p[1] + mins) % 1440; return String(Math.floor(t / 60)).padStart(2, '0') + ':' + String(t % 60).padStart(2, '0'); }
+function minsBetween(a, b){ if(!a || !b) return 0; const x = a.split(':').map(Number), y = b.split(':').map(Number); return (y[0] * 60 + y[1]) - (x[0] * 60 + x[1]); }
 function taskForm(t, date){
-  const isNew = !t;
-  const v = Object.assign({ title: '', date: date || todayKey(), time: '', end: '', kind: '📌 أخرى', note: '', done: '' }, t || {});
-  const b = openSheet(sheetHead(isNew ? '➕ مهمة جديدة' : 'تعديل المهمة') +
-    '<div class="flabel">المهمة</div><input id="kT" class="fin rtl" value="' + esc(v.title) + '" placeholder="مثلاً: اختبار المالية">' +
-    '<div class="flabel">النوع</div>' + catChips(TASK_KINDS.map(k => k[0]), v.kind, 'data-kk') +
-    '<div class="flabel">التاريخ</div><input id="kD" type="date" class="fin" value="' + esc(v.date) + '">' +
-    '<div class="row2"><div><div class="flabel">من</div><input id="kF" type="time" class="fin" value="' + esc(v.time) + '"></div><div><div class="flabel">إلى</div><input id="kE" type="time" class="fin" value="' + esc(v.end) + '"></div></div>' +
-    '<div class="hint">اتركها فاضية = طول اليوم</div>' +
-    '<div class="flabel">ملاحظات</div><input id="kN" class="fin rtl" value="' + esc(v.note) + '">' +
-    (isNew ? '<button class="btn" id="kSave">حفظ</button>' : '<label class="chk"><input type="checkbox" id="kDone"' + (taskDone(v) ? ' checked' : '') + '> منجزة</label><div class="btns"><button class="btn danger" id="kDel">حذف</button><button class="btn" id="kSave">حفظ</button></div>'));
-  bindChips(b, 'data-kk', k => { v.kind = k; });
-  if(isNew) setTimeout(() => $('kT').focus(), 300);
-  $('kSave').onclick = () => {
-    const row = { id: t && t.id, title: $('kT').value.trim(), date: $('kD').value, time: $('kF').value, end: $('kE').value, kind: v.kind, note: $('kN').value.trim() };
-    if(!row.title) return toast('اكتب المهمة');
-    if(!row.date) return toast('اختر التاريخ');
-    if(!isNew) row.done = $('kDone').checked ? '✓' : '';
-    closeSheet(); save('tasks', row, ['tasks'], isNew ? '📅 انضافت' : '✅ انحفظت');
+  const isNew = !t, today = todayKey();
+  const v = Object.assign({ title: '', date: date || today, time: '', end: '', kind: kinds()[0][0], note: '', done: '' }, t || {});
+  let pm = String(v.date).slice(0, 7), rep = 0;
+  const b = openSheet('', { full: true });
+  const paint = () => {
+    const first = new Date(+pm.slice(0, 4), +pm.slice(5) - 1, 1).getDay(), n = daysIn(pm);
+    let g = WD1.map(w => '<b>' + w + '</b>').join('');
+    for(let i = 0; i < first; i++) g += '<i></i>';
+    for(let d = 1; d <= n; d++){ const k = pm + '-' + String(d).padStart(2, '0'); g += '<button type="button" class="pd' + (k === v.date ? ' on' : '') + (k === today ? ' t' : '') + (tasksOn(k, true).length ? ' h' : '') + '" data-pd="' + k + '">' + d + '</button>'; }
+    const dur = minsBetween(v.time, v.end);
+    const h = v.time ? +v.time.slice(0, 2) : 16, mi = v.time ? v.time.slice(3, 5) : '00';
+    b.innerHTML = '<div class="grab"></div>' + sheetHead(isNew ? '➕ موعد جديد' : 'تعديل الموعد') +
+      '<input id="kT" class="fin rtl big2" value="' + esc(v.title) + '" placeholder="وش الموعد؟ مثلاً: اختبار المالية">' +
+      '<div class="flabel">الفئة</div><div class="pchips">' + kinds().map(k => '<button type="button" class="chip kchip' + (v.kind === k[0] ? ' on' : '') + '" data-kk="' + esc(k[0]) + '" style="--kc:' + k[1] + '">' + esc(k[0]) + '</button>').join('') + '</div>' +
+      '<div class="flabel">اليوم · <b style="color:var(--ink)">' + esc(dayName(v.date) + ' ' + dayLabel(v.date)) + '</b></div>' +
+      '<div class="pchips">' + [[today, 'اليوم'], [addDays(today, 1), 'بكرة'], [addDays(today, 2), 'بعد بكرة'], [addDays(v.date, 7), '+ أسبوع']].map(x => '<button type="button" class="chip' + (x[0] === v.date ? ' on' : '') + '" data-qd="' + x[0] + '">' + x[1] + '</button>').join('') + '</div>' +
+      '<div class="picker"><div class="pnav"><button type="button" data-pm="-1">›</button><b>' + MONTHS[+pm.slice(5) - 1] + ' <span class="num">' + pm.slice(0, 4) + '</span></b><button type="button" data-pm="1">‹</button></div><div class="pgrid">' + g + '</div></div>' +
+      '<div class="flabel">الوقت</div><div class="pchips"><button type="button" class="chip' + (!v.time ? ' on' : '') + '" data-qt="">طول اليوم</button>' +
+        ['08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00', '22:00'].map(x => '<button type="button" class="chip' + (v.time === x ? ' on' : '') + '" data-qt="' + x + '">' + hm12(x) + '</button>').join('') + '</div>' +
+      (v.time ? '<div class="tpick"><select id="kH" class="fsel">' + Array.from({ length: 12 }, (_, i) => i + 1).map(x => '<option' + ((h % 12 || 12) === x ? ' selected' : '') + '>' + x + '</option>').join('') + '</select><span>:</span>' +
+        '<select id="kM" class="fsel">' + ['00', '15', '30', '45'].map(x => '<option' + (mi === x ? ' selected' : '') + '>' + x + '</option>').join('') + '</select>' +
+        '<div class="seg"><button type="button" data-ap="am" class="' + (h < 12 ? 'on' : '') + '">ص</button><button type="button" data-ap="pm" class="' + (h >= 12 ? 'on' : '') + '">م</button></div></div>' +
+        '<div class="flabel">المدة' + (v.end ? ' · لين <b style="color:var(--ink)">' + hm12(v.end) + '</b>' : '') + '</div><div class="pchips">' + [[0, 'بدون'], [30, 'نص ساعة'], [60, 'ساعة'], [120, 'ساعتين'], [180, '3 ساعات'], [360, '6 ساعات'], [540, '9 ساعات']].map(x => '<button type="button" class="chip' + ((x[0] === 0 && !v.end) || (x[0] && dur === x[0]) ? ' on' : '') + '" data-du="' + x[0] + '">' + x[1] + '</button>').join('') + '</div>' : '') +
+      (isNew ? '<div class="flabel">التكرار</div><div class="pchips">' + [[0, 'مرة وحدة'], [4, 'كل أسبوع × 4'], [8, 'كل أسبوع × 8'], [12, 'كل أسبوع × 12']].map(x => '<button type="button" class="chip' + (rep === x[0] ? ' on' : '') + '" data-rp="' + x[0] + '">' + x[1] + '</button>').join('') + '</div>' : '') +
+      '<div class="flabel">ملاحظات</div><input id="kN" class="fin rtl" value="' + esc(v.note) + '" placeholder="اختياري">' +
+      (isNew ? '<button class="btn" id="kSave">حفظ' + (rep ? ' (' + rep + ' مواعيد)' : '') + '</button>' :
+        '<label class="chk"><input type="checkbox" id="kDone"' + (taskDone(v) ? ' checked' : '') + '> منجزة</label><div class="btns"><button class="btn danger" id="kDel">حذف</button><button class="btn ghost" id="kDup">نسخ</button><button class="btn" id="kSave">حفظ</button></div>');
+    const grab = () => { v.title = $('kT').value; v.note = $('kN').value; const dn = $('kDone'); if(dn) v.done = dn.checked ? '✓' : ''; };
+    const setTime = (t0) => { const d0 = minsBetween(v.time, v.end); v.time = t0; v.end = t0 && d0 > 0 ? addMin(t0, d0) : (t0 ? v.end : ''); if(v.end && minsBetween(v.time, v.end) <= 0) v.end = ''; };
+    b.querySelectorAll('[data-kk]').forEach(x => x.onclick = () => { grab(); v.kind = x.dataset.kk; paint(); });
+    b.querySelectorAll('[data-qd]').forEach(x => x.onclick = () => { grab(); v.date = x.dataset.qd; pm = v.date.slice(0, 7); paint(); });
+    b.querySelectorAll('[data-pd]').forEach(x => x.onclick = () => { grab(); v.date = x.dataset.pd; paint(); });
+    b.querySelectorAll('[data-pm]').forEach(x => x.onclick = () => { grab(); pm = shiftMonth(pm, +x.dataset.pm); paint(); });
+    b.querySelectorAll('[data-qt]').forEach(x => x.onclick = () => { grab(); setTime(x.dataset.qt); paint(); });
+    b.querySelectorAll('[data-du]').forEach(x => x.onclick = () => { grab(); const m0 = +x.dataset.du; v.end = m0 && v.time ? addMin(v.time, m0) : ''; paint(); });
+    b.querySelectorAll('[data-rp]').forEach(x => x.onclick = () => { grab(); rep = +x.dataset.rp; paint(); });
+    const fine = () => { grab(); const hh = +$('kH').value % 12 + (b.querySelector('[data-ap].on').dataset.ap === 'pm' ? 12 : 0); setTime(String(hh).padStart(2, '0') + ':' + $('kM').value); paint(); };
+    if($('kH')){ $('kH').onchange = fine; $('kM').onchange = fine; b.querySelectorAll('[data-ap]').forEach(x => x.onclick = () => { b.querySelectorAll('[data-ap]').forEach(y => y.classList.toggle('on', y === x)); fine(); }); }
+    $('kSave').onclick = async () => {
+      grab();
+      const row = { id: t && t.id, title: v.title.trim(), date: v.date, time: v.time, end: v.end, kind: v.kind, note: v.note.trim() };
+      if(!row.title) return toast('اكتب الموعد');
+      if(!isNew) row.done = v.done;
+      closeSheet();
+      if(isNew && rep) batch(Array.from({ length: rep }, (_, i) => ({ a: 'save', table: 'tasks', row: Object.assign({}, row, { id: undefined, date: addDays(row.date, i * 7) }) })), ['tasks'], '📅 انضاف ' + rep + ' مواعيد');
+      else save('tasks', row, ['tasks'], isNew ? '📅 انضاف' : '✅ انحفظ');
+    };
+    const dl = $('kDel'); if(dl) dl.onclick = () => { closeSheet(); remove('tasks', t.id, ['tasks']); };
+    const dp = $('kDup'); if(dp) dp.onclick = () => { grab(); const c = Object.assign({}, v); delete c.id; c.done = ''; taskForm(null, c.date); setTimeout(() => { const i = $('kT'); if(i){ i.value = c.title; } }, 30); };
   };
-  const dl = $('kDel'); if(dl) dl.onclick = () => { closeSheet(); remove('tasks', t.id, ['tasks']); };
+  paint();
+  if(isNew) setTimeout(() => { const i = $('kT'); if(i) i.focus(); }, 300);
 }
 
-/* ---------- مهام الأسبوع بالرئيسية ---------- */
-function tasksWeekHTML(){
-  const today = todayKey(), end = addDays(today, 6);
-  const L = S.data.tasks.filter(t => String(t.date) >= today && String(t.date) <= end).sort((a, b) => (a.date + (a.time || '')).localeCompare(b.date + (b.time || '')));
-  const late = S.data.tasks.filter(t => String(t.date) < today && String(t.date) >= addDays(today, -7) && !taskDone(t) && !/إجازة|دراسة|اختبار/.test(t.kind || ''));
-  return '<div class="tile light wide twk" style="min-height:0;cursor:default"><div class="secttl"><span>📋 مهام الأسبوع</span><button data-go="cal">التقويم ›</button></div>' +
-    (L.length || late.length ? '<div class="list">' + late.map(t => taskRow(t)).join('') + L.map(t => taskRow(t)).join('') + '</div>' : '<div class="ts" style="margin:8px 0 4px">ما فيه مهام هالأسبوع</div>') +
-    '<button class="link" id="twAdd" style="margin:4px 0 0;padding:0">➕ مهمة</button></div>';
+/* ---------- إدارة الفئات ---------- */
+function kindsSheet(){
+  const rows = kinds().map(k => ({ ic: kindIcon(k[0]), nm: String(k[0]).replace(kindIcon(k[0]), '').trim(), c: k[1], orig: k[0] }));
+  const b = openSheet('', { full: true });
+  const paint = () => {
+    b.innerHTML = '<div class="grab"></div>' + sheetHead('⚙️ فئات التقويم') + '<p class="hint">غيّر الاسم أو الإيموجي أو اللون. لو غيّرت اسم فئة، مواعيدها تتحدث معها.</p>' +
+      rows.map((r, i) => '<div class="krow"><input class="fin kic" data-ki="' + i + '" value="' + esc(r.ic) + '" maxlength="8"><input class="fin rtl" data-kn="' + i + '" value="' + esc(r.nm) + '" placeholder="اسم الفئة"><button type="button" class="kx" data-kd="' + i + '" aria-label="حذف">✕</button>' +
+        '<div class="kcols">' + KIND_COLORS.map(c => '<button type="button" class="kc' + (r.c === c ? ' on' : '') + '" data-kc="' + i + '|' + c + '" style="background:' + c + '"></button>').join('') + '</div></div>').join('') +
+      '<button class="btn ghost" id="kAdd">➕ فئة جديدة</button><button class="btn" id="kSaveK">حفظ الفئات</button>';
+    const grab = () => { b.querySelectorAll('[data-ki]').forEach(x => rows[+x.dataset.ki].ic = x.value.trim()); b.querySelectorAll('[data-kn]').forEach(x => rows[+x.dataset.kn].nm = x.value.trim()); };
+    b.querySelectorAll('[data-kc]').forEach(x => x.onclick = () => { grab(); const p = x.dataset.kc.split('|'); rows[+p[0]].c = p[1]; paint(); });
+    b.querySelectorAll('[data-kd]').forEach(x => x.onclick = () => { grab(); const i = +x.dataset.kd, n = S.data.tasks.filter(t => t.kind === rows[i].orig).length; if(n && !x.dataset.sure){ x.dataset.sure = 1; x.textContent = 'متأكد؟'; x.classList.add('sure'); return toast('فيه ' + n + ' موعد بهالفئة — اضغط مرة ثانية للحذف'); } rows.splice(i, 1); paint(); });
+    $('kAdd').onclick = () => { grab(); rows.push({ ic: '⭐', nm: '', c: KIND_COLORS[rows.length % KIND_COLORS.length], orig: '' }); paint(); };
+    $('kSaveK').onclick = async () => {
+      grab();
+      const list = rows.filter(r => r.nm).map(r => [((r.ic ? r.ic + ' ' : '') + r.nm).trim(), r.c, r.orig]);
+      if(!list.length) return toast('لازم فئة وحدة على الأقل');
+      if(uniq(list.map(x => x[0])).length !== list.length) return toast('فيه فئتين بنفس الاسم');
+      $('kSaveK').disabled = true;
+      const r = await api('settings_save', { settings: { TASK_KINDS: JSON.stringify(list.map(x => [x[0], x[1]])) } });
+      if(!r.ok){ $('kSaveK').disabled = false; return toast('⚠️ ' + errText(r)); }
+      S.settings = r.settings; saveCache();
+      const ops = [];
+      list.forEach(x => { if(x[2] && x[2] !== x[0]) S.data.tasks.filter(t => t.kind === x[2]).forEach(t => ops.push({ a: 'save', table: 'tasks', row: { id: t.id, kind: x[0] } })); });
+      if(S.calK && !list.some(x => x[0] === S.calK)) S.calK = '';
+      closeSheet();
+      if(ops.length) batch(ops, ['tasks'], '✅ انحفظت الفئات وتحدّث ' + ops.length + ' موعد');
+      else { toast('✅ انحفظت الفئات'); render(); }
+    };
+  };
+  paint();
 }
+
+/* ---------- مهام الأسبوع (للاستخدام القديم) ---------- */
+function tasksWeekHTML(){ return ''; }
 
 /* =========================================================
    وضع المعاينة: بيانات تجريبية + محاكاة السكربت محلياً
