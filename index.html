@@ -873,6 +873,116 @@ body[data-view="cal"]{--accent:#D63A73;--accent2:#F0508A;--accentbg:rgba(214,58,
   .hc1{position:sticky;top:14px;max-height:calc(100vh - 28px);overflow-y:auto;scrollbar-width:thin;padding-bottom:6px}
 }
 
+/* ================= تصميم «زجاجي هادئ» — html.ds-glass ================= */
+html.ds-glass{
+  --c-exp:#E2674F; --c-exp2:#EE8A73; --c-inv:#1F8F75; --c-inv2:#35AA8E; --c-wat:#3A86D1; --c-wat2:#5BA0E2; --c-pr:#7A62D6; --c-pr2:#957FE5;
+  --c-sub:#C9577D; --c-bud:#D19A2B; --c-free:#2A9DA3; --c-ink:#1E2230;
+  --bg:#F3EFEA; --card:rgba(255,255,255,.72); --card2:rgba(255,255,255,.6); --solid:#FFFFFF; --edge:rgba(255,255,255,.85);
+  --ink:#1E2230; --sub:#6E7385; --faint:#9A9FAE; --line:rgba(30,34,48,.07); --bar:rgba(30,34,48,.08);
+  --accent:#1F8F75; --accent2:#35AA8E; --accentbg:rgba(31,143,117,.12);
+  --hdr:#1E2230; --hdrs:#6E7385; --btnbg:rgba(255,255,255,.7);
+  --gl-bg:radial-gradient(1100px 700px at 100% 0%,#CDBFB2 0%,transparent 60%),radial-gradient(900px 650px at 0% 100%,#C89A92 0%,transparent 62%),radial-gradient(900px 700px at 100% 100%,#93AFC8 0%,transparent 58%),linear-gradient(180deg,#CFC4B9 0%,#C4AFAD 55%,#A9B8CB 100%);
+  --gl-pat:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22120%22%20height%3D%22120%22%20viewBox%3D%220%200%20120%20120%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%221.1%22%20opacity%3D%22.55%22%3E%3Crect%20x%3D%2238%22%20y%3D%2238%22%20width%3D%2244%22%20height%3D%2244%22/%3E%3Crect%20x%3D%2238%22%20y%3D%2238%22%20width%3D%2244%22%20height%3D%2244%22%20transform%3D%22rotate%2845%2060%2060%29%22/%3E%3Ccircle%20cx%3D%2260%22%20cy%3D%2260%22%20r%3D%229%22/%3E%3Cpath%20d%3D%22M0%200l22%2022M120%200L98%2022M0%20120l22-22M120%20120L98%2098%22/%3E%3Crect%20x%3D%22-14%22%20y%3D%22-14%22%20width%3D%2228%22%20height%3D%2228%22%20transform%3D%22rotate%2845%200%200%29%22/%3E%3Crect%20x%3D%22106%22%20y%3D%22-14%22%20width%3D%2228%22%20height%3D%2228%22%20transform%3D%22rotate%2845%20120%200%29%22/%3E%3Crect%20x%3D%22-14%22%20y%3D%22106%22%20width%3D%2228%22%20height%3D%2228%22%20transform%3D%22rotate%2845%200%20120%29%22/%3E%3Crect%20x%3D%22106%22%20y%3D%22106%22%20width%3D%2228%22%20height%3D%2228%22%20transform%3D%22rotate%2845%20120%20120%29%22/%3E%3Cpath%20d%3D%22M60%200v16M60%20104v16M0%2060h16M104%2060h16%22/%3E%3C/g%3E%3C/svg%3E");
+  --gl-sh:0 1px 0 rgba(255,255,255,.9) inset,0 10px 30px -12px rgba(60,50,80,.18);
+}
+html.ds-glass[data-theme="dark"]{
+  --bg:#12141C; --card:rgba(34,38,52,.58); --card2:rgba(255,255,255,.06); --solid:#1B1E28; --edge:rgba(255,255,255,.08);
+  --ink:#EEF0F6; --sub:#A2A8B8; --faint:#737A8C; --line:rgba(255,255,255,.07); --bar:rgba(255,255,255,.09); --btnbg:rgba(40,44,60,.7); --hdr:#EEF0F6; --hdrs:#A2A8B8;
+  --gl-bg:radial-gradient(1000px 700px at 100% 0%,#232842 0%,transparent 60%),radial-gradient(900px 600px at 0% 100%,#3A2533 0%,transparent 60%),radial-gradient(900px 700px at 100% 100%,#1D3346 0%,transparent 55%),linear-gradient(180deg,#14161F 0%,#151722 100%);
+  --gl-sh:0 1px 0 rgba(255,255,255,.06) inset,0 14px 34px -14px rgba(0,0,0,.6);
+}
+@media (prefers-color-scheme: dark){ html.ds-glass:not([data-theme="light"]){
+  --bg:#12141C; --card:rgba(34,38,52,.58); --card2:rgba(255,255,255,.06); --solid:#1B1E28; --edge:rgba(255,255,255,.08);
+  --ink:#EEF0F6; --sub:#A2A8B8; --faint:#737A8C; --line:rgba(255,255,255,.07); --bar:rgba(255,255,255,.09); --btnbg:rgba(40,44,60,.7); --hdr:#EEF0F6; --hdrs:#A2A8B8;
+  --gl-bg:radial-gradient(1000px 700px at 100% 0%,#232842 0%,transparent 60%),radial-gradient(900px 600px at 0% 100%,#3A2533 0%,transparent 60%),radial-gradient(900px 700px at 100% 100%,#1D3346 0%,transparent 55%),linear-gradient(180deg,#14161F 0%,#151722 100%);
+  --gl-sh:0 1px 0 rgba(255,255,255,.06) inset,0 14px 34px -14px rgba(0,0,0,.6) } }
+html.ds-glass body[data-view]{--accent:#1F8F75;--accent2:#35AA8E;--accentbg:rgba(31,143,117,.12)}
+html.ds-glass body[data-view="exp"]{--accent:var(--c-exp);--accentbg:rgba(226,103,79,.12)}
+html.ds-glass body[data-view="pr"]{--accent:var(--c-pr);--accentbg:rgba(122,98,214,.12)}
+html.ds-glass body[data-view="nwc"]{--accent:var(--c-wat);--accentbg:rgba(58,134,209,.12)}
+html.ds-glass body[data-view="cal"]{--accent:var(--c-sub);--accentbg:rgba(201,87,125,.12)}
+html.ds-glass{background:var(--gl-bg) fixed;background-color:var(--bg)}
+html.ds-glass body{background:transparent!important}
+html.ds-glass body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background-image:var(--gl-pat);background-size:120px 120px;opacity:.5;-webkit-mask-image:linear-gradient(180deg,#000 0%,rgba(0,0,0,.55) 45%,#000 100%);mask-image:linear-gradient(180deg,#000 0%,rgba(0,0,0,.55) 45%,#000 100%)}
+html.ds-glass[data-theme="dark"] body::before{opacity:.12}
+@media (prefers-color-scheme: dark){ html.ds-glass:not([data-theme="light"]) body::before{opacity:.12} }
+html.ds-glass{--bg:#C9BDB2;--hdr:#1E2230}
+html.ds-glass[data-theme="light"] .dline,html.ds-glass[data-theme="light"] #fresh,html.ds-glass[data-theme="light"] #greet{color:#3A3F4E}
+
+/* الأسطح الزجاجية */
+html.ds-glass .card,html.ds-glass .kp,html.ds-glass .qc,html.ds-glass .tile,html.ds-glass .kpi,html.ds-glass #sheet .pn,html.ds-glass .search input,html.ds-glass .selbtn,html.ds-glass .ibx{
+  background:var(--card)!important;color:var(--ink);border:1px solid var(--edge)!important;box-shadow:var(--gl-sh);
+  -webkit-backdrop-filter:blur(22px) saturate(140%);backdrop-filter:blur(22px) saturate(140%)}
+html.ds-glass #sheet .pn{background:var(--solid)!important}
+html.ds-glass .card{border-radius:30px}
+
+/* البلوكات: زجاج بدل الألوان، والأيقونة تحمل اللون */
+html.ds-glass .tile{color:var(--ink)!important;border-radius:30px}
+html.ds-glass .tile .ti{width:44px;height:44px;padding:10px;border-radius:15px;stroke:var(--tc,var(--accent));background:color-mix(in srgb,var(--tc,var(--accent)) 13%,transparent);box-sizing:border-box}
+html.ds-glass .t-exp{--tc:var(--c-exp)} html.ds-glass .t-inv{--tc:var(--c-inv)} html.ds-glass .t-wat{--tc:var(--c-wat)} html.ds-glass .t-pr{--tc:var(--c-pr)} html.ds-glass .t-ink{--tc:var(--ink)} html.ds-glass .t-sub{--tc:var(--c-sub)} html.ds-glass .t-bud{--tc:var(--c-bud)} html.ds-glass .t-free{--tc:var(--c-free)}
+html.ds-glass .tile .tt,html.ds-glass .tile .ts{color:var(--sub);opacity:1}
+html.ds-glass .tile .tv{color:var(--ink)}
+html.ds-glass .tile .tbadge{background:color-mix(in srgb,var(--tc,var(--accent)) 14%,transparent);color:var(--tc,var(--accent))}
+html.ds-glass .tile .tbadge.solid{background:var(--c-exp);color:#fff}
+html.ds-glass .tile .fill{background:color-mix(in srgb,var(--c-wat) 9%,transparent)}
+html.ds-glass .tile::after{content:"↗";position:absolute;top:14px;left:14px;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--solid);color:var(--sub);font-size:15px;box-shadow:0 2px 8px -3px rgba(0,0,0,.15)}
+html.ds-glass .tile.light::after,html.ds-glass .tile.hbig::after,html.ds-glass .tile:has(.tbadge)::after{display:none}
+
+/* بطاقة المصاريف الكبيرة */
+html.ds-glass .hbig .hnum b{color:var(--ink)}
+html.ds-glass .hbig .hhead{color:var(--sub)}
+html.ds-glass .hbig .hhead .tbadge{background:color-mix(in srgb,var(--c-exp) 14%,transparent);color:var(--c-exp)}
+html.ds-glass .hbig .dbars i{background:color-mix(in srgb,var(--c-exp) 22%,transparent)!important}
+html.ds-glass .hbig .dbars i.t{background:repeating-linear-gradient(135deg,var(--c-exp) 0 6px,var(--c-exp2) 6px 12px)!important}
+html.ds-glass .hbig .dbars i.f{background:var(--bar)!important}
+html.ds-glass .hbig .hstats span{color:var(--sub)}
+html.ds-glass .hbig .hstats b{color:var(--ink)}
+
+/* بطاقات اليوم */
+html.ds-glass .kp{border-radius:26px;padding:15px 16px}
+html.ds-glass .kp b{font-size:28px;letter-spacing:-.5px}
+html.ds-glass .kp.hot{background:linear-gradient(135deg,var(--c-exp),var(--c-exp2))!important;color:#fff;border-color:transparent!important}
+html.ds-glass .kp.ok b{color:var(--c-inv)}
+html.ds-glass .qc{border-radius:22px}
+html.ds-glass .qc i{border-radius:14px}
+
+/* الأشرطة والهيرو داخل الصفحات */
+html.ds-glass .hero{background:var(--card)!important;color:var(--ink)!important;border:1px solid var(--edge)!important;box-shadow:var(--gl-sh);-webkit-backdrop-filter:blur(22px);backdrop-filter:blur(22px)}
+html.ds-glass .hero .label,html.ds-glass .hero small,html.ds-glass .hero .meta,html.ds-glass .hero .mtxt{color:var(--sub)!important}
+html.ds-glass .hero .big,html.ds-glass .hero .num{color:var(--ink)}
+html.ds-glass .hero .mbar{background:var(--bar)}
+html.ds-glass .hero .mbar i{background:repeating-linear-gradient(135deg,var(--accent) 0 7px,var(--accent2) 7px 14px)}
+html.ds-glass .hero .hbtn{background:var(--accentbg);color:var(--accent)}
+html.ds-glass .bbar{background:var(--bar)}
+html.ds-glass .btn{border-radius:22px}
+html.ds-glass .btn.ghost{background:var(--card2);color:var(--ink)}
+html.ds-glass .chip{background:var(--card2);border:1px solid var(--edge)}
+html.ds-glass .chip.on{background:var(--ink);color:var(--bg);border-color:transparent}
+html.ds-glass .subnav button{background:var(--card2);border:1px solid var(--edge)}
+html.ds-glass .subnav button.on{background:var(--ink)!important;color:var(--bg)!important}
+html.ds-glass .ibi{border-radius:14px}
+html.ds-glass .top button{background:var(--btnbg);border:1px solid var(--edge);box-shadow:var(--gl-sh);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+
+/* شريط التبويبات */
+html.ds-glass #tabbar{background:rgba(255,255,255,.66)!important;border:1px solid var(--edge);box-shadow:0 14px 34px -14px rgba(60,50,80,.3);-webkit-backdrop-filter:blur(24px) saturate(150%);backdrop-filter:blur(24px) saturate(150%)}
+html.ds-glass[data-theme="dark"] #tabbar{background:rgba(30,34,46,.72)!important}
+@media (prefers-color-scheme: dark){ html.ds-glass:not([data-theme="light"]) #tabbar{background:rgba(30,34,46,.72)!important} }
+html.ds-glass #tabbar button{color:var(--sub)}
+html.ds-glass #tabbar button svg{stroke:var(--sub)}
+html.ds-glass #tabbar button.on{background:var(--ink)!important;color:var(--bg)!important}
+html.ds-glass #tabbar button.on svg{stroke:var(--bg)}
+html.ds-glass #fab{background:var(--ink);border-color:var(--bg)}
+html.ds-glass #fab svg{stroke:var(--bg)}
+
+/* الكمبيوتر: التبويبات شريط علوي بالنص مثل الصورة */
+@media (min-width:1024px){
+  html.ds-glass body{padding-right:28px!important}
+  html.ds-glass #tabbar{top:18px;bottom:auto!important;right:50%!important;left:auto!important;transform:translateX(50%);flex-direction:row;padding:6px;border-radius:99px}
+  html.ds-glass #tabbar button,html.ds-glass #tabbar button.on{width:auto;height:46px;padding:0 18px;gap:8px}
+  html.ds-glass #tabbar button .tl{display:inline!important;font-size:14px;font-weight:600}
+  html.ds-glass .top{margin-bottom:14px}
+}
+
 </style>
 </head>
 <body>
@@ -913,7 +1023,7 @@ body[data-view="cal"]{--accent:#D63A73;--accent2:#F0508A;--accentbg:rgba(214,58,
 <script src="config.js"></script>
 <script>
 'use strict';
-const VERSION = 'V1.4.7';
+const VERSION = 'V1.4.8';
 const APP_NAME = 'دفتر | DFTR';
 const API_URL = String(window.DFTR_API_URL || '').trim();
 const LS = {
@@ -1146,6 +1256,7 @@ function donut(parts, size){
 function applyTheme(){
   const dark = prefs.theme === 'dark' || (prefs.theme === 'auto' && window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches);
   document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+  document.documentElement.classList.add('ds-glass');
   const m = document.querySelector('meta[name=theme-color]'); if(m) m.setAttribute('content', dark ? '#0D0F14' : '#EDEFF3');
 }
 try { matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyTheme); } catch(e){}
