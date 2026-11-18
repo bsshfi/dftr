@@ -1097,7 +1097,7 @@ html.ds-glass #fab svg{stroke:var(--bg)}
 <script src="config.js"></script>
 <script>
 'use strict';
-const VERSION = 'V1.4.9';
+const VERSION = 'V1.5.0';
 const APP_NAME = 'دفتر | DFTR';
 const API_URL = String(window.DFTR_API_URL || '').trim();
 const LS = {
@@ -1183,6 +1183,45 @@ async function api(action, payload, tries){
   return { ok: false, error: 'Network', message: 'ما فيه اتصال — تأكد من النت' };
 }
 
+/* ---------- الحفظ بالخلفية: الواجهة تتحدث فوراً والسكربت يحفظ وراها ----------
+   local() يعدّل البيانات بالجهاز، والطلبات تمشي بالدور. لو فشل طلب نرجع لآخر نسخة من السكربت */
+S.pend = 0; let BGQ = Promise.resolve(), BGP = {}, BGF = false;
+function bg(action, payload, local, msg, after){
+  if(local) try { local(); } catch(e){}
+  S.pend++; setFresh('saving'); render();
+  if(msg) toast(msg);
+  BGQ = BGQ.then(async () => {
+    let r; try { r = await api(action, payload); } catch(e){ r = { ok: false, error: 'Network' }; }
+    S.pend--;
+    if(r.ok){
+      Object.assign(BGP, r.part || {});
+      if(r.undo && msg && $('toast').classList.contains('on')) toast(msg, r.undo);
+      if(after) try { after(r); } catch(e){}
+    } else { BGF = true; toast('⚠️ ما انحفظ: ' + errText(r)); }
+    if(!S.pend){
+      const p = BGP; BGP = {};
+      if(BGF){ BGF = false; loadCache(); applyParts(p); render(); sync(true); }
+      else { applyParts(p); setFresh('ok'); render(); }
+    }
+    return r;
+  });
+  return BGQ;
+}
+function keyOf(row){ return row.id != null && row.id !== '' ? 'id' : row.pid != null && row.pid !== '' ? 'pid' : 'name'; }
+function locSave(table, row){
+  const L = S.data[table]; if(!L) return;
+  const k = keyOf(row), ex = row[k] != null && row[k] !== '' ? L.find(x => x[k] === row[k]) : null;
+  if(ex) Object.assign(ex, row); else L.push(Object.assign({ id: 'tmp' + Date.now() + Math.random().toString(36).slice(2, 5) }, row));
+}
+function locDel(table, id){ if(S.data[table]) S.data[table] = S.data[table].filter(x => x.id !== id && x.pid !== id && x.name !== id); }
+function locBatch(ops){ (ops || []).forEach(o => { if(o.a === 'save') locSave(o.table, o.row); else if(o.a === 'delete') locDel(o.table, o.id); }); }
+function locMerchant(name, cat, past){
+  const k = String(name).trim().toLowerCase(), m = S.data.merchants.find(x => String(x.name).trim().toLowerCase() === k), old = m && m.category;
+  if(m){ m.category = cat; m.status = '✅ معتمد'; } else S.data.merchants.push({ name, category: cat, status: '✅ معتمد' });
+  if(past !== false) S.data.tx.forEach(t => { if(String(t.merchant || '').trim().toLowerCase() === k && (past === 'all' || isUnclassified(t.category) || t.category === old)) t.category = cat; });
+}
+window.addEventListener('beforeunload', e => { if(S.pend){ e.preventDefault(); e.returnValue = ''; } });
+
 /* {c:[...], r:[[...]]} ← كائنات */
 function unpack(p){ if(!p || !p.c) return []; return p.r.map(row => { const o = {}; p.c.forEach((k, i) => { o[k] = row[i]; }); return o; }); }
 function applyParts(part){
@@ -1201,6 +1240,7 @@ function loadCache(){
 
 async function sync(silent){
   if(S.loading) return;
+  if(S.pend){ await BGQ; if(S.pend) return; }
   S.loading = true; setFresh('loading');
   $('refresh').classList.add('spin');
   const r = await api('sync', {});
@@ -1217,30 +1257,21 @@ async function sync(silent){
 
 function setFresh(st){
   const f = $('fresh');
-  if(!S.at && st !== 'loading'){ f.style.display = 'none'; return; }
+  if(!S.at && st !== 'loading' && st !== 'saving'){ f.style.display = 'none'; return; }
   f.style.display = 'flex';
-  f.className = 'fresh' + (st === 'loading' ? ' loading' : st === 'old' ? ' old' : '');
-  f.innerHTML = '<i></i>' + (st === 'loading' ? 'جاري التحديث…' : 'آخر تحديث ' + esc((S.at || '').slice(5, 16).replace(' ', ' · ')));
+  f.className = 'fresh' + (st === 'loading' || st === 'saving' ? ' loading' : st === 'old' ? ' old' : '');
+  f.innerHTML = '<i></i>' + (st === 'saving' ? 'يحفظ بالخلفية…' : st === 'loading' ? 'جاري التحديث…' : 'آخر تحديث ' + esc((S.at || '').slice(5, 16).replace(' ', ' · ')));
 }
 
 /* حفظ عام: يرسل ويطبّق اللي رجع */
-async function save(table, row, parts, okMsg){
-  const r = await api('row_save', { table, row, parts: parts || [table] });
-  if(r.ok){ applyParts(r.part); if(okMsg !== false) toast(okMsg || '✅ انحفظ', r.undo); render(); }
-  else toast('⚠️ ' + errText(r));
-  return r;
+function save(table, row, parts, okMsg){
+  return bg('row_save', { table, row, parts: parts || [table] }, () => locSave(table, row), okMsg === false ? null : (okMsg || '✅ انحفظ'));
 }
-async function remove(table, id, parts, okMsg){
-  const r = await api('row_delete', { table, id, parts: parts || [table] });
-  if(r.ok){ applyParts(r.part); toast(okMsg || '🗑️ انحذف', r.undo); render(); }
-  else toast('⚠️ ' + errText(r));
-  return r;
+function remove(table, id, parts, okMsg){
+  return bg('row_delete', { table, id, parts: parts || [table] }, () => locDel(table, id), okMsg || '🗑️ انحذف');
 }
-async function batch(ops, parts, okMsg){
-  const r = await api('batch', { ops, parts });
-  if(r.ok){ applyParts(r.part); toast(okMsg || '✅ انحفظ', r.undo); render(); }
-  else toast('⚠️ ' + errText(r));
-  return r;
+function batch(ops, parts, okMsg){
+  return bg('batch', { ops, parts }, () => locBatch(ops), okMsg || '✅ انحفظ');
 }
 function errText(r){
   const m = { UndoExpired:'انتهت مهلة التراجع', Network:'ما فيه اتصال', Busy:'السكربت مشغول، جرّب بعد ثواني', NoKey:'حط مفتاح Gemini من الإعدادات', Duplicate:'هذي الفاتورة انضافت قبل', NotFound:'ما لقيته' };
@@ -1716,15 +1747,10 @@ function txForm(t){
     if(!cat) return toast('اختر التصنيف');
     const row = { id: t.id, date: $('fDate').value, time: $('fTime').value, merchant: $('fMer').value.trim(), category: cat, amount, currency: $('fCur').value, bank: $('fBank').value, pay: $('fPay').value, note: $('fNote').value.trim() };
     if(isNew){ row.type = 'يدوي'; row.source = 'يدوي'; }
-    $('fSave').disabled = true;
     const learn = $('fLearn') && $('fLearn').checked;
-    const r = await api('row_save', { table: 'tx', row, parts: ['tx'] });
-    if(r.ok){
-      applyParts(r.part);
-      let und = r.undo;
-      if(learn && row.merchant){ const r2_ = await api('merchant_set', { name: row.merchant, category: cat, applyPast: 'all' }); if(r2_.ok){ applyParts(r2_.part); und = null; } }
-      closeSheet(); toast(isNew ? '✅ انضاف' : '✅ انحفظ', und); render();
-    } else { $('fSave').disabled = false; toast('⚠️ ' + errText(r)); }
+    closeSheet();
+    bg('row_save', { table: 'tx', row, parts: ['tx'] }, () => locSave('tx', row), isNew ? '✅ انضاف' : '✅ انحفظ');
+    if(learn && row.merchant) bg('merchant_set', { name: row.merchant, category: cat, applyPast: 'all' }, () => locMerchant(row.merchant, cat, 'all'));
   };
 }
 
@@ -1814,10 +1840,8 @@ function transferSheet(id){
   bindChips(b, 'data-pu', v => { purpose = v; });
   $('tGo').onclick = async () => {
     if(!purpose) return toast('اختر الغرض');
-    $('tGo').disabled = true;
-    const r = await api('transfer_apply', { id: t.id, purpose, category: $('tCat').value, amount: $('tAmt').value, party: $('tParty').value.trim() });
-    if(r.ok){ applyParts(r.part); closeSheet(); toast(r.result && r.result.status ? r.result.status : '✅ تم', r.undo); render(); }
-    else { $('tGo').disabled = false; toast('⚠️ ' + errText(r)); }
+    closeSheet();
+    bg('transfer_apply', { id: t.id, purpose, category: $('tCat').value, amount: $('tAmt').value, party: $('tParty').value.trim() }, () => locTransfer(t, purpose), '✅ انعتمدت: ' + purpose);
   };
 }
 
@@ -1848,10 +1872,9 @@ function merchantSheet(name){
   bindChips(b, 'data-cat', c => { cat = c; });
   $('mSave').onclick = async () => {
     if(isUnclassified(cat)) return toast('اختر التصنيف');
-    $('mSave').disabled = true;
-    const r = await api('merchant_set', { name, category: cat, applyPast: $('mAll').checked ? 'all' : false });
-    if(r.ok){ applyParts(r.part); closeSheet(); toast('✅ ' + (r.changed ? 'تحدّثت ' + r.changed + ' عملية' : 'انحفظ'), r.undo); render(); }
-    else { $('mSave').disabled = false; toast('⚠️ ' + errText(r)); }
+    const past = $('mAll').checked ? 'all' : false;
+    closeSheet();
+    bg('merchant_set', { name, category: cat, applyPast: past }, () => locMerchant(name, cat, past), '✅ ' + name + ' ← ' + cat);
   };
   const d = $('mDel'); if(d) d.onclick = () => { closeSheet(); remove('merchants', name, ['merchants']); };
 }
@@ -3079,25 +3102,21 @@ function inboxItems(){
   return L.filter(x => !dis[x.k]);
 }
 
-async function quickTransfer(t){
-  const r = await api('transfer_apply', { id: t.id, purpose: t.suggested, amount: t.amount, party: t.party });
-  if(r.ok){ applyParts(r.part); toast(r.result && r.result.status ? r.result.status : '✅ انعتمدت', r.undo); render(); } else toast('⚠️ ' + errText(r));
+function locTransfer(t, purpose){ t.status = '✅ ' + (purpose || ''); t.purpose = purpose; }
+function quickTransfer(t){
+  bg('transfer_apply', { id: t.id, purpose: t.suggested, amount: t.amount, party: t.party }, () => locTransfer(t, t.suggested), '✅ انعتمدت: ' + t.suggested);
 }
-async function quickMerchant(name, cat){
-  const r = await api('merchant_set', { name, category: cat, applyPast: 'all' });
-  if(r.ok){ applyParts(r.part); toast('✅ ' + name + ' ← ' + cat, r.undo); render(); } else toast('⚠️ ' + errText(r));
+function quickMerchant(name, cat){
+  bg('merchant_set', { name, category: cat, applyPast: 'all' }, () => locMerchant(name, cat, 'all'), '✅ ' + name + ' ← ' + cat);
 }
 async function approveAll(list){
   if(!await ask('اعتماد كل المقترحات؟', 'ينعتمد ' + list.length + ' عنصر حسب الاقتراح 💡', 'اعتمد الكل')) return;
-  toast('⏳ جاري الاعتماد…');
-  let n = 0;
-  for(const it of list){
+  list.forEach(it => {
     const tr = it.k.indexOf('tr:') === 0 ? S.data.transfers.find(x => 'tr:' + x.id === it.k) : null;
-    const r = tr ? await api('transfer_apply', { id: tr.id, purpose: tr.suggested, amount: tr.amount, party: tr.party })
-      : await api('merchant_set', { name: it.k.slice(3), category: (S.data.merchants.find(m => 'mr:' + m.name === it.k) || {}).category, applyPast: 'all' });
-    if(r.ok){ applyParts(r.part); n++; }
-  }
-  render(); toast('✅ انعتمد ' + n + ' من ' + list.length);
+    if(tr) bg('transfer_apply', { id: tr.id, purpose: tr.suggested, amount: tr.amount, party: tr.party }, () => locTransfer(tr, tr.suggested));
+    else { const name = it.k.slice(3), cat = (S.data.merchants.find(m => m.name === name) || {}).category; bg('merchant_set', { name, category: cat, applyPast: 'all' }, () => locMerchant(name, cat, 'all')); }
+  });
+  toast('✅ انعتمد ' + list.length + ' عنصر');
 }
 
 let IBX = [];
@@ -3179,52 +3198,14 @@ function bulkCatSheet(){
     (mers.length ? '<label class="chk"><input type="checkbox" id="bLearn" checked> علّم دفتر: ' + (mers.length === 1 ? esc(mers[0]) : mers.length + ' تجار') + ' دايماً بهذا التصنيف</label>' : '') +
     '<button class="btn" id="bGo">صنّف</button>');
   bindChips(b, 'data-cat', c => { cat = c; });
-  $('bGo').onclick = async () => {
+  $('bGo').onclick = () => {
     if(!cat) return toast('اختر التصنيف');
     const learn = $('bLearn') && $('bLearn').checked;
-    $('bGo').disabled = true;
-    const r = await api('batch', { ops: ids.map(id => ({ a: 'save', table: 'tx', row: { id, category: cat } })), parts: ['tx'] });
-    if(!r.ok){ $('bGo').disabled = false; return toast('⚠️ ' + errText(r)); }
-    applyParts(r.part);
-    if(learn) for(const m of mers){ const r2_ = await api('merchant_set', { name: m, category: cat, applyPast: false }); if(r2_.ok) applyParts(r2_.part); }
-    S.sel = null; closeSheet(); render();
-    toast('✅ تصنّفت ' + ids.length + ' عملية', learn ? null : r.undo);
+    S.sel = null; closeSheet();
+    bg('batch', { ops: ids.map(id => ({ a: 'save', table: 'tx', row: { id, category: cat } })), parts: ['tx'] }, () => ids.forEach(id => { const t = S.data.tx.find(x => x.id === id); if(t) t.category = cat; }), '✅ تصنّفت ' + ids.length + ' عملية');
+    if(learn) mers.forEach(m => bg('merchant_set', { name: m, category: cat, applyPast: false }, () => locMerchant(m, cat, false)));
   };
 }
-
-/* ---------- الكيبورد (الكمبيوتر) ---------- */
-let IBF = -1;
-document.addEventListener('keydown', e => {
-  if(!session() && !DEMO) return;
-  if($('auth').style.display === 'block') return;
-  const tag = (e.target.tagName || '').toLowerCase();
-  const sheetOn = $('sheet').classList.contains('on');
-  if(e.key === 'Escape'){ if(sheetOn) closeSheet(); else if(S.sel){ S.sel = null; render(); } return; }
-  if(/input|textarea|select/.test(tag) || e.metaKey || e.altKey) return;
-  if((e.ctrlKey && e.key.toLowerCase() === 'z') || (!e.ctrlKey && e.key === 'u')){ e.preventDefault(); return undoLast(); }
-  if(e.ctrlKey || sheetOn) return;
-  const k = e.key;
-  const tabs = { '1': 'home', '2': 'exp', '3': 'pr', '4': 'inv', '5': 'nwc', '6': 'cal' };
-  if(tabs[k]){ e.preventDefault(); return go(tabs[k]); }
-  if(k === '/'){ e.preventDefault(); return searchSheet(); }
-  if(k === 'n'){ e.preventDefault(); return fabAction(); }
-  if(k === 'r'){ e.preventDefault(); return sync(); }
-  if(k === 'i'){ e.preventDefault(); return go('inbox'); }
-  if(k === '?'){ e.preventDefault(); return keysSheet(); }
-  const rows = Array.from(document.querySelectorAll('.ibr')).filter(r => r.offsetParent);
-  if(!rows.length) return;
-  if(k === 'j' || k === 'ArrowDown' && e.shiftKey){ e.preventDefault(); IBF = Math.min(rows.length - 1, IBF + 1); }
-  else if(k === 'k' || k === 'ArrowUp' && e.shiftKey){ e.preventDefault(); IBF = Math.max(0, IBF - 1); }
-  else if(IBF >= 0 && rows[IBF]){
-    const x = IBX[+rows[IBF].dataset.ib]; if(!x) return;
-    if(k === 'Enter'){ e.preventDefault(); return x.open(); }
-    if(k === 'a'){ e.preventDefault(); return x.quick ? x.quick() : x.acts[0] ? x.acts[0].fn() : x.open(); }
-    if(k === 'x' && x.snooze){ e.preventDefault(); dismiss(x.k); return render(); }
-    return;
-  } else return;
-  rows.forEach((r, i) => r.classList.toggle('kf', i === IBF));
-  rows[IBF].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-});
 function keysSheet(){
   const K = [['1 – 6','التبويبات'],['i','يحتاج إجراء'],['j / k','تنقل بين العناصر'],['Enter','افتح العنصر'],['a','اعتمد / الإجراء الأول'],['x','تجاهل'],['u أو Ctrl+Z','تراجع عن آخر عملية'],['n','إضافة'],['/','بحث'],['r','تحديث'],['Esc','إغلاق']];
   openSheet(sheetHead('⌨️ اختصارات الكيبورد') + K.map(x => '<div class="kvl"><span>' + x[1] + '</span><b><kbd>' + x[0] + '</kbd></b></div>').join(''));
