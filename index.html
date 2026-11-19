@@ -1144,7 +1144,7 @@ body[data-view="plt"],html.ds-glass body[data-view="plt"]{--accent:var(--c-plt);
 <script src="config.js"></script>
 <script>
 'use strict';
-const VERSION = 'V1.6.0';
+const VERSION = 'V1.6.1';
 const APP_NAME = 'دفتر | DFTR';
 const API_URL = String(window.DFTR_API_URL || '').trim();
 const LS = {
@@ -3706,12 +3706,14 @@ const PLT_BID = {
 };
 S.sub.plt = 'live';
 S.plates = (() => { if(DEMO) return null; try { return JSON.parse(LS.get('dftr:plates') || 'null'); } catch(e){ return null; } })();
-function pltOn(){ return DEMO || !!(PLT_URL && LS.get('dftr:pkey')); }
+const PLT_KEY0 = String(window.DFTR_PLATES_KEY || '').trim();
+function pKey(){ return LS.get('dftr:pkey') || PLT_KEY0; }
+function pltOn(){ return DEMO || !!(PLT_URL && pKey()); }
 
 async function papi(action, payload){
   if(DEMO) return PDemo(action, payload || {});
   if(!PLT_URL) return { ok: false, error: 'NoUrl', message: 'رابط مراقب اللوحات مو موجود في config.js' };
-  const key = LS.get('dftr:pkey') || '';
+  const key = pKey();
   if(!key) return { ok: false, error: 'NoPKey', message: 'حط «رمز دفتر» من الإعدادات' };
   for(let i = 0; i < 2; i++){
     try {
@@ -3931,12 +3933,12 @@ function watchForm(w){
 
 /* ---------- الإعدادات ---------- */
 function pltSettingsHTML(){
-  const k = LS.get('dftr:pkey');
+  const k = pKey();
   return '<section class="card"><h2>🚗 مراقب اللوحات</h2>' +
     (DEMO ? '<div class="pres bad">وضع المعاينة — بيانات تجريبية</div>' :
-      '<div class="appst"><b>' + (k ? '✅' : '⚠️') + '</b><div>' + (k ? 'مربوط بشيت Bs-Plate_Watch' : 'مو مربوط') + '<div class="hint">' + (S.plates && S.plates.at ? 'آخر قراءة ' + esc(pWhen(S.plates.at)) : 'الرمز ينحفظ في هذا الجهاز بس') + '</div></div></div>') +
+      '<div class="appst"><b>' + (k ? '✅' : '⚠️') + '</b><div>' + (k ? 'مربوط بشيت Bs-Plate_Watch' + (LS.get('dftr:pkey') ? '' : ' (الرمز من config.js)') : 'مو مربوط') + '<div class="hint">' + (S.plates && S.plates.at ? 'آخر قراءة ' + esc(pWhen(S.plates.at)) : 'الرمز ينحفظ في هذا الجهاز بس') + '</div></div></div>') +
     '<div class="flabel">رمز دفتر (من شيت Bs-Plate_Watch ← الإعدادات)</div><div class="field"><input id="pKey" class="fin" style="margin:0" placeholder="pw_..." autocomplete="off" value=""><button class="paste" id="pKeySave">حفظ واختبار</button></div>' +
-    (k ? '<button class="btn ghost" id="pKeyDel">فك الربط من هذا الجهاز</button>' : '') + '</section>';
+    (LS.get('dftr:pkey') ? '<button class="btn ghost" id="pKeyDel">رجوع للرمز الافتراضي</button>' : '') + '</section>';
 }
 function pltSettingsBind(){
   const s = $('pKeySave'); if(!s) return;
