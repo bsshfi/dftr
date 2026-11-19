@@ -1057,6 +1057,53 @@ html.ds-glass #fab svg{stroke:var(--bg)}
 .calhd>.calnav{flex-direction:row!important;align-items:center}
 .calhd>.calseg{flex-direction:row!important}
 
+/* ---------- 🚗 اللوحات (V1.6.0) ---------- */
+:root{--c-plt:#46546E;--c-plt2:#5E6E8C}
+.t-plt{--tbg:var(--c-plt)}
+html.ds-glass .t-plt{--tc:var(--c-plt)}
+:root[data-theme="dark"]{--c-plt:#8FA3C8;--c-plt2:#A9BAD8}
+body[data-view="plt"],html.ds-glass body[data-view="plt"]{--accent:var(--c-plt);--accent2:var(--c-plt2);--accentbg:rgba(70,84,110,.14)}
+:root[data-theme="dark"] body[data-view="plt"]{--accentbg:rgba(140,160,200,.16)}
+.kplate{display:inline-grid;grid-template-columns:auto auto 22px;direction:ltr;background:#F4F5F2;color:#121417;border:2px solid #1d2026;border-radius:10px;overflow:hidden;box-shadow:0 2px 0 rgba(0,0,0,.08);font-family:var(--ui)}
+.kplate>div{display:grid;grid-template-rows:1fr 1fr}
+.kplate .kn{border-inline-end:2px solid #1d2026}
+.kplate .kl{border-inline-end:2px solid #1d2026}
+.kplate span{display:flex;align-items:center;justify-content:center;padding:2px 12px;font-weight:800;white-space:nowrap}
+.kplate span:first-child{border-bottom:2px solid #1d2026;font-size:22px;line-height:1.25}
+.kplate span:last-child{font-size:17px;letter-spacing:.12em;font-family:var(--nf)}
+.kplate .kl span:first-child{direction:rtl;letter-spacing:.08em}
+.kplate .ks{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;font-size:7.5px;font-weight:800;line-height:1;background:#fff}
+.kplate .ks i{width:6px;height:6px;border-radius:50%;background:#121417;margin-top:3px}
+.kplate.sm span:first-child{font-size:17px} .kplate.sm span:last-child{font-size:13px} .kplate.sm span{padding:1px 9px}
+.kplate.lg span:first-child{font-size:30px} .kplate.lg span:last-child{font-size:22px} .kplate.lg span{padding:4px 16px}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px;margin-bottom:12px}
+.pcard{background:var(--card);border-radius:26px;padding:14px 14px 10px;cursor:pointer;display:flex;flex-direction:column;gap:10px;min-width:0}
+.pcard:active{transform:scale(.99)}
+.pcard .pt{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:12px;color:var(--sub)}
+.pcard .pp{display:flex;justify-content:center;padding:4px 0}
+.pcard .pk{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;text-align:center}
+.pcard .pk small{display:block;font-size:11px;color:var(--sub)}
+.pcard .pk b{font-size:15px;font-family:var(--nf)}
+.pcard .pk b.ar{font-family:var(--ui);font-size:13.5px}
+.pcard .pm{font-size:11.5px;color:var(--faint);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pspark{display:block;width:100%;height:38px}
+.pspark.lg{height:110px}
+.badge.warn{background:rgba(232,163,23,.16);color:#B07A06}
+:root[data-theme="dark"] .badge.warn{color:#F2C14E}
+.pw-item{display:flex;align-items:center;gap:12px;padding:12px 2px;border-top:1px solid var(--line)}
+.pw-item:first-child{border-top:0}
+.pw-item .pw-b{flex:1;min-width:0;cursor:pointer}
+.pw-item .pw-p{font-weight:800;font-size:16px;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.pw-item .pw-p .num{direction:ltr;unicode-bidi:isolate}
+.pw-item .pw-s{font-size:12.5px;color:var(--sub);margin-top:3px}
+.pw-item.off .pw-p{opacity:.45}
+.ptable{width:100%;border-collapse:collapse;font-size:13.5px}
+.ptable th{color:var(--sub);font-weight:600;font-size:12px;text-align:right;padding:6px 4px;border-bottom:1px solid var(--line)}
+.ptable td{padding:8px 4px;border-bottom:1px solid var(--line)}
+.ptable td.num{font-family:var(--nf);direction:ltr;text-align:left}
+.ptable .up{color:var(--up)}
+.phelp{background:var(--accentbg);border-radius:16px;padding:10px 12px;font-size:12.5px;line-height:1.9;margin-top:10px}
+.phelp code{font-family:var(--nf);background:var(--card);border-radius:6px;padding:0 5px;direction:ltr;unicode-bidi:isolate}
 </style>
 </head>
 <body>
@@ -1097,7 +1144,7 @@ html.ds-glass #fab svg{stroke:var(--bg)}
 <script src="config.js"></script>
 <script>
 'use strict';
-const VERSION = 'V1.5.0';
+const VERSION = 'V1.6.0';
 const APP_NAME = 'دفتر | DFTR';
 const API_URL = String(window.DFTR_API_URL || '').trim();
 const LS = {
@@ -1249,6 +1296,7 @@ async function sync(silent){
     Object.keys(r.data).forEach(k => { S.data[k] = unpack(r.data[k]); });
     S.settings = r.settings || {}; S.purposes = r.purposes || []; S.ai = !!r.ai; S.at = r.at || '';
     saveCache(); setFresh('ok'); render();
+    loadPlates(true);
   } else {
     setFresh('old');
     if(!silent && r && r.error !== 'NoSession') toast('⚠️ ' + (r.message || 'ما قدرت أحدّث — ' + (r.error || '')));
@@ -1409,7 +1457,7 @@ function render(){
   const h = new Date().getHours();
   $('greet').textContent = (h < 12 ? 'صباح الخير' : 'مساء الخير') + ' يا باسل';
   $('dline').innerHTML = dateLine();
-  $('ttl').textContent = { home:APP_NAME, exp:'مصاريفي', pr:'الأسعار', inv:'استثماراتي', nwc:'المياه', set:'الإعدادات', inbox:'يحتاج إجراء', cal:'التقويم' }[S.view] || 'دفتر';
+  $('ttl').textContent = { home:APP_NAME, exp:'مصاريفي', pr:'الأسعار', inv:'استثماراتي', nwc:'المياه', plt:'اللوحات', set:'الإعدادات', inbox:'يحتاج إجراء', cal:'التقويم' }[S.view] || 'دفتر';
   if(S.sel && S.view !== 'exp') S.sel = null;
   selBar();
 }
@@ -1430,6 +1478,7 @@ function fabAction(){
   if(S.view === 'inv') return opForm();
   if(S.view === 'nwc') return readingForm();
   if(S.view === 'cal') return taskForm(null, todayKey());
+  if(S.view === 'plt') return pltOn() ? watchForm() : go('set');
   const b = openSheet(sheetHead('إضافة') +
     '<div class="qa qa4" style="margin-top:8px"><button data-a="tx"><i style="background:rgba(242,107,29,.14)">🧾</i>مصروف</button><button data-a="rc"><i style="background:rgba(106,69,232,.14)">📷</i>فاتورة</button><button data-a="wt"><i style="background:rgba(31,114,214,.14)">💧</i>قراءة ماء</button><button data-a="op"><i style="background:rgba(17,135,90,.14)">📈</i>استثمار</button></div>' +
     '<div class="btns"><button class="btn ghost" data-a="tk">📅 مهمة</button><button class="btn ghost" data-a="it">🛡️ ضمان أو فاتورة</button></div>');
@@ -2896,6 +2945,7 @@ VIEWS.home = () => {
   H.push('<button class="tile t-pr short" data-go="prs">' + ico('pr') + '<div class="tt">كم سعره؟</div><div class="tv ar">' + S.data.products.length + ' منتج</div><div class="ts">' + (rc ? 'آخر فاتورة ' + esc(rc.store) : '') + '</div></button>');
   const own = S.data.items, wAct = own.filter(i => i.wEnd && String(i.wEnd) >= today);
   H.push('<button class="tile t-ink short" data-go="own">' + ico('shield') + '<div class="tt">الضمانات والفواتير</div><div class="tv ar">' + (own.length ? own.length + ' غرض' : 'أضف أول غرض') + '</div><div class="ts">' + (own.length ? wAct.length + ' ضمان ساري' : 'فواتير وضمانات أغراضك') + '</div></button>');
+  H.push(pltTile());
   H.push('</div>');
 
 
@@ -2961,7 +3011,7 @@ VIEWS.home_after = root => {
     exp: () => { S.period = cycleKey(); go('exp', 'sum'); }, inv: () => go('inv', 'sum'), nwc: () => go('nwc', 'now'),
     prs: () => { S.sub.pr = 'search'; go('pr'); setTimeout(() => { const i = $('pq'); if(i) i.focus(); }, 60); },
     rev: () => go('exp', 'rev'), bud: () => { S.period = cycleKey(); go('exp', 'bud'); }, subs: () => subsSheet(),
-    exptx: () => { S.q = ''; go('exp', 'tx'); }, own: () => go('pr', 'own'), cal: () => go('cal'), yday: () => daySheet(addDays(todayKey(), -1)), inbox: () => go('inbox'), rpt: () => reportSheet(shiftMonth(cycleKey(), -1))
+    exptx: () => { S.q = ''; go('exp', 'tx'); }, own: () => go('pr', 'own'), plt: () => go('plt'), cal: () => go('cal'), yday: () => daySheet(addDays(todayKey(), -1)), inbox: () => go('inbox'), rpt: () => reportSheet(shiftMonth(cycleKey(), -1))
   };
   root.querySelectorAll('[data-go]').forEach(b => b.onclick = () => act[b.dataset.go] && act[b.dataset.go]());
   root.querySelectorAll('[data-own]').forEach(el => el.onclick = () => itemSheet(el.dataset.own));
@@ -3642,6 +3692,301 @@ function tasksWeekHTML(){ return ''; }
 /* =========================================================
    وضع المعاينة: بيانات تجريبية + محاكاة السكربت محلياً
    ========================================================= */
+/* =========================================================
+   🚗 اللوحات — من شيت Bs-Plate_Watch (مستقل عن Bs-Dftr)
+   الرابط في config.js (DFTR_PLATES_URL)، و«رمز دفتر» ينحفظ في هذا الجهاز بس
+   ========================================================= */
+const PLT_URL = String(window.DFTR_PLATES_URL || '').trim();
+const PLT_ACTIVE = ['جاري', 'لم يبدأ'];
+const PLT_SECTIONS = ['الكل', 'المميزة', 'الأفراد'];
+const PLT_TYPES = ['الكل', 'خصوصي', 'نقل خاص', 'دراجة نارية'];
+const PLT_BID = {
+  'المميزة': 'https://www.absher.sa/wps/myportal/individuals/Home/myservices/eservices/traffic/mazadservice/',
+  'الأفراد': 'https://www.absher.sa/wps/myportal/individuals/Home/vehileservices-dupe/vehileservices-services-dupe/vpm'
+};
+S.sub.plt = 'live';
+S.plates = (() => { if(DEMO) return null; try { return JSON.parse(LS.get('dftr:plates') || 'null'); } catch(e){ return null; } })();
+function pltOn(){ return DEMO || !!(PLT_URL && LS.get('dftr:pkey')); }
+
+async function papi(action, payload){
+  if(DEMO) return PDemo(action, payload || {});
+  if(!PLT_URL) return { ok: false, error: 'NoUrl', message: 'رابط مراقب اللوحات مو موجود في config.js' };
+  const key = LS.get('dftr:pkey') || '';
+  if(!key) return { ok: false, error: 'NoPKey', message: 'حط «رمز دفتر» من الإعدادات' };
+  for(let i = 0; i < 2; i++){
+    try {
+      const res = await fetch(PLT_URL + (PLT_URL.indexOf('?') === -1 ? '?' : '&') + 't=' + Date.now() + '_' + i,
+        { method: 'POST', body: JSON.stringify(Object.assign({ action: action, key: key }, payload || {})), cache: 'no-store', redirect: 'follow' });
+      const txt = await res.text();
+      let r; try { r = JSON.parse(txt); } catch(e){ r = { ok: false, error: 'BadResponse' }; }
+      if(r.error === 'Busy' && !i){ await sleep(1200); continue; }
+      return r;
+    } catch(e){ if(i) return { ok: false, error: 'Network', message: 'ما فيه اتصال — تأكد من النت' }; }
+  }
+  return { ok: false, error: 'Network' };
+}
+async function loadPlates(silent){
+  if(!pltOn()) return;
+  if(DEMO && !S.plates){ const r = await papi('plates_data'); S.plates = r; return; }
+  const r = await papi('plates_data');
+  if(r && r.ok){
+    S.plates = { watch: r.watch || [], track: r.track || [], status: r.status || {}, at: r.at || '' };
+    LS.set('dftr:plates', JSON.stringify(S.plates));
+    if(S.view === 'plt' || S.view === 'home') render();
+  } else if(!silent) toast('⚠️ اللوحات: ' + errText(r || {}));
+}
+
+/* ---------- مساعدات ---------- */
+const AR_DIG = s => String(s).replace(/[0-9]/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
+function plParts(t){
+  const m = String(t.plate || '').match(/^(.*?)\s+(\d+)$/) || [null, t.plate || '', ''];
+  const en = String(t.en || '').replace(/\s*\d+\s*$/, '');
+  return { letters: m[1].trim(), number: m[2], en: en.trim() };
+}
+function plateHTML(t, size){
+  const p = plParts(t);
+  return '<div class="kplate' + (size ? ' ' + size : '') + '" aria-label="' + esc(p.letters + ' ' + p.number) + '">' +
+    '<div class="kn"><span>' + esc(AR_DIG(p.number)) + '</span><span>' + esc(p.number) + '</span></div>' +
+    '<div class="kl"><span>' + esc(p.letters) + '</span><span>' + esc(p.en) + '</span></div>' +
+    '<div class="ks"><b>K</b><b>S</b><b>A</b><i></i></div></div>';
+}
+function pltBadge(st){
+  const c = { 'جاري': 'run', 'لم يبدأ': 'mute', 'انتهى بمزايدات': 'ok', 'انتهى بدون مزايدات': 'mute', 'اختفت قبل الموعد': 'warn' }[st] || 'mute';
+  return '<span class="badge ' + c + '">' + esc(st || '—') + '</span>';
+}
+function pDate(s){ return String(s || '').slice(0, 10); }
+function pTime(s){ return String(s || '').slice(11, 16); }
+function pWhen(s){
+  if(!s) return '—';
+  const d = pDate(s), t = pTime(s), td = todayKey();
+  const h = t ? ' ' + t : '';
+  if(d === td) return (t && +t.slice(0, 2) >= 18 ? 'الليلة' : 'اليوم') + h;
+  if(d === addDays(td, 1)) return 'بكرة' + h;
+  if(d === addDays(td, -1)) return 'أمس' + h;
+  return dayLabel(d) + h;
+}
+function pLeft(s){
+  if(!s) return '';
+  const ms = Date.parse(String(s).replace(' ', 'T') + ':00+03:00') - Date.now();
+  if(!(ms > 0)) return '';
+  const h = Math.floor(ms / 3600000);
+  return h >= 48 ? 'باقي ' + Math.floor(h / 24) + ' أيام' : h >= 1 ? 'باقي ' + h + ' ساعة' : 'باقي ' + Math.max(1, Math.round(ms / 60000)) + ' دقيقة';
+}
+function pSpark(snaps, big){
+  const pts = (snaps || []).map(s => num(s[1]));
+  if(!pts.length) return '';
+  const W = 300, H = big ? 110 : 38, pad = 4, mx = Math.max.apply(null, pts), mn = Math.min.apply(null, pts), rg = mx - mn || 1;
+  const xy = pts.map((v, i) => [pts.length === 1 ? W / 2 : pad + i * (W - pad * 2) / (pts.length - 1), H - pad - (mx === mn ? (H - pad * 2) / 2 : (v - mn) / rg * (H - pad * 2))]);
+  const line = xy.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
+  const area = 'M' + xy[0][0].toFixed(1) + ',' + H + ' L' + line.replace(/ /g, ' L') + ' L' + xy[xy.length - 1][0].toFixed(1) + ',' + H + ' Z';
+  return '<svg class="pspark' + (big ? ' lg' : '') + '" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" aria-hidden="true">' +
+    '<path d="' + area + '" fill="var(--accent)" opacity=".12"/>' +
+    '<polyline points="' + line + '" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/>' +
+    '<circle cx="' + xy[xy.length - 1][0].toFixed(1) + '" cy="' + xy[xy.length - 1][1].toFixed(1) + '" r="3.5" fill="var(--accent)"/></svg>';
+}
+function pTrack(){ return (S.plates && S.plates.track) || []; }
+function pWatch(){ return (S.plates && S.plates.watch) || []; }
+function pLive(){ return pTrack().filter(t => PLT_ACTIVE.indexOf(t.status) >= 0).sort((a, b) => String(a.end).localeCompare(String(b.end))); }
+function pDone(){ return pTrack().filter(t => PLT_ACTIVE.indexOf(t.status) < 0).sort((a, b) => String(b.end).localeCompare(String(a.end))); }
+
+/* بلوك الرئيسية */
+function pltTile(){
+  if(!pltOn()) return '';
+  const L = pLive(), n = L[0], today = L.filter(t => pDate(t.end) === todayKey()).length;
+  return '<button class="tile t-plt wide short" data-go="plt"><svg class="ti" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="6.5" width="19" height="11" rx="2.5"/><path d="M7 10v4M10.5 10v4M14 10h3M14 14h3"/></svg>' +
+    '<div class="tt">اللوحات اللي أتابعها</div><div class="tv ar">' + (S.plates ? L.length + ' جارية' : '…') + '</div>' +
+    '<div class="ts">' + (n ? esc(n.plate) + ' · ينتهي ' + esc(pWhen(n.end)) : pWatch().filter(w => w.active).length + ' نمط مفعّل · ما فيه لوحات جارية') + '</div>' +
+    (today ? '<span class="tbadge solid">⏰ ' + today + ' تنتهي اليوم</span>' : '') + '</button>';
+}
+
+/* ---------- الصفحة ---------- */
+VIEWS.plt = () => {
+  const tabs = [['live', 'الجارية', pLive().length], ['done', 'المنتهية', 0], ['watch', 'قائمة المراقبة', 0]];
+  let h = '<div class="subnav">' + tabs.map(t => '<button data-psub="' + t[0] + '" class="' + (S.sub.plt === t[0] ? 'on' : '') + '">' + t[1] + (t[2] ? '<span class="bd">' + t[2] + '</span>' : '') + '</button>').join('') + '</div>';
+  if(!pltOn()) return h + '<section class="card" style="text-align:center;padding:26px 16px"><div style="font-size:44px">🚗</div><h3 style="margin:8px 0 4px">اربط مراقب اللوحات</h3><p class="hint">' + (PLT_URL ? 'حط «رمز دفتر» من الإعدادات. تلقاه في شيت Bs-Plate_Watch ← تبويب الإعدادات.' : 'رابط مراقب اللوحات مو موجود في config.js') + '</p><button class="btn" id="pGoSet">⚙️ الإعدادات</button></section>';
+  if(!S.plates) return h + '<section class="card"><div class="empty">جاري التحميل…</div></section>';
+  h += ({ live: pLiveHTML, done: pDoneHTML, watch: pWatchHTML }[S.sub.plt] || pLiveHTML)();
+  const st = S.plates.status || {};
+  h += '<p class="hint" style="text-align:center">آخر فحص من الآيفون: ' + esc(st.last ? pWhen(st.last) : '—') + '</p>';
+  return h;
+};
+function pCard(t){
+  const p = t.snaps || [], ch = t.firstPrice && t.lastPrice !== t.firstPrice ? (t.lastPrice - t.firstPrice) / t.firstPrice * 100 : null;
+  const live = PLT_ACTIVE.indexOf(t.status) >= 0;
+  return '<div class="pcard" data-pk="' + esc(t.key) + '">' +
+    '<div class="pt"><span>' + esc([t.section, t.type, t.category].filter(Boolean).join(' · ')) + '</span>' + pltBadge(t.status) + '</div>' +
+    '<div class="pp">' + plateHTML(t) + '</div>' +
+    '<div class="pk"><div><small>' + (live ? 'أعلى مزايدة' : 'آخر سعر') + '</small><b>' + money0(t.lastPrice) + '</b></div><div><small>المزايدات</small><b>' + esc(t.bids) + '</b></div>' +
+    '<div><small>' + (live ? 'ينتهي' : 'انتهى') + '</small><b class="ar">' + esc(pWhen(t.end)) + '</b></div></div>' +
+    (p.length > 1 ? pSpark(p) : '') +
+    '<div class="pm">' + (live && pLeft(t.end) ? esc(pLeft(t.end)) + ' · ' : '') + p.length + ' تسجيل' + (ch != null ? ' · ' + (ch > 0 ? '▲ ' : '▼ ') + Math.abs(ch).toFixed(0) + '٪ من أول سعر' : '') + '</div></div>';
+}
+function pLiveHTML(){
+  const L = pLive(), W = pWatch().filter(w => w.active), st = (S.plates || {}).status || {};
+  const H = ['<div class="grid g3">' + kpi('جارية', L.length, L.filter(t => pDate(t.end) === todayKey()).length + ' تنتهي اليوم') + kpi('أنماط مفعّلة', W.length, pWatch().length + ' بالقائمة') + kpi('المنتهية', pDone().length, 'محفوظة بالسجل') + '</div>'];
+  if(!L.length) H.push('<section class="card" style="text-align:center;padding:24px 16px"><div style="font-size:40px">🔎</div><h3 style="margin:8px 0 4px">ما فيه لوحات جارية تطابق قائمتك</h3><p class="hint">أول ما تظهر لوحة يوصلك إيميل وتطلع هنا، وتنحفظ أسعارها كل فحص.</p></section>');
+  else H.push('<div class="pgrid">' + L.map(pCard).join('') + '</div>');
+  return H.join('');
+}
+function pDoneHTML(){
+  const D = pDone();
+  if(!D.length) return '<section class="card"><div class="empty">لسا ما انتهى مزاد لوحة تتابعها</div></section>';
+  const sold = D.filter(t => t.status === 'انتهى بمزايدات');
+  const H = ['<div class="grid g3">' + kpi('انتهت', D.length, sold.length + ' بمزايدات') + kpi('متوسط آخر سعر', sold.length ? money0(sum(sold, t => num(t.lastPrice)) / sold.length) : '—', 'للي انتهت بمزايدات') +
+    kpi('الأعلى', sold.length ? money0(Math.max.apply(null, sold.map(t => num(t.lastPrice)))) : '—', sold.length ? sold.slice().sort((a, b) => b.lastPrice - a.lastPrice)[0].plate : '') + '</div>'];
+  H.push('<p class="hint" style="margin:0 4px 10px">أبشر ما ينشر سعر البيع النهائي، فهذا آخر سعر شفناه في آخر فحص قبل نهاية المزاد.</p>');
+  H.push('<div class="pgrid">' + D.map(pCard).join('') + '</div>');
+  return H.join('');
+}
+function pWatchHTML(){
+  const W = pWatch();
+  return '<section class="card"><h2>🎯 قائمة المراقبة <button class="link" id="pwAdd" style="margin:0;padding:0">➕</button></h2>' +
+    '<div class="list">' + (W.length ? W.map(w => '<div class="pw-item' + (w.active ? '' : ' off') + '"><div class="pw-b" data-pw="' + w.row + '">' +
+      '<div class="pw-p"><span>' + esc(w.letters || 'أي حروف') + '</span><span class="num">' + esc(w.number || 'أي رقم') + '</span></div>' +
+      '<div class="pw-s">' + esc([w.section === 'الكل' ? 'كل الأقسام' : w.section, w.type === 'الكل' ? 'كل الأنواع' : w.type, w.max ? '≤ ' + money0(w.max) + ' ريال' : '', w.note].filter(Boolean).join(' · ')) + '</div></div>' +
+      '<input type="checkbox" class="tg" data-pwt="' + w.row + '"' + (w.active ? ' checked' : '') + ' aria-label="تفعيل"></div>').join('') : '<div class="empty">القائمة فاضية — أضف أول لوحة</div>') + '</div>' +
+    '<button class="btn" id="pwAdd2">➕ إضافة لوحة أو نمط</button></section>' +
+    '<div class="phelp"><b>الرموز:</b> <code>?</code> خانة وحدة · <code>*</code> أي عدد خانات (حتى صفر) · فاضي = أي شي<br>' +
+    '<code>*33*</code> أي رقم فيه 33 · <code>3*</code> يبدأ بـ 3 · <code>??</code> رقم من خانتين · <code style="direction:rtl">ب ? ?</code> أول حرف ب</div>';
+}
+VIEWS.plt_after = root => {
+  root.querySelectorAll('[data-psub]').forEach(b => b.onclick = () => { S.sub.plt = b.dataset.psub; render(); });
+  const gs = $('pGoSet'); if(gs) gs.onclick = () => go('set');
+  root.querySelectorAll('[data-pk]').forEach(el => el.onclick = () => plateSheet(el.dataset.pk));
+  root.querySelectorAll('[data-pw]').forEach(el => el.onclick = () => watchForm(pWatch().find(w => String(w.row) === el.dataset.pw)));
+  root.querySelectorAll('[data-pwt]').forEach(el => el.onchange = async () => {
+    const w = pWatch().find(x => String(x.row) === el.dataset.pwt); if(!w) return;
+    w.active = el.checked; render();
+    const r = await papi('watch_toggle', { row: w.row, active: el.checked });
+    if(r.ok){ S.plates.watch = r.watch; LS.set('dftr:plates', JSON.stringify(S.plates)); toast(el.checked ? '✅ تفعّل' : '⏸️ توقف'); render(); }
+    else { w.active = !el.checked; render(); toast('⚠️ ' + errText(r)); }
+  });
+  ['pwAdd', 'pwAdd2'].forEach(id => { const b = $(id); if(b) b.onclick = () => watchForm(); });
+  if(!S.plates && pltOn()) loadPlates();
+};
+
+/* ---------- تفاصيل لوحة ---------- */
+function plateSheet(key){
+  const t = pTrack().find(x => x.key === key); if(!t) return;
+  const sn = (t.snaps || []).slice().reverse(), live = PLT_ACTIVE.indexOf(t.status) >= 0;
+  const ch = t.firstPrice ? (t.lastPrice - t.firstPrice) / t.firstPrice * 100 : 0;
+  openSheet(sheetHead('🚗 ' + esc(t.plate)) +
+    '<div style="display:flex;justify-content:center;margin:6px 0 12px">' + plateHTML(t, 'lg') + '</div>' +
+    '<div style="text-align:center;margin-bottom:10px">' + pltBadge(t.status) + (live && pLeft(t.end) ? ' <span class="badge mute">' + esc(pLeft(t.end)) + '</span>' : '') + '</div>' +
+    '<div class="grid g3">' + kpi(live ? 'أعلى مزايدة' : 'آخر سعر', money0(t.lastPrice), 'ريال') + kpi('أول سعر شفناه', money0(t.firstPrice), (ch ? (ch > 0 ? '▲ ' : '▼ ') + Math.abs(ch).toFixed(0) + '٪' : 'بدون تغيير')) + kpi('المزايدات', t.bids, '') + '</div>' +
+    ((t.snaps || []).length > 1 ? '<section class="card" style="padding:14px"><h2 style="margin-bottom:6px">تطور السعر</h2>' + pSpark(t.snaps, true) + '</section>' : '') +
+    '<section class="card" style="padding:6px 16px">' +
+    [['القسم', t.section], ['النوع', t.type], ['الفئة', t.category], ['أول ظهور', t.first ? dayLabel(pDate(t.first)) + ' ' + pTime(t.first) : ''], ['بداية المزاد', t.start ? dayLabel(pDate(t.start)) + ' ' + pTime(t.start) : ''], ['نهاية المزاد', t.end ? dayLabel(pDate(t.end)) + ' ' + pTime(t.end) : ''], ['طابقت', t.matched]]
+      .filter(r => r[1]).map(r => '<div class="kvl"><span>' + r[0] + '</span><span style="font-weight:700">' + esc(r[1]) + '</span></div>').join('') + '</section>' +
+    '<section class="card" style="padding:12px 14px"><h2 style="margin-bottom:4px">السجل <span class="badge mute">' + sn.length + '</span></h2><table class="ptable"><thead><tr><th>اليوم</th><th>الوقت</th><th>السعر</th><th>المزايدات</th></tr></thead><tbody>' +
+    sn.map((s, i) => { const prev = sn[i + 1], up = prev && num(s[1]) > num(prev[1]);
+      return '<tr><td>' + esc(WEEK[new Date(pDate(s[0]) + 'T12:00:00').getDay()] + ' ' + dayLabel(pDate(s[0]))) + '</td><td class="num">' + esc(pTime(s[0])) + '</td><td class="num' + (up ? ' up' : '') + '">' + money0(s[1]) + (up ? ' ▲' : '') + '</td><td class="num">' + esc(s[2]) + '</td></tr>'; }).join('') +
+    '</tbody></table></section>' +
+    '<div class="btns">' + (t.link ? '<a class="btn ghost" href="' + esc(t.link) + '" target="_blank" rel="noopener" style="text-align:center;text-decoration:none">عرض اللوحة</a>' : '') +
+    (live && PLT_BID[t.section] ? '<a class="btn" href="' + esc(PLT_BID[t.section]) + '" target="_blank" rel="noopener" style="text-align:center;text-decoration:none">المزايدة في أبشر</a>' : '') + '</div>', { full: true });
+}
+
+/* ---------- إضافة / تعديل نمط ---------- */
+function pPatternOk(letters, number){
+  if(!letters && !number) return 'اكتب الحروف أو الرقم';
+  if(letters && /[^\sء-ي?*؟A-Za-z]/.test(letters)) return 'الحروف فيها رموز غير مسموحة';
+  if(number && /[^0-9٠-٩?*؟]/.test(number)) return 'الرقم يقبل أرقام و ? و * بس';
+  return '';
+}
+function watchForm(w){
+  const isNew = !w; w = Object.assign({ active: true, letters: '', number: '', section: 'الكل', type: 'الكل', max: '', note: '' }, w || {});
+  const segH = (id, list, v) => '<div class="seg" id="' + id + '" style="display:inline-flex;flex-wrap:wrap;margin-top:2px">' + list.map(x => '<button data-v="' + esc(x) + '" class="' + (x === v ? 'on' : '') + '">' + esc(x) + '</button>').join('') + '</div>';
+  openSheet(sheetHead(isNew ? '🎯 لوحة أو نمط جديد' : 'تعديل النمط') +
+    '<div class="row2"><div><div class="flabel">الحروف (كما تقراها)</div><input id="pwL" class="fin rtl" style="direction:rtl;text-align:right;font-size:18px" placeholder="ب س ل" value="' + esc(w.letters) + '" autocomplete="off"></div>' +
+    '<div><div class="flabel">الرقم</div><input id="pwN" class="fin" style="font-size:18px" placeholder="*3*" value="' + esc(w.number) + '" autocomplete="off" autocapitalize="off"></div></div>' +
+    '<div class="hint" id="pwPrev"></div>' +
+    '<div class="flabel">القسم</div>' + segH('pwS', PLT_SECTIONS, w.section) +
+    '<div class="flabel">النوع</div>' + segH('pwT', PLT_TYPES, w.type) +
+    '<div class="row2"><div><div class="flabel">أقصى سعر (اختياري)</div><input id="pwM" class="fin" inputmode="numeric" placeholder="بدون حد" value="' + esc(w.max || '') + '"></div>' +
+    '<div><div class="flabel">ملاحظة</div><input id="pwO" class="fin rtl" style="direction:rtl;text-align:right" value="' + esc(w.note) + '" placeholder="تطلع في الإيميل"></div></div>' +
+    '<div class="opt" style="margin-top:12px"><div class="ol">مفعّل</div><input type="checkbox" class="tg" id="pwA"' + (w.active ? ' checked' : '') + '></div>' +
+    '<div class="phelp"><code>?</code> خانة وحدة · <code>*</code> أي عدد خانات · فاضي = أي شي<br><code>*33*</code> فيه 33 · <code>3*</code> يبدأ بـ 3 · <code>*7</code> ينتهي بـ 7 · <code>??</code> خانتين</div>' +
+    (isNew ? '<button class="btn" id="pwGo">إضافة</button>' : '<div class="btns"><button class="btn danger" id="pwDel">حذف</button><button class="btn" id="pwGo">حفظ</button></div>'));
+  const sb = $('sheetBody');
+  ['pwS', 'pwT'].forEach(id => sb.querySelectorAll('#' + id + ' button').forEach(b => b.onclick = () => { sb.querySelectorAll('#' + id + ' button').forEach(x => x.classList.toggle('on', x === b)); }));
+  const prev = () => { const L = $('pwL').value.trim(), N = $('pwN').value.trim(), e = pPatternOk(L, N);
+    $('pwPrev').innerHTML = (L || N) ? (e ? '<span style="color:var(--up)">⚠️ ' + esc(e) + '</span>' : 'ينبهك على: <b>' + esc(L || 'أي حروف') + '</b> + <b class="num">' + esc(N || 'أي رقم') + '</b>') : ''; };
+  $('pwL').oninput = prev; $('pwN').oninput = prev; prev();
+  setTimeout(() => { if(isNew) $('pwL').focus(); }, 300);
+  $('pwGo').onclick = async () => {
+    const L = $('pwL').value.trim(), N = $('pwN').value.trim().replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/؟/g, '?'), e = pPatternOk(L, N);
+    if(e) return toast(e);
+    const on = id => (sb.querySelector('#' + id + ' button.on') || {}).dataset;
+    $('pwGo').disabled = true;
+    const r = await papi('watch_save', { row: isNew ? null : w.row, active: $('pwA').checked, letters: L, number: N, section: (on('pwS') || {}).v || 'الكل', type: (on('pwT') || {}).v || 'الكل', max: num($('pwM').value) || '', note: $('pwO').value.trim() });
+    if(r.ok){ S.plates.watch = r.watch; LS.set('dftr:plates', JSON.stringify(S.plates)); closeSheet(); toast(isNew ? '✅ انضاف — يتطبق من الفحص الجاي' : '✅ انحفظ'); S.sub.plt = 'watch'; render(); }
+    else { $('pwGo').disabled = false; toast('⚠️ ' + errText(r)); }
+  };
+  const d = $('pwDel'); if(d) d.onclick = async () => {
+    if(!await ask('حذف النمط؟', (w.letters || 'أي حروف') + ' · ' + (w.number || 'أي رقم') + '\nاللوحات اللي تتابعها من قبل تكمل لين ينتهي مزادها.', 'حذف', true)) return;
+    const r = await papi('watch_delete', { row: w.row });
+    if(r.ok){ S.plates.watch = r.watch; LS.set('dftr:plates', JSON.stringify(S.plates)); closeSheet(); toast('🗑️ انحذف'); render(); } else toast('⚠️ ' + errText(r));
+  };
+}
+
+/* ---------- الإعدادات ---------- */
+function pltSettingsHTML(){
+  const k = LS.get('dftr:pkey');
+  return '<section class="card"><h2>🚗 مراقب اللوحات</h2>' +
+    (DEMO ? '<div class="pres bad">وضع المعاينة — بيانات تجريبية</div>' :
+      '<div class="appst"><b>' + (k ? '✅' : '⚠️') + '</b><div>' + (k ? 'مربوط بشيت Bs-Plate_Watch' : 'مو مربوط') + '<div class="hint">' + (S.plates && S.plates.at ? 'آخر قراءة ' + esc(pWhen(S.plates.at)) : 'الرمز ينحفظ في هذا الجهاز بس') + '</div></div></div>') +
+    '<div class="flabel">رمز دفتر (من شيت Bs-Plate_Watch ← الإعدادات)</div><div class="field"><input id="pKey" class="fin" style="margin:0" placeholder="pw_..." autocomplete="off" value=""><button class="paste" id="pKeySave">حفظ واختبار</button></div>' +
+    (k ? '<button class="btn ghost" id="pKeyDel">فك الربط من هذا الجهاز</button>' : '') + '</section>';
+}
+function pltSettingsBind(){
+  const s = $('pKeySave'); if(!s) return;
+  s.onclick = async () => {
+    const v = $('pKey').value.trim(); if(!v) return toast('الصق الرمز');
+    if(DEMO) return toast('في المعاينة ما يحتاج رمز');
+    const old = LS.get('dftr:pkey'); LS.set('dftr:pkey', v);
+    s.disabled = true; s.textContent = '…';
+    const r = await papi('plates_data');
+    s.disabled = false; s.textContent = 'حفظ واختبار';
+    if(r.ok){ S.plates = { watch: r.watch || [], track: r.track || [], status: r.status || {}, at: r.at || '' }; LS.set('dftr:plates', JSON.stringify(S.plates)); toast('✅ انربط — ' + (r.track || []).length + ' لوحة بالمتابعة'); render(); }
+    else { if(old) LS.set('dftr:pkey', old); else LS.del('dftr:pkey'); toast('⚠️ ' + errText(r)); }
+  };
+  const d = $('pKeyDel'); if(d) d.onclick = () => { LS.del('dftr:pkey'); LS.del('dftr:plates'); S.plates = null; toast('انفك الربط'); render(); };
+}
+
+/* ---------- بيانات المعاينة ---------- */
+function PDemo(a, p){
+  const D = PDemo.d || (PDemo.d = (() => {
+    const td = todayKey(), at = (d, t) => d + ' ' + t;
+    const mk = (plate, en, sec, type, cat, st, first, end, prices, bids, matched) => {
+      const days = prices.length, snaps = prices.map((v, i) => [at(addDays(first, Math.floor(i / 2)), i % 2 ? '21:45' : '07:35'), v, bids[i]]);
+      return { key: sec + '|' + plate + '|' + end, section: sec, plate, en, type, category: cat, status: st, first: at(first, '07:35'), last: snaps[snaps.length - 1][0], start: '', end, firstPrice: prices[0], lastPrice: prices[days - 1], bids: bids[days - 1], link: 'https://mazad.absher.sa/portal/auction-dashboard/', matched, snaps };
+    };
+    return {
+      watch: [
+        { row: 2, active: true, letters: 'ب س ل', number: '*3*', section: 'الكل', type: 'خصوصي', max: 0, note: '' },
+        { row: 3, active: true, letters: 'ب ب ب', number: '*33*', section: 'الكل', type: 'خصوصي', max: 0, note: '' },
+        { row: 4, active: true, letters: 'ط ن ا', number: '', section: 'الكل', type: 'خصوصي', max: 0, note: '' },
+        { row: 5, active: false, letters: '', number: '3333', section: 'الكل', type: 'خصوصي', max: 0, note: 'أرقام مكررة' }
+      ],
+      track: [
+        mk('س و س 6', 'S U S 6', 'المميزة', 'خصوصي', 'ذهبي', 'جاري', addDays(td, -1), at(td, '22:00'), [85000, 87500, 90000], [3, 3, 4], 'س و س · 6'),
+        mk('ب ب ب 1330', 'B B B 1330', 'المميزة', 'خصوصي', 'فضي', 'جاري', td, at(addDays(td, 2), '22:00'), [20000], [0], 'ب ب ب · *33*'),
+        mk('ط ن ا 77', 'A N T 77', 'الأفراد', 'خصوصي', '', 'لم يبدأ', td, at(addDays(td, 4), '20:40'), [35000], [0], 'ط ن ا'),
+        mk('ب س ل 312', 'L S B 312', 'الأفراد', 'خصوصي', '', 'انتهى بمزايدات', addDays(td, -6), at(addDays(td, -3), '21:52'), [40500, 41000, 43000, 46000, 46000, 52500], [0, 1, 2, 4, 4, 7], 'ب س ل · *3*'),
+        mk('ب ب ب 33', 'B B B 33', 'المميزة', 'خصوصي', 'ماسي', 'انتهى بمزايدات', addDays(td, -9), at(addDays(td, -8), '22:00'), [150000, 162000, 181000], [5, 8, 13], 'ب ب ب · *33*'),
+        mk('ط ن ا 4', 'A N T 4', 'الأفراد', 'خصوصي', '', 'اختفت قبل الموعد', addDays(td, -5), at(addDays(td, -1), '20:00'), [60000, 60000], [0, 0], 'ط ن ا')
+      ],
+      status: { last: at(td, '07:35') }, at: at(td, nowHM())
+    };
+  })());
+  if(a === 'plates_data') return { ok: true, watch: D.watch, track: D.track, status: D.status, at: D.at };
+  if(a === 'watch_toggle'){ const w = D.watch.find(x => x.row === p.row); if(w) w.active = p.active; return { ok: true, watch: D.watch }; }
+  if(a === 'watch_delete'){ D.watch = D.watch.filter(x => x.row !== p.row); return { ok: true, watch: D.watch }; }
+  if(a === 'watch_save'){ const r = { row: p.row || Math.max(1, ...D.watch.map(x => x.row)) + 1, active: p.active, letters: p.letters, number: p.number, section: p.section, type: p.type, max: num(p.max), note: p.note }; D.watch = D.watch.filter(x => x.row !== r.row).concat([r]).sort((x, y) => x.row - y.row); return { ok: true, watch: D.watch }; }
+  return { ok: false, error: 'UnknownAction' };
+}
+if(DEMO) S.plates = PDemo('plates_data', {});
+
 const Demo = (() => {
   const KEYS = { wmeter:'id', wbills:'start', tx:'id', merchants:'name', categories:'name', transfers:'id', trules:'key', rules:'id', prices:'id', products:'pid', stores:'key', receipts:'id', sukuk:'id', ops:'id', dues:'id', zakat:'id', items:'id', tasks:'id' };
   let seed = 7;
@@ -3841,6 +4186,8 @@ VIEWS.set = () => {
     '<div class="flabel">النموذج</div><div class="field"><input id="gModel" class="fin" style="margin:0" value="' + esc(S.settings.AI_MODEL || 'gemini-2.5-flash') + '"><button class="paste" id="gModelSave">حفظ</button></div>' +
     '<p class="hint">المفتاح ينحفظ في السكربت بس، وما يرجع للجوال أبداً.</p></section>');
 
+  H.push(pltSettingsHTML());
+
   H.push('<section class="card"><h2>🛟 النسخ الاحتياطي</h2><div id="bkBox"><div class="hint">…</div></div></section>');
 
   H.push('<section class="card"><h2>🎨 المظهر</h2>' +
@@ -3880,6 +4227,7 @@ VIEWS.set = () => {
 VIEWS.set_after = root => {
   $('sDone').onclick = () => go('home');
   backupBox();
+  pltSettingsBind();
   $('sKey').onclick = keySheet;
   root.querySelectorAll('[data-th]').forEach(b => b.onclick = () => { prefs.theme = b.dataset.th; savePrefs(); applyTheme(); render(); });
   $('pPriv').onchange = () => { prefs.privacy = $('pPriv').checked; savePrefs(); };
@@ -3915,9 +4263,9 @@ VIEWS.set_after = root => {
   $('sOutAll').onclick = async () => {
     const pin = await askPin('خروج من كل الأجهزة', 'كل الأجهزة المسجلة تحتاج الرقم السري من جديد، ومنها هذا الجهاز.'); if(!pin) return;
     const r = await api('auth_logout_all', { pin });
-    if(r.ok){ LS.del('dftr:session'); LS.del('dftr:cache'); location.reload(); } else toast(pinErr(r));
+    if(r.ok){ LS.del('dftr:session'); LS.del('dftr:cache'); LS.del('dftr:pkey'); LS.del('dftr:plates'); location.reload(); } else toast(pinErr(r));
   };
-  $('sOut').onclick = async () => { if(!await ask('تسجيل خروج؟', 'تحتاج الرقم السري للدخول مرة ثانية.', 'خروج')) return; await api('auth_logout', {}); LS.del('dftr:session'); LS.del('dftr:cache'); location.reload(); };
+  $('sOut').onclick = async () => { if(!await ask('تسجيل خروج؟', 'تحتاج الرقم السري للدخول مرة ثانية.', 'خروج')) return; await api('auth_logout', {}); LS.del('dftr:session'); LS.del('dftr:cache'); LS.del('dftr:pkey'); LS.del('dftr:plates'); location.reload(); };
 };
 
 function pinErr(r){ return r.error === 'BadPin' ? 'الرقم السري غلط' + (r.left ? ' — باقي ' + r.left : '') : r.error === 'Locked' ? 'مقفل ' + r.minutes + ' دقيقة' : errText(r); }
