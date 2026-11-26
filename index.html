@@ -1037,6 +1037,155 @@ html.ds-glass #fab svg{stroke:#fff!important}
 html.ds-glass #sheet .pn{background:#FFFFFF!important;border-top:4px solid transparent;border-image:var(--wa-arc) 1}
 #selbar{max-width:calc(100vw - 20px);white-space:nowrap}
 
+/* ================= الرئيسية الجديدة + الاشتراكات + القوائم ================= */
+.hx{display:grid;gap:14px}
+.hx>div{display:flex;flex-direction:column;gap:14px;min-width:0}
+@media (min-width:760px){ .hx{grid-template-columns:1fr 1fr} .hx3{grid-column:1/-1;display:grid!important;grid-template-columns:1fr 1fr} }
+@media (min-width:1120px){ .hx{grid-template-columns:1.05fr 1.25fr 1fr;align-items:start} .hx3{grid-column:auto;display:flex!important} }
+.hx .card{margin:0}
+.hx [data-go]{cursor:pointer}
+
+/* بطاقة اليوم */
+.hx-today{position:relative;overflow:hidden;border-radius:26px;padding:20px 20px 16px;color:#fff;display:grid;grid-template-columns:1fr auto;gap:6px 12px;
+  background:radial-gradient(420px 260px at 0% 120%,rgba(255,138,42,.55),transparent 60%),radial-gradient(380px 260px at 110% -30%,rgba(196,120,255,.55),transparent 60%),linear-gradient(135deg,#5B2FD6 0%,#7B4BF0 55%,#9A5CF0 100%);
+  box-shadow:0 22px 44px -22px rgba(91,47,214,.75)}
+.hx-today::before{content:"";position:absolute;inset-inline-start:-60px;bottom:-140px;width:300px;height:300px;border-radius:50%;border:30px solid rgba(255,255,255,.07)}
+.hx-today>*{position:relative}
+.ht-k{font-size:13.5px;opacity:.9;font-weight:600}
+.ht-v{display:flex;align-items:baseline;gap:6px;margin:2px 0 4px}
+.ht-v b{font-size:44px;font-weight:800;letter-spacing:-1px;line-height:1.05}
+.ht-v small{font-size:15px;opacity:.85}
+.ht-n{font-size:12.5px;opacity:.9}
+.ht-r{position:relative;width:116px;height:116px;grid-row:span 2}
+.ht-rc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.ht-rc b{font-size:20px;font-weight:800}
+.ht-rc small{font-size:9.5px;opacity:.85;max-width:62px;line-height:1.25}
+.ht-p{grid-column:1/-1;display:flex;gap:8px;margin-top:10px}
+.ht-p span{flex:1;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:7px 10px;font-size:11.5px;opacity:.95;display:flex;flex-direction:column}
+.ht-p b{font-size:16px;font-weight:800}
+
+/* شريط القرارات */
+.hpills{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:-2px 0}
+.hpills::-webkit-scrollbar{display:none}
+.hpill{flex:none;border:1px solid var(--edge);background:#fff;border-radius:999px;padding:9px 14px;font:600 13px inherit;font-family:inherit;color:var(--ink);box-shadow:0 6px 16px -12px rgba(40,26,110,.35);white-space:nowrap}
+.hpill.hot{background:linear-gradient(135deg,#FF8A2A,#E86E0E);color:#fff;border-color:transparent}
+.hpill b{font-weight:800}
+
+/* رسم الشهر */
+.hx-chart{padding:16px 16px 14px!important}
+.hc-h{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.hc-k{font-size:13px;color:var(--sub);font-weight:600}
+.hc-v{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+.hc-v b{font-size:30px;font-weight:800;letter-spacing:-.5px}
+.hc-v small{color:var(--sub);font-size:13px}
+.dch{font-size:12px;font-weight:700;border-radius:999px;padding:2px 8px;margin-inline-start:4px}
+.dch.up{background:#FDECEC;color:#D64545}.dch.dn{background:#E6F6F1;color:#12897C}
+.hc-f{text-align:left;display:flex;flex-direction:column;align-items:flex-end}
+.hc-f small{font-size:11.5px;color:var(--sub)} .hc-f b{font-size:16px;color:#E86E0E}
+.cumw{position:relative;height:120px;margin:10px 0 4px;direction:ltr}
+.cum{width:100%;height:100%;display:block;transform:scaleX(-1)}
+.cumdot{position:absolute;width:12px;height:12px;border-radius:50%;background:#fff;border:3px solid #E86E0E;transform:translate(50%,-50%);box-shadow:0 2px 8px rgba(232,110,14,.5)}
+.hc-lg{display:flex;gap:14px;font-size:11.5px;color:var(--sub);flex-wrap:wrap}
+.hc-lg span{display:inline-flex;align-items:center;gap:6px}
+.hc-lg i{width:16px;height:4px;border-radius:4px;display:inline-block}
+.hc-lg i.dash{background:repeating-linear-gradient(90deg,#B9B3D9 0 4px,transparent 4px 7px)}
+.stack{display:flex;height:12px;border-radius:999px;overflow:hidden;gap:2px;margin-top:14px}
+.stack i{min-width:4px}
+.stleg{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:8px;font-size:11.5px;color:var(--sub)}
+.stleg span{display:inline-flex;align-items:center;gap:5px}
+.stleg i{width:8px;height:8px;border-radius:3px}
+.stleg b{color:var(--ink)}
+
+/* الأقسام بالألوان */
+.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.stile{position:relative;overflow:hidden;border:0;border-radius:22px;padding:14px 14px 13px;text-align:right;color:#fff;font-family:inherit;display:flex;flex-direction:column;align-items:flex-start;gap:1px;min-height:128px;box-shadow:0 16px 30px -20px rgba(27,19,66,.55)}
+.stile .sbig{position:absolute;inset-inline-end:-18px;bottom:-22px;width:104px;height:104px;fill:none;stroke:#fff;stroke-width:1.4;opacity:.16;stroke-linecap:round;stroke-linejoin:round}
+.stile .sic2{width:34px;height:34px;border-radius:12px;background:rgba(255,255,255,.2);display:grid;place-items:center;margin-bottom:8px}
+.stile .sic2 svg{width:19px;height:19px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.stile .st{font-size:12.5px;opacity:.92;font-weight:600}
+.stile .sv{font-size:21px;font-weight:800;letter-spacing:-.3px}
+.stile small{font-size:11px;opacity:.88;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.stile em{position:absolute;top:12px;inset-inline-end:12px;font-style:normal;font-size:11px;font-weight:700;background:rgba(255,255,255,.25);border-radius:999px;padding:2px 8px}
+.sgauge{width:100%;height:6px;border-radius:6px;background:rgba(255,255,255,.25);margin-top:6px;overflow:hidden}
+.sgauge i{display:block;height:100%;background:#fff;border-radius:6px}
+.savs{display:flex;margin-top:6px}.savs .sav{margin-inline-start:-6px;border:2px solid rgba(255,255,255,.7)}.savs .sav:first-child{margin-inline-start:0}
+.g-inv{background:linear-gradient(140deg,#0F7A6E,#1FB39C)}
+.g-wat{background:linear-gradient(140deg,#2F5FCB,#5AA0F0)}
+.g-sub{background:linear-gradient(140deg,#B0307E,#E05BA6)}
+.g-pr{background:linear-gradient(140deg,#C98A0C,#F0B83B)}
+.g-own{background:linear-gradient(140deg,#5B2FD6,#9067FF)}
+.g-plt{background:linear-gradient(140deg,#1B1342,#43348F)}
+
+/* بطاقات العمود الثالث */
+.hx-subs .hsav{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 10px}
+.hsn{display:flex;gap:8px;align-items:center;font-size:13px;padding:7px 0;border-top:1px solid var(--line)}
+.hsn span:first-child{flex:1;font-weight:600}.hsn span:nth-child(2){color:var(--sub);font-size:12px}
+.hl{display:grid;grid-template-columns:1fr auto;gap:4px 8px;width:100%;border:0;background:var(--card2);border-radius:14px;padding:10px 12px;margin-top:8px;font-family:inherit;color:var(--ink);text-align:right}
+.hl span{font-weight:600;font-size:14px}.hl b{color:var(--lc,var(--accent));font-size:15px}
+.hl i{grid-column:1/-1;height:5px;border-radius:5px;background:#E4E0F3;overflow:hidden}
+.hl i em{display:block;height:100%;background:var(--lc,var(--accent));border-radius:5px}
+.hb{margin-top:10px}
+.hb>div{display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px}
+.hb>i{display:block;position:relative;height:8px;border-radius:8px;background:#EEEBF9}
+.hb>i em{display:block;height:100%;border-radius:8px}
+.hb>i u{position:absolute;top:-3px;width:2px;height:14px;background:var(--ink);opacity:.35;border-radius:2px}
+.trb{display:flex;align-items:flex-end;gap:10px;height:130px;margin-top:12px}
+.trb>div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:5px;height:100%}
+.trb span{font-size:10.5px;color:var(--sub)}
+.trb i{width:100%;max-width:34px;border-radius:10px 10px 6px 6px;background:linear-gradient(180deg,#9B7BF5,#6A3DE8)}
+.trb small{font-size:11px;color:var(--sub)}
+
+/* الاشتراكات */
+.sav{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:50%;color:#fff;font-style:normal;font-weight:800;font-size:13px;flex:none;letter-spacing:-.3px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06)}
+.sav.more{background:#EEEBF9;color:var(--sub)}
+.subhero{border-radius:26px;padding:18px;color:#fff;background:radial-gradient(400px 240px at 0% 120%,rgba(255,138,42,.5),transparent 60%),linear-gradient(135deg,#B0307E,#7B4BF0);box-shadow:0 22px 44px -24px rgba(123,75,240,.7);margin-bottom:14px}
+.sh-t{display:flex;justify-content:space-between;align-items:center;font-weight:700}
+.sh-add{border:0;background:#fff;color:#7B4BF0;font:700 13px inherit;font-family:inherit;border-radius:999px;padding:7px 14px}
+.sh-b{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:8px}
+.sh-k{font-size:13px;opacity:.85}.sh-v{font-size:38px;font-weight:800;letter-spacing:-1px}.sh-v small{font-size:14px;opacity:.85}
+.sh-s{font-size:12.5px;opacity:.9}
+.sh-d{background:rgba(255,255,255,.95);border-radius:50%;padding:6px;line-height:0}
+.sh-leg{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.sh-leg span{background:rgba(255,255,255,.16);border-radius:999px;padding:4px 10px;font-size:11.5px;display:inline-flex;align-items:center;gap:6px}
+.sh-leg i{width:8px;height:8px;border-radius:50%;box-shadow:0 0 0 2px rgba(255,255,255,.7)}
+.subsoon{display:flex;gap:10px;overflow-x:auto;padding:4px 0 2px;scrollbar-width:none}
+.subsoon::-webkit-scrollbar{display:none}
+.ss{flex:none;width:104px;border:1px solid var(--edge);background:var(--card2);border-radius:18px;padding:12px 8px;display:flex;flex-direction:column;align-items:center;gap:4px;font-family:inherit;color:var(--ink)}
+.ss b{font-size:12.5px;max-width:92px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ss small{font-size:11px;color:var(--sub)}.ss span{font-weight:800;color:#E86E0E}
+.subk h2 span:first-child{color:var(--kc)}
+.srow{display:flex!important;align-items:center;gap:12px}
+.srow .sm{flex:1;min-width:0}
+.spk{display:inline-flex;align-items:flex-end;gap:2px;height:16px;width:44px}
+.spk i{flex:1;background:var(--kc,var(--accent));border-radius:2px;opacity:.8}
+.subtop{display:flex;align-items:center;gap:14px;margin:6px 0 8px}
+
+/* القوائم */
+.lgrid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));align-items:start}
+.lcard{border-top:5px solid var(--lc,var(--accent))!important;margin:0!important}
+.lh{display:flex;align-items:center;gap:8px}
+.lh b{flex:1;font-size:17px}
+.lh .num{font-size:12.5px;color:var(--sub);background:var(--card2);border-radius:999px;padding:2px 9px}
+.lmenu{border:0;background:transparent;font-size:20px;line-height:1;color:var(--sub);padding:2px 6px;cursor:pointer}
+.lbar{height:5px;border-radius:5px;background:#EEEBF9;margin:10px 0 4px;overflow:hidden}.lbar i{display:block;height:100%;background:var(--lc);border-radius:5px}
+.lrow{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid var(--line)}
+.lrow:last-child{border-bottom:0}
+.lrow span{flex:1;font-size:14.5px;cursor:pointer;padding-top:2px}
+.lrow small{display:block;color:var(--sub);font-size:12px}
+.lchk{width:24px;height:24px;flex:none;border-radius:50%;border:2px solid var(--lc,var(--accent));background:#fff;color:#fff;font-weight:900;font-size:13px;cursor:pointer;display:grid;place-items:center;padding:0}
+.lrow.done span{text-decoration:line-through;color:var(--faint)}
+.lrow.done .lchk{background:var(--lc,var(--accent))}
+.ladd{display:flex;gap:6px;margin-top:8px}
+.ladd input{flex:1;border:1px dashed #D3CDEC;background:var(--card2);border-radius:12px;padding:9px 12px;font:inherit;font-size:14px;color:var(--ink);outline:none}
+.ladd input:focus{border-style:solid;border-color:var(--lc)}
+.ladd button{border:0;width:40px;border-radius:12px;background:var(--lc,var(--accent));color:#fff;font-size:18px;font-weight:700;cursor:pointer}
+.ldone summary{font-size:12.5px;color:var(--sub);cursor:pointer;margin-top:10px}
+/* الجوال: عمود واحد بترتيب «وش وضعي اليوم» */
+@media (max-width:759px){
+  .hx{display:flex;flex-direction:column}
+  .hx>div{display:contents}
+  .hx-today{order:1}.hpills{order:2}.hx-chart{order:3}.sgrid{order:4}.hx .ibx{order:5}.hx .agenda{order:6}.hx-subs{order:7}.hx-lists{order:8}.hx-bud{order:9}.hx-tr{order:10}
+}
+
 </style>
 </head>
 <body>
@@ -1077,7 +1226,7 @@ html.ds-glass #sheet .pn{background:#FFFFFF!important;border-top:4px solid trans
 <script src="config.js"></script>
 <script>
 'use strict';
-const VERSION = 'V1.11.1';
+const VERSION = 'V1.12.0';
 const APP_NAME = 'دفتر | DFTR';
 const API_URL = String(window.DFTR_API_URL || '').trim();
 const LS = {
@@ -1095,7 +1244,7 @@ const DEMO = !/^https:\/\/script\.google\.com\/.+\/exec$/.test(API_URL) || /[?&#
 
 /* ---------- الحالة ---------- */
 const S = {
-  data: { tx:[], merchants:[], categories:[], transfers:[], trules:[], rules:[], prices:[], products:[], stores:[], receipts:[], sukuk:[], ops:[], dues:[], zakat:[], wmeter:[], wbills:[], items:[], tasks:[] },
+  data: { tx:[], merchants:[], categories:[], transfers:[], trules:[], rules:[], prices:[], products:[], stores:[], receipts:[], sukuk:[], ops:[], dues:[], zakat:[], wmeter:[], wbills:[], items:[], tasks:[], subs:[] },
   settings: {}, purposes: [], ai: false, at: '',
   view: 'home', sub: { exp:'sum', pr:'search', inv:'sum', nwc:'now' }, sel: null,
   period: '', q: '', pq: '', loading: false
@@ -1230,6 +1379,7 @@ async function sync(silent){
     S.settings = r.settings || {}; S.purposes = r.purposes || []; S.ai = !!r.ai; S.at = r.at || '';
     saveCache(); setFresh('ok'); render();
     loadPlates(true);
+    setTimeout(subsAuto, 300);
   } else {
     setFresh('old');
     if(!silent && r && r.error !== 'NoSession') toast('⚠️ ' + (r.message || 'ما قدرت أحدّث — ' + (r.error || '')));
@@ -1489,7 +1639,7 @@ function pinScreen(){
 function start(){
   applyTheme();
   $('demoBar').hidden = !DEMO;
-  if(DEMO){ Demo.load(); S.view = LS.get('dftr:view') || 'home'; render(); return; }
+  if(DEMO){ Demo.load(); S.view = LS.get('dftr:view') || 'home'; render(); setTimeout(subsAuto, 400); return; }
   if(!session()) return showAuth();
   if(prefs.lock && !UNLOCKED) return lockScreen();
   S.view = LS.get('dftr:view') || 'home';
@@ -1571,10 +1721,10 @@ function periods(){
 VIEWS.exp = () => {
   if(!S.period) S.period = cycleKey();
   const pend = pendingCount();
-  const tabs = [['sum','الملخص'],['tx','العمليات'],['bud','الميزانية'],['rev','المراجعة' + (pend ? '<span class="bd">' + pend + '</span>' : '')],['mer','التجار']];
+  const tabs = [['sum','الملخص'],['tx','العمليات'],['bud','الميزانية'],['rev','المراجعة' + (pend ? '<span class="bd">' + pend + '</span>' : '')],['subs','الاشتراكات'],['mer','التجار']];
   let h = '<div class="subnav">' + tabs.map(t => '<button data-sub="' + t[0] + '" class="' + (S.sub.exp === t[0] ? 'on' : '') + '">' + t[1] + '</button>').join('') + '</div>';
   if(S.sub.exp === 'sum') h += periodBar();
-  h += ({ sum: expSummary, tx: expTx, bud: expBudget, rev: expReview, mer: expMerchants }[S.sub.exp] || expSummary)();
+  h += ({ sum: expSummary, tx: expTx, bud: expBudget, rev: expReview, subs: expSubs, mer: expMerchants }[S.sub.exp] || expSummary)();
   return h;
 };
 VIEWS.exp_after = root => {
@@ -1596,6 +1746,7 @@ VIEWS.exp_after = root => {
   const tso = $('trSelOn'); if(tso) tso.onclick = () => { S.trSel = S.trSel ? null : new Set(); render(); };
   const tsa = $('trSelAll'); if(tsa) tsa.onclick = () => { const pt = pendingTransfers(), all = pt.every(t => S.trSel.has(t.id)); pt.forEach(t => all ? S.trSel.delete(t.id) : S.trSel.add(t.id)); render(); };
   root.querySelectorAll('[data-mer]').forEach(el => el.onclick = () => merchantSheet(el.dataset.mer));
+  if(S.sub.exp === 'subs') bindSubs(root);
   root.querySelectorAll('[data-catf]').forEach(el => el.onclick = () => { S.q = el.dataset.catf; S.sub.exp = 'tx'; render(); });
   root.querySelectorAll('[data-tabs]').forEach(g => g.querySelectorAll('button').forEach(b => b.onclick = () => { S[g.dataset.tabs] = b.dataset.v; render(); }));
   const q = $('txq'); if(q){ q.oninput = () => { S.q = q.value; const pos = q.selectionStart; render(); const n = $('txq'); n.focus(); try { n.setSelectionRange(pos, pos); } catch(e){} }; }
@@ -2783,32 +2934,11 @@ const ICON = {
 };
 const ico = k => '<svg class="ti" viewBox="0 0 24 24" aria-hidden="true">' + ICON[k] + '</svg>';
 
-/* ---------- الاشتراكات المتكررة ---------- */
-function subscriptions(){
-  const since = shiftMonth(monthKey(), -6) + '-01';
-  const by = groupBy(txBase(S.data.tx.filter(t => t.date >= since && num(t.amount) > 0 && t.merchant)), t => normAr(t.merchant).replace(/\d+/g, '').trim());
-  const out = [];
-  Object.keys(by).forEach(k => {
-    const l = by[k].sort((a, b) => String(a.date).localeCompare(String(b.date)));
-    const months = uniq(l.map(t => String(t.date).slice(0, 7)));
-    if(months.length < 3 || l.length > months.length * 1.5) return;
-    const am = l.map(t => num(t.amount)), mn = Math.min.apply(null, am), mx = Math.max.apply(null, am);
-    if(mx > mn * 1.3 + 2) return;
-    if(/بقال|مطاعم|وقود|تحويل/.test(l[0].category || '')) return;
-    const last = l[l.length - 1], avg = sum(am) / am.length;
-    const recent = months.indexOf(monthKey()) !== -1 || months.indexOf(shiftMonth(monthKey(), -1)) !== -1;
-    if(!recent) return;
-    const nextD = shiftMonth(last.date.slice(0, 7), 1) + last.date.slice(7);
-    out.push({ name: last.merchant, avg: r2(avg), last, months: months.length, next: nextD, cat: last.category });
-  });
-  return out.sort((a, b) => b.avg - a.avg);
-}
-
 /* ---------- القادم خلال 30 يوم ---------- */
 function upcoming(days){
   const today = todayKey(), until = addDays(today, days || 30), ev = [];
   S.data.dues.filter(d => dueOpen(d) && String(d.date) >= today && String(d.date) <= until).forEach(d => ev.push({ d: d.date, t: d.sukuk + ' · ' + d.type, a: num(d.amount), c: 'var(--c-inv)', go: () => go('inv', 'due') }));
-  subscriptions().forEach(s => { if(s.next >= today && s.next <= until) ev.push({ d: s.next, t: 'اشتراك ' + s.name, a: -s.avg, c: 'var(--c-sub)', go: () => subsSheet() }); });
+  subsAll().forEach(x => { if(x.next && x.next >= today && x.next <= until) ev.push({ d: x.next, t: '🔁 ' + x.s.name, a: -x.amount, c: subKindColor(x.s.kind), go: () => subForm(x.s) }); });
   if(S.data.wbills.length){ const D = wData(); if(D.cur && D.cur.end <= until) ev.push({ d: D.cur.end, t: 'نهاية فترة المياه · متوقعة', a: -D.cur.billProj, c: 'var(--c-wat)', go: () => go('nwc', 'now') }); }
   S.data.items.filter(i => i.wEnd && String(i.wEnd) >= today && String(i.wEnd) <= until).forEach(i => ev.push({ d: String(i.wEnd), t: 'نهاية ضمان ' + i.name, a: null, c: 'var(--c-pr)', go: () => itemSheet(i.id) }));
   const h = hawlInfo(); if(h.next <= until) ev.push({ d: h.next, t: 'حول الزكاة', a: null, c: 'var(--c-bud)', go: () => go('inv', 'zak') });
@@ -2816,113 +2946,7 @@ function upcoming(days){
   return ev.sort((a, b) => a.d.localeCompare(b.d));
 }
 
-/* ---------- الرئيسية ---------- */
-VIEWS.home = () => {
-  const P = cycleKey(), st = periodStats(P), today = todayKey();
-  const diff = st.prevTotal ? (st.total - st.prevTotal) / st.prevTotal * 100 : 0;
-  const H = [];
-  const dayMax = Math.max.apply(null, st.daily.map(d => d.v).concat([1]));
-  const HERO = [];
-  HERO.push('<button class="tile t-exp wide hbig" data-go="exp">' +
-    '<div class="hhead"><span>مصاريفي · ' + shortMonth(P) + '</span>' + (st.prevTotal ? '<span class="tbadge" style="position:static">' + (diff > 0 ? '▲ ' : '▼ ') + Math.abs(diff).toFixed(0) + '٪</span>' : '') + '</div>' +
-    '<div class="hnum"><b>' + money0(st.total) + '</b><small>ر.س</small></div>' +
-    '<div class="dbars">' + st.daily.map(d => '<i class="' + (d.k === today ? 't' : d.k > today ? 'f' : '') + '" style="height:' + Math.max(4, pct(d.v, dayMax)) + '%"></i>').join('') + '</div>' +
-    '<div class="hstats"><span>اليوم<b>' + money0(sum(txBase(S.data.tx.filter(t => t.date === today)), t => num(t.amount))) + '</b></span><span>يومياً<b>' + money0(st.avg) + '</b></span><span>المتوقع<b>' + money0(st.forecast) + '</b></span></div></button>');
-  H.push(HERO.join(''));
-
-  /* الأقسام */
-  const iv = S.data.sukuk.length ? invStats() : null;
-  const D = S.data.wbills.length ? wData() : null, c = D && D.cur;
-  H.push('<div class="bento">');
-  H.push('<button class="tile t-inv" data-go="inv">' + ico('inv') + '<div class="tt">استثماراتي</div><div class="tv">' + (iv ? money0(iv.outstanding) : '—') + '</div><div class="ts">' + (iv ? '+' + money0(iv.distYear) + ' توزيعات ' + today.slice(0, 4) : 'أضف أول استثمار') + '</div>' + (iv && iv.late.length ? '<span class="tbadge">⏰ ' + iv.late.length + '</span>' : '') + '</button>');
-  H.push('<button class="tile t-wat" data-go="nwc">' + (c ? '<div class="fill" style="height:' + Math.min(100, pct(c.cons, c.lim2)) + '%"></div>' : '') + ico('wat') + '<div class="tt">المياه · متوقعة</div><div class="tv">' + (c ? f2(c.billProj) : '—') + '</div><div class="ts">' + (c ? f2(c.cons) + ' من ' + f1(c.lim2) + ' م³' : 'ما فيه بيانات') + '</div>' + (D && D.unpaid.length ? '<span class="tbadge solid">' + D.unpaid.length + ' غير مسددة</span>' : '') + '</button>');
-  const rc = S.data.receipts.slice().sort((a, b) => String(b.date).localeCompare(String(a.date)))[0];
-  H.push('<button class="tile t-pr short" data-go="prs">' + ico('pr') + '<div class="tt">كم سعره؟</div><div class="tv ar">' + S.data.products.length + ' منتج</div><div class="ts">' + (rc ? 'آخر فاتورة ' + esc(rc.store) : '') + '</div></button>');
-  const own = S.data.items, wAct = own.filter(i => i.wEnd && String(i.wEnd) >= today);
-  H.push('<button class="tile t-ink short" data-go="own">' + ico('shield') + '<div class="tt">الضمانات والفواتير</div><div class="tv ar">' + (own.length ? own.length + ' غرض' : 'أضف أول غرض') + '</div><div class="ts">' + (own.length ? wAct.length + ' ضمان ساري' : 'فواتير وضمانات أغراضك') + '</div></button>');
-  H.push(pltTile());
-  H.push('</div>');
-
-
-  /* اشتراكات + ميزانية + أيام بدون صرف + التقرير */
-  const subs = subscriptions(), subT = sum(subs, s => s.avg);
-  const bc = S.data.categories.filter(x => num(x.budget) > 0);
-  const over = bc.filter(x => (st.cats.find(y => y.n === x.name) || { v: 0 }).v > num(x.budget));
-  const bTot = sum(bc, x => num(x.budget)), bSp = sum(bc, x => (st.cats.find(y => y.n === x.name) || { v: 0 }).v);
-  const spentDays = uniq(txBase(txIn(P)).map(t => t.date)), freeDays = st.days - spentDays.filter(d => d <= today).length;
-  const prevM = shiftMonth(P, -1);
-  const Q = [
-    ['subs', 'sub', 'var(--c-sub)', 'اشتراكات', money0(subT) + '/شهر'],
-    ['bud', 'bud', 'var(--c-bud)', 'الميزانية', bc.length ? Math.round(pct(bSp, bTot)) + '٪' + (over.length ? ' · ' + over.length + ' تجاوز' : '') : 'حدّدها'],
-    ['exptx', 'leaf', 'var(--c-free)', 'بدون صرف', Math.max(0, freeDays) + ' من ' + st.days + ' يوم'],
-    ['rpt', 'rpt', 'var(--c-ink)', 'التقرير', MONTHS[+prevM.slice(5) - 1]]];
-  H.push('<div class="qrow">' + Q.map(q => '<button class="qc" data-go="' + q[0] + '"><i style="background:' + q[2] + '"><svg viewBox="0 0 24 24">' + ICON[q[1]] + '</svg></i><span>' + q[3] + '</span><b>' + esc(q[4]) + '</b></button>').join('') + '</div>');
-
-  /* الميزانية الثابتة */
-  const BR = budgetRows();
-  const SIDE = [];
-  if(BR.rows.length) SIDE.push('<button class="tile light wide hbud" data-go="bud" style="min-height:0"><div class="secttl"><span>🎯 الميزانية الشهرية</span><span style="font-size:12.5px;color:var(--sub);font-weight:600">باقي <b class="num">' + money0(BR.tot - BR.spent) + '</b> من ' + money0(BR.tot) + '</span></div><div class="list" style="margin-top:6px">' + BR.rows.slice(0, 3).map(r => budRow(r, BR.dp)).join('') + '</div>' + (BR.rows.length > 3 ? '<div class="ts" style="text-align:center;margin-top:4px">+' + (BR.rows.length - 3) + ' تصنيف ›</div>' : '') + '</button>');
-
-  /* أقرب الضمانات انتهاءً */
-  const WL = S.data.items.filter(i => i.wEnd && String(i.wEnd) >= today).sort((a, b) => String(a.wEnd).localeCompare(String(b.wEnd))).slice(0, 3);
-  if(WL.length) SIDE.push('<div class="tile light wide" style="min-height:0;cursor:default"><div class="secttl"><span>🛡️ أقرب الضمانات انتهاءً</span><button data-go="own">الكل ›</button></div><div class="wlist">' + WL.map(i => {
-    const left = daysBetween(today, i.wEnd), all = Math.max(1, daysBetween(i.date || today, i.wEnd)), rd = num(S.settings.WARRANTY_REMIND_DAYS) || 30;
-    return '<div class="wl" data-own="' + esc(i.id) + '"><div class="r1"><span>' + catIcon(i.category) + ' ' + esc(i.name) + '</span><em class="' + (left <= rd ? 'soon' : '') + '">' + (left === 0 ? 'اليوم' : left < 60 ? 'باقي ' + left + ' يوم' : 'باقي ' + Math.round(left / 30) + ' شهر') + '</em></div><div class="bbar ' + (left <= rd ? 'warn' : '') + '"><i style="width:' + Math.max(3, 100 - pct(left, all)) + '%"></i></div><small>' + esc([i.store, 'ينتهي ' + dayLabel(i.wEnd)].filter(Boolean).join(' · ')) + '</small></div>';
-  }).join('') + '</div></div>');
-
-  /* التصنيفات */
-  const CH = [];
-  if(st.cats.length){
-    const cols = ['var(--c-exp)','var(--c-wat)','var(--c-inv)','var(--c-pr)','var(--c-sub)'];
-    const top = st.cats.slice(0, 5), rest = sum(st.cats.slice(5), x => x.v);
-    const parts = top.map((x, i) => ({ n: x.n, v: x.v, c: ['#F26B1D','#1F72D6','#11875A','#6A45E8','#D63A73'][i], cv: cols[i] })).concat(rest ? [{ n: 'الباقي', v: rest, c: '#9aa3b6', cv: '#9aa3b6' }] : []);
-    CH.push('<div class="tile light wide" id="hCats" style="min-height:0"><div class="secttl"><span>وين راحت فلوسك؟</span><span style="color:var(--c-exp);font-size:13px">التفاصيل ›</span></div><div class="donut" style="margin-top:10px"><div class="dwrap">' + donut(parts, 126) + '<div class="dmid"><b class="num">' + st.cats.length + '</b><small>تصنيف</small></div></div>' +
-      '<div class="mini-list" style="flex:1;margin:0">' + parts.map(p => '<div class="mr"><i style="background:' + p.c + '"></i><span>' + esc(p.n) + '</span><b>' + money0(p.v) + '</b></div>').join('') + '</div></div></div>');
-  }
-
-  /* 6 أشهر */
-  const tr = trend6(P), mx = Math.max.apply(null, tr.map(m => m.v).concat([1])), avg6 = sum(tr.slice(0, 5), m => m.v) / 5;
-  CH.push('<div class="tile light wide" id="hTrend" style="min-height:0"><div class="secttl"><span>آخر 6 أشهر</span><span style="font-size:12px;color:var(--sub);font-weight:600">متوسط <b class="num">' + money0(avg6) + '</b></span></div>' +
-    '<div style="display:flex;align-items:flex-end;gap:10px;height:120px;margin-top:14px">' + tr.map(m => '<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;height:100%;justify-content:flex-end"><span class="num" style="font-size:10.5px;color:var(--sub)">' + (m.v >= 1000 ? (m.v / 1000).toFixed(1) + 'k' : money0(m.v)) + '</span><div style="width:100%;height:' + Math.max(3, pct(m.v, mx) * 0.8) + '%;border-radius:12px;background:' + (m.k === P ? 'var(--c-exp)' : 'var(--bar)') + '"></div><span style="font-size:11px;color:' + (m.k === P ? 'var(--ink)' : 'var(--sub)') + ';font-weight:' + (m.k === P ? 700 : 400) + '">' + shortMonth(m.k) + '</span></div>').join('') + '</div></div>');
-  /* البلوك الأول: نبض اليوم */
-  const IB = inboxItems(), y = addDays(today, -1), yl = txBase(S.data.tx.filter(t => t.date === y && num(t.amount) > 0));
-  const tt = tasksOn(today, true).filter(t => !taskDone(t)), nt = S.data.tasks.filter(t => String(t.date) >= today && !taskDone(t)).sort((a, b) => (a.date + (a.time || '')).localeCompare(b.date + (b.time || '')))[0];
-  const newM = uniq(yl.filter(t => t.merchant && !S.data.tx.some(x => x.merchant === t.merchant && String(x.date) < y)).map(t => t.merchant));
-  const kpi = (go, lab, val, sub, cls) => '<button class="kp' + (cls ? ' ' + cls : '') + '" data-go="' + go + '"><span>' + lab + '</span><b>' + val + '</b><small>' + sub + '</small></button>';
-  const PULSE = '<section class="pulse">' +
-    kpi('inbox', '📥 يحتاج إجراء', IB.length ? '<span class="num">' + IB.length + '</span>' : '✓', IB.length ? 'اضغط تراجعها' : 'كل شي تمام', IB.length ? 'hot' : 'ok') +
-    kpi('cal', '📋 مهام اليوم', '<span class="num">' + tt.length + '</span>', nt ? esc((nt.date === today ? '' : dayLabel(nt.date) + ' · ') + nt.title) : 'ما فيه مهام', '') +
-    (BR.rows.length ? kpi('bud', '🎯 باقي من الميزانية', '<span class="num">' + money0(BR.tot - BR.spent) + '</span>', Math.round(pct(BR.spent, BR.tot)) + '٪ مصروف · مر ' + Math.round(BR.dp) + '٪ من الشهر', BR.spent > BR.tot ? 'hot' : '')
-      : kpi('exp', '💳 ' + shortMonth(P), '<span class="num">' + money0(st.total) + '</span>', st.prevTotal ? (diff > 0 ? '▲ ' : '▼ ') + Math.abs(diff).toFixed(0) + '٪ عن الشهر الماضي' : 'ر.س', '')) +
-    kpi('yday', '☀️ أمس', '<span class="num">' + money0(sum(yl, t => num(t.amount))) + '</span>', yl.length ? yl.length + ' عملية' + (newM.length ? ' · 🆕 ' + newM.length + ' تاجر جديد' : '') : 'ما صرفت شي 🌿', '') + '</section>';
-  const C1 = PULSE + (IB.length ? inboxHTML(false) : '') + agendaHTML();
-  return '<div class="hg"><div class="hc1">' + C1 + '</div><div class="hc2">' + H.join('') + (CH[1] || '') + '</div><div class="hc3">' + SIDE.join('') + (CH.length > 1 ? CH[0] : '') + '</div></div>';
-};
-VIEWS.home_after = root => {
-  bindInbox(root); bindTaskRows(root);
-  root.querySelectorAll('[data-ag]').forEach(el => el.onclick = () => { const e = S._ag[+el.dataset.ag]; if(e && e.go) e.go(); });
-  const ta = $('agAdd'); if(ta) ta.onclick = () => taskForm(null, todayKey());
-  const act = {
-    exp: () => { S.period = cycleKey(); go('exp', 'sum'); }, inv: () => go('inv', 'sum'), nwc: () => go('nwc', 'now'),
-    prs: () => { S.sub.pr = 'search'; go('pr'); setTimeout(() => { const i = $('pq'); if(i) i.focus(); }, 60); },
-    rev: () => go('exp', 'rev'), bud: () => { S.period = cycleKey(); go('exp', 'bud'); }, subs: () => subsSheet(),
-    exptx: () => { S.q = ''; go('exp', 'tx'); }, own: () => go('pr', 'own'), plt: () => go('plt'), cal: () => go('cal'), yday: () => daySheet(addDays(todayKey(), -1)), inbox: () => go('inbox'), rpt: () => reportSheet(shiftMonth(cycleKey(), -1))
-  };
-  root.querySelectorAll('[data-go]').forEach(b => b.onclick = () => act[b.dataset.go] && act[b.dataset.go]());
-  root.querySelectorAll('[data-own]').forEach(el => el.onclick = () => itemSheet(el.dataset.own));
-  root.querySelectorAll('[data-up]').forEach(el => el.onclick = () => { const e = S._up[+el.dataset.up]; if(e && e.go) e.go(); });
-  const hc = $('hCats'); if(hc) hc.onclick = act.exp;
-  const ht = $('hTrend'); if(ht) ht.onclick = act.exp;
-};
-
-/* ---------- ورقة الاشتراكات ---------- */
-function subsSheet(){
-  const s = subscriptions();
-  openSheet(sheetHead('🔁 الاشتراكات المتكررة') + '<p class="hint">تجار تكررت عندهم عملية بنفس المبلغ تقريباً كل شهر (آخر 6 أشهر).</p>' +
-    '<div class="rpt-h" style="background:var(--c-sub)"><div style="font-size:13px;opacity:.9">شهرياً</div><div class="big num">' + money(sum(s, x => x.avg)) + '</div><div style="font-size:13px;opacity:.9">سنوياً تقريباً <b class="num">' + money0(sum(s, x => x.avg) * 12) + '</b> ر.س</div></div>' +
-    '<div class="list">' + (s.length ? s.map(x => '<div class="item" data-sm="' + esc(x.name) + '" style="cursor:pointer"><div class="r1"><span class="n">' + esc(x.name) + '</span><span class="a num">' + money(x.avg) + '</span></div><div class="r2"><span>' + esc(x.cat || '') + ' · ' + x.months + ' أشهر</span><span>المتوقع ' + esc(dayLabel(x.next)) + '</span></div></div>').join('') : '<div class="empty">ما لقيت اشتراكات متكررة</div>') + '</div>');
-  $('sheetBody').querySelectorAll('[data-sm]').forEach(el => el.onclick = () => { closeSheet(); S.q = el.dataset.sm; go('exp', 'tx'); });
-}
+/* الرئيسية في 5k_home2.js */
 
 /* ---------- التقرير الشهري ---------- */
 function reportSheet(M){
@@ -2934,7 +2958,7 @@ function reportSheet(M){
   const wb = S.data.wbills.length ? wData().bills.find(b => b.month === M) : null;
   const bc = S.data.categories.filter(x => num(x.budget) > 0);
   const over = bc.filter(x => (st.cats.find(y => y.n === x.name) || { v: 0 }).v > num(x.budget));
-  const subs = subscriptions().filter(s => txIn(M).some(t => t.merchant === s.last.merchant));
+  const subsM = sum(subsAll(), x => sum(x.ch.filter(t => String(t.date).slice(0, 7) === M), t => num(t.amount)));
   const ms = st.months; const months = []; for(let i = 1; i <= 12; i++) months.push(shiftMonth(M, -i));
   openSheet(sheetHead('📄 تقرير ' + monthName(M)) +
     '<div class="rpt-h"><div style="font-size:13px;opacity:.85">مجموع المصروف</div><div class="big">' + money0(st.total) + ' <small style="font-size:15px;opacity:.8">ر.س</small></div>' +
@@ -2945,7 +2969,7 @@ function reportSheet(M){
     '<div class="rrow"><span>📈 توزيعات الاستثمار</span><b class="num" style="color:var(--c-inv)">' + money0(sum(inv, o => num(o.net) || num(o.amount))) + '</b></div>' +
     '<div class="rrow"><span>💧 فاتورة المياه</span><b class="num">' + (wb ? f2(wb.official != null ? wb.official : wb.calc.total) + ' · ' + f1(wb.cons) + ' م³' : '—') + '</b></div>' +
     '<div class="rrow"><span>🛒 فواتير المشتريات</span><b class="num">' + rc.length + ' · ' + money0(sum(rc, r => num(r.total))) + '</b></div>' +
-    '<div class="rrow"><span>🔁 الاشتراكات</span><b class="num">' + money0(sum(subs, s => s.avg)) + '</b></div>' +
+    '<div class="rrow"><span>🔁 الاشتراكات</span><b class="num">' + money0(subsM) + '</b></div>' +
     (bc.length ? '<div class="rrow"><span>🎯 الميزانية</span><b>' + (over.length ? over.length + ' تصنيف تجاوز: ' + over.map(x => esc(x.name)).join('، ') : 'ضمن الحد ✓') + '</b></div>' : '') +
     '<div class="btns"><button class="btn ghost" id="rpP" style="margin-top:16px">‹ ' + shortMonth(shiftMonth(M, -1)) + '</button>' + (M < shiftMonth(cycleKey(), -1) ? '<button class="btn ghost" id="rpN" style="margin-top:16px">' + shortMonth(shiftMonth(M, 1)) + ' ›</button>' : '<button class="btn" id="rpX">تم</button>') + '</div>');
   $('rpP').onclick = () => reportSheet(shiftMonth(M, -1));
@@ -3364,7 +3388,8 @@ function kinds(){
 function kindColor(k){ const x = kinds().find(t => t[0] === k); return x ? x[1] : '#9AA0AE'; }
 function kindIcon(k){ return (String(k || '').match(/^\p{Extended_Pictographic}[️‍\p{Extended_Pictographic}]*/u) || ['•'])[0]; }
 function taskDone(t){ return /^(1|true|نعم|✓|✅)$/i.test(String(t.done || '').trim()); }
-function calTasks(){ return S.calK ? S.data.tasks.filter(t => t.kind === S.calK) : S.data.tasks; }
+function datedTasks(){ return S.data.tasks.filter(t => t.date); }
+function calTasks(){ return S.calK ? datedTasks().filter(t => t.kind === S.calK) : datedTasks(); }
 function tasksOn(d, all){ return (all ? S.data.tasks : calTasks()).filter(t => String(t.date) === d).sort((a, b) => String(a.time || '99').localeCompare(String(b.time || '99'))); }
 function hm12(s){ if(!s) return ''; const p = String(s).split(':'), h = +p[0]; return (h % 12 || 12) + (p[1] && p[1] !== '00' ? ':' + p[1] : '') + (h < 12 ? ' ص' : ' م'); }
 function taskTime12(t){ return t.time ? hm12(t.time) + (t.end ? ' – ' + hm12(t.end) : '') : 'طول اليوم'; }
@@ -3372,18 +3397,21 @@ function dayName(d){ return WEEK[new Date(d + 'T12:00:00').getDay()]; }
 function relDay(d){ const t = todayKey(); return d === t ? 'اليوم' : d === addDays(t, 1) ? 'بكرة' : d === addDays(t, -1) ? 'أمس' : dayName(d) + ' ' + dayLabel(d); }
 
 /* ---------- الصفحة ---------- */
+function calHead(mode, Y, M){
+  const title = mode === 'year' ? '<b class="num">' + Y + '</b>' : mode === 'month' ? '<b>' + MONTHS[+M.slice(5) - 1] + ' <span class="num">' + M.slice(0, 4) + '</span></b>' : '';
+  return '<section class="card calhd"><div class="seg calseg">' + [['year', 'السنة'], ['month', 'الشهر'], ['list', 'القادم'], ['lists', 'قوائمي']].map(x => '<button data-cm="' + x[0] + '" class="' + (mode === x[0] ? 'on' : '') + '">' + x[1] + '</button>').join('') + '</div>' +
+    (mode === 'year' || mode === 'month' ? '<div class="calnav"><button class="cnav" data-cn="-1" aria-label="السابق">›</button><div class="ctitle">' + title + '</div><button class="cnav" data-cn="1" aria-label="التالي">‹</button></div>' : '') +
+    (mode === 'lists' ? '<button class="chip ctoday" id="lNew">＋ قائمة</button>' : '<button class="chip ctoday" id="cToday">اليوم</button>') + '</section>';
+}
 VIEWS.cal = () => {
   const today = todayKey(), mode = S.calMode || 'year';
+  if(mode === 'lists') return calHead(mode, '', '') + listsHTML();
   if(!S.calM) S.calM = today.slice(0, 7);
   const Y = S.calY || +today.slice(0, 4), M = S.calM;
-  const H = [];
-  const title = mode === 'year' ? '<b class="num">' + Y + '</b>' : mode === 'month' ? '<b>' + MONTHS[+M.slice(5) - 1] + ' <span class="num">' + M.slice(0, 4) + '</span></b>' : '<b>القائمة</b>';
-  H.push('<section class="card calhd"><div class="seg calseg">' + [['year', 'السنة'], ['month', 'الشهر'], ['list', 'القائمة']].map(x => '<button data-cm="' + x[0] + '" class="' + (mode === x[0] ? 'on' : '') + '">' + x[1] + '</button>').join('') + '</div>' +
-    (mode !== 'list' ? '<div class="calnav"><button class="cnav" data-cn="-1" aria-label="السابق">›</button><div class="ctitle">' + title + '</div><button class="cnav" data-cn="1" aria-label="التالي">‹</button></div>' : '') +
-    '<button class="chip ctoday" id="cToday">اليوم</button></section>');
-  const yearTasks = S.data.tasks.filter(t => String(t.date).slice(0, 4) === String(Y));
-  H.push('<div class="chips hscroll calk"><button class="chip' + (!S.calK ? ' on' : '') + '" data-ck="">الكل <span class="num">' + S.data.tasks.length + '</span></button>' +
-    kinds().map(k => '<button class="chip' + (S.calK === k[0] ? ' on' : '') + '" data-ck="' + esc(k[0]) + '" style="--kc:' + k[1] + '"><i style="background:' + k[1] + '"></i>' + esc(k[0]) + ' <span class="num">' + S.data.tasks.filter(t => t.kind === k[0]).length + '</span></button>').join('') +
+  const H = [calHead(mode, Y, M)];
+  const yearTasks = datedTasks().filter(t => String(t.date).slice(0, 4) === String(Y));
+  H.push('<div class="chips hscroll calk"><button class="chip' + (!S.calK ? ' on' : '') + '" data-ck="">الكل <span class="num">' + datedTasks().length + '</span></button>' +
+    kinds().map(k => '<button class="chip' + (S.calK === k[0] ? ' on' : '') + '" data-ck="' + esc(k[0]) + '" style="--kc:' + k[1] + '"><i style="background:' + k[1] + '"></i>' + esc(k[0]) + ' <span class="num">' + datedTasks().filter(t => t.kind === k[0]).length + '</span></button>').join('') +
     '<button class="chip" id="ckEdit">⚙️ الفئات</button></div>');
   if(S.calK) H.push(kindListHTML(S.calK));
   if(mode === 'year') H.push(yearHTML(Y));
@@ -3431,7 +3459,7 @@ function listHTML(){
 }
 
 function kindListHTML(k){
-  const today = todayKey(), L = S.data.tasks.filter(t => t.kind === k).sort((a, b) => (a.date + (a.time || '')).localeCompare(b.date + (b.time || '')));
+  const today = todayKey(), L = datedTasks().filter(t => t.kind === k).sort((a, b) => (a.date + (a.time || '')).localeCompare(b.date + (b.time || '')));
   const up = L.filter(t => String(t.date) >= today);
   return '<section class="card kindcard" style="--kc:' + kindColor(k) + '"><h2><span>' + esc(k) + '</span><span class="num" style="color:var(--sub);font-size:13px">' + up.length + ' قادم · ' + (L.length - up.length) + ' سابق</span></h2>' +
     (up.length ? groupByDay(up) : '<div class="empty">ما فيه مواعيد قادمة بهالفئة</div>') + '</section>';
@@ -3454,9 +3482,10 @@ VIEWS.cal_after = root => {
     else { S.calM = shiftMonth(S.calM, d); S.calY = +S.calM.slice(0, 4); }
     render();
   });
-  $('cToday').onclick = () => { S.calY = 0; S.calM = todayKey().slice(0, 7); if(S.calMode === 'list') S.calMode = 'month'; render(); };
+  const ct = $('cToday'); if(ct) ct.onclick = () => { S.calY = 0; S.calM = todayKey().slice(0, 7); if(S.calMode === 'list') S.calMode = 'month'; render(); };
   root.querySelectorAll('[data-ck]').forEach(b => b.onclick = () => { S.calK = S.calK === b.dataset.ck ? '' : b.dataset.ck; render(); });
-  $('ckEdit').onclick = kindsSheet;
+  const ke = $('ckEdit'); if(ke) ke.onclick = kindsSheet;
+  if(S.calMode === 'lists') bindLists(root);
   root.querySelectorAll('[data-ym]').forEach(b => b.onclick = () => { S.calM = b.dataset.ym; S.calMode = 'month'; render(); window.scrollTo(0, 0); });
   root.querySelectorAll('[data-day]').forEach(b => b.onclick = () => calDaySheet(b.dataset.day));
   const am = $('cAddM'); if(am) am.onclick = () => taskForm(null, S.calMode === 'month' && S.calM !== todayKey().slice(0, 7) ? S.calM + '-01' : todayKey());
@@ -3580,6 +3609,404 @@ function kindsSheet(){
   paint();
 }
 
+
+/* ---------- 📝 قوائمي: مهام بدون تاريخ (مذاكرة، أغراض، أفكار…) ---------- */
+const LIST_COLORS = ['#6A3DE8', '#E86E0E', '#12897C', '#C2418C', '#3A6FD8', '#D9A21B', '#8C6640'];
+function listItems(){ return S.data.tasks.filter(t => !t.date && t.list); }
+function listNames(){
+  const order = (() => { try { return JSON.parse(S.settings.TASK_LISTS || '[]'); } catch(e){ return []; } })();
+  return uniq(order.concat(listItems().map(t => t.list))).filter(Boolean);
+}
+function listColor(n){ const i = listNames().indexOf(n); return LIST_COLORS[(i < 0 ? 0 : i) % LIST_COLORS.length]; }
+function listsHTML(){
+  const names = listNames();
+  if(!names.length) return '<section class="card lcard"><div class="empty">ما عندك قوائم بعد.<br>سوّ قائمة للمذاكرة، أو أغراض تبي تشتريها، أو أي شي ما له تاريخ.</div><button class="btn" id="lNew2">＋ قائمة جديدة</button></section>';
+  return '<div class="lgrid">' + names.map(n => {
+    const L = listItems().filter(t => t.list === n), open = L.filter(t => !taskDone(t)), done = L.filter(taskDone), c = listColor(n);
+    return '<section class="card lcard" style="--lc:' + c + '"><div class="lh"><b>' + esc(n) + '</b><span class="num">' + open.length + (L.length ? ' / ' + L.length : '') + '</span><button class="lmenu" data-lmenu="' + esc(n) + '" aria-label="خيارات">⋯</button></div>' +
+      (L.length ? '<div class="lbar"><i style="width:' + pct(done.length, L.length) + '%"></i></div>' : '') +
+      '<div class="litems">' + open.map(t => lRow(t)).join('') + '</div>' +
+      '<form class="ladd" data-ladd="' + esc(n) + '"><input placeholder="＋ أضف لـ ' + esc(n.replace(/^\p{Extended_Pictographic}\s*/u, '')) + '" enterkeyhint="done"><button aria-label="أضف">＋</button></form>' +
+      (done.length ? '<details class="ldone"><summary>منجزة (' + done.length + ')</summary>' + done.map(t => lRow(t)).join('') + '</details>' : '') + '</section>';
+  }).join('') + '</div>';
+}
+function lRow(t){
+  return '<div class="lrow' + (taskDone(t) ? ' done' : '') + '"><button class="lchk" data-ldone="' + esc(t.id) + '" aria-label="منجزة">' + (taskDone(t) ? '✓' : '') + '</button><span data-ledit="' + esc(t.id) + '">' + esc(t.title) + (t.note ? '<small>' + esc(t.note) + '</small>' : '') + '</span></div>';
+}
+function bindLists(root){
+  const nw = () => listNameForm(null);
+  ['lNew', 'lNew2'].forEach(id => { const b = $(id); if(b) b.onclick = nw; });
+  root.querySelectorAll('[data-ladd]').forEach(f => f.onsubmit = e => {
+    e.preventDefault(); const i = f.querySelector('input'), v = i.value.trim(); if(!v) return;
+    save('tasks', { date: '', title: v, list: f.dataset.ladd, kind: '', done: '' }, ['tasks'], false);
+    setTimeout(() => { const n = document.querySelector('[data-ladd="' + CSS.escape(f.dataset.ladd) + '"] input'); if(n) n.focus(); }, 30);
+  });
+  root.querySelectorAll('[data-ldone]').forEach(b => b.onclick = () => { const t = S.data.tasks.find(x => x.id === b.dataset.ldone); if(t) save('tasks', { id: t.id, done: taskDone(t) ? '' : '✓' }, ['tasks'], false); });
+  root.querySelectorAll('[data-ledit]').forEach(el => el.onclick = () => { const t = S.data.tasks.find(x => x.id === el.dataset.ledit); if(t) listItemForm(t); });
+  root.querySelectorAll('[data-lmenu]').forEach(b => b.onclick = () => listMenu(b.dataset.lmenu));
+}
+function saveListOrder(names){ settingsSet({ TASK_LISTS: JSON.stringify(names) }); }
+function settingsSet(o){ Object.assign(S.settings, o); bg('settings_save', { settings: o }, null, null, r => { if(r.settings) S.settings = r.settings; saveCache(); }); }
+function listNameForm(old){
+  openSheet(sheetHead(old ? 'تعديل القائمة' : '＋ قائمة جديدة') +
+    '<div class="flabel">اسم القائمة (تقدر تبدأه بإيموجي)</div><input id="lnN" class="fin rtl" value="' + esc(old || '') + '" placeholder="📚 مذاكرة">' +
+    (old ? '' : '<div class="pchips" style="margin-top:8px">' + ['📚 مذاكرة', '🧸 بودي العيال', '🛒 مشتريات', '🏠 البيت', '💡 أفكار', '🎯 أهداف'].map(x => '<button class="chip" data-lq="' + x + '">' + x + '</button>').join('') + '</div>') +
+    '<button class="btn" id="lnSave">' + (old ? 'حفظ' : 'سوّ القائمة') + '</button>');
+  document.querySelectorAll('[data-lq]').forEach(b => b.onclick = () => { $('lnN').value = b.dataset.lq; });
+  $('lnSave').onclick = () => {
+    const n = $('lnN').value.trim(); if(!n) return toast('اكتب الاسم');
+    const names = listNames();
+    if(n !== old && names.indexOf(n) !== -1) return toast('فيه قائمة بنفس الاسم');
+    closeSheet();
+    if(!old){ saveListOrder(names.concat([n])); render(); setTimeout(() => { const i = document.querySelector('[data-ladd="' + CSS.escape(n) + '"] input'); if(i) i.focus(); }, 80); return; }
+    saveListOrder(names.map(x => x === old ? n : x));
+    const ops = listItems().filter(t => t.list === old).map(t => ({ a: 'save', table: 'tasks', row: { id: t.id, list: n } }));
+    if(ops.length) batch(ops, ['tasks'], '✅ تغيّر الاسم'); else render();
+  };
+}
+async function listMenu(n){
+  const L = listItems().filter(t => t.list === n), done = L.filter(taskDone);
+  openSheet(sheetHead(esc(n)) +
+    '<button class="btn ghost" id="lmRen">✏️ تغيير الاسم</button>' +
+    (done.length ? '<button class="btn ghost" id="lmClr">🧹 مسح المنجز (' + done.length + ')</button>' : '') +
+    '<button class="btn ghost" id="lmDel" style="color:var(--bad,#D64545)">🗑️ حذف القائمة' + (L.length ? ' و' + L.length + ' مهمة' : '') + '</button>');
+  $('lmRen').onclick = () => { closeSheet(); listNameForm(n); };
+  const c = $('lmClr'); if(c) c.onclick = () => { closeSheet(); batch(done.map(t => ({ a: 'delete', table: 'tasks', id: t.id })), ['tasks'], '🧹 انمسح المنجز'); };
+  $('lmDel').onclick = async () => {
+    if(L.length && !await ask('حذف «' + n + '»؟', 'تنحذف معها ' + L.length + ' مهمة، وتقدر تتراجع', 'احذف', true)) return;
+    closeSheet(); saveListOrder(listNames().filter(x => x !== n));
+    if(L.length) batch(L.map(t => ({ a: 'delete', table: 'tasks', id: t.id })), ['tasks'], '🗑️ انحذفت القائمة'); else render();
+  };
+}
+function listItemForm(t){
+  let ln = t.list;
+  const b = openSheet(sheetHead('تعديل') +
+    '<div class="flabel">المهمة</div><input id="liT" class="fin rtl" value="' + esc(t.title) + '">' +
+    '<div class="flabel">ملاحظة</div><input id="liN" class="fin rtl" value="' + esc(t.note || '') + '">' +
+    '<div class="flabel">القائمة</div><div class="pchips">' + listNames().map(n => '<button class="chip' + (n === ln ? ' on' : '') + '" data-li="' + esc(n) + '">' + esc(n) + '</button>').join('') + '</div>' +
+    '<button class="btn" id="liSave">حفظ</button><button class="btn ghost" id="liDate">📅 حطها بالتقويم بتاريخ</button><button class="btn ghost" id="liDel">🗑️ حذف</button>');
+  bindChips(b, 'data-li', v => { ln = v; });
+  $('liSave').onclick = () => { const v = $('liT').value.trim(); if(!v) return toast('اكتب المهمة'); closeSheet(); save('tasks', { id: t.id, title: v, note: $('liN').value.trim(), list: ln }, ['tasks']); };
+  $('liDate').onclick = () => { closeSheet(); taskForm(Object.assign({}, t, { date: todayKey() }), todayKey()); };
+  $('liDel').onclick = () => { closeSheet(); remove('tasks', t.id, ['tasks']); };
+}
+
+/* =========================================================
+   🔁 الاشتراكات والفواتير المتكررة (جدول «الاشتراكات»)
+   دفتر يكتشفها من عمليات البنك (كهرباء، ماء، اتصالات، بث، تطبيقات…)
+   ويعتمدها تلقائياً، وأنت تعدّل أي شي أو تضيف يدوي.
+   ========================================================= */
+const SUB_KINDS = [
+  ['📱 اتصالات', '#6A3DE8'], ['⚡ كهرباء', '#E8A90E'], ['💧 ماء', '#2C7FD6'], ['🎬 بث وترفيه', '#E5484D'],
+  ['☁️ تطبيقات', '#12897C'], ['🛡️ تأمين', '#3A6FD8'], ['🏠 سكن', '#8C6640'], ['🏋️ رياضة', '#E86E0E'], ['🔁 أخرى', '#7A7F99']
+];
+/* علامات معروفة: re على اسم التاجر في رسالة البنك → الاسم والنوع واللون والحرف */
+const SUB_BRANDS = [
+  { re: 'saudi elec|السعودية للكهرباء|الكهرباء', n: 'الكهرباء', k: '⚡ كهرباء', c: '#0B7A3E', t: 'ك' },
+  { re: 'national water|the nation\\b|المياه الوطنية', n: 'المياه الوطنية', k: '💧 ماء', c: '#1F8FD6', t: 'م' },
+  { re: 'alliance water', n: 'تحالف المياه', k: '💧 ماء', c: '#3BA4DA', t: 'ت' },
+  { re: 'jawwy', n: 'جوّي', k: '📱 اتصالات', c: '#7B2FF7', t: 'ج' },
+  { re: 'arabian internet|^stc\\b(?! ?bank| ?pay)|\\bstc tv', n: 'STC', k: '📱 اتصالات', c: '#4F008C', t: 'stc' },
+  { re: '(^|[^a-z])salam\\b', n: 'سلام', k: '📱 اتصالات', c: '#00A79D', t: 'س' },
+  { re: 'mobily|موبايلي', n: 'موبايلي', k: '📱 اتصالات', c: '#0A9FD8', t: 'M' },
+  { re: '\\bzain\\b|زين', n: 'زين', k: '📱 اتصالات', c: '#7E3A96', t: 'Z' },
+  { re: 'virgin mobile', n: 'فيرجن', k: '📱 اتصالات', c: '#E10A0A', t: 'V' },
+  { re: 'lebara|ليبارا', n: 'ليبارا', k: '📱 اتصالات', c: '#1E3C8C', t: 'L' },
+  { re: 'netflix|نتفلكس', n: 'Netflix', k: '🎬 بث وترفيه', c: '#E50914', t: 'N' },
+  { re: '\\bmbc\\b|shahid|شاهد', n: 'شاهد', k: '🎬 بث وترفيه', c: '#00B86B', t: 'ش' },
+  { re: '\\bosn\\b', n: 'OSN+', k: '🎬 بث وترفيه', c: '#111111', t: 'O' },
+  { re: 'spotify', n: 'Spotify', k: '🎬 بث وترفيه', c: '#1DB954', t: 'S' },
+  { re: 'anghami|أنغامي', n: 'أنغامي', k: '🎬 بث وترفيه', c: '#8A2BE2', t: 'أ' },
+  { re: 'youtube', n: 'YouTube', k: '🎬 بث وترفيه', c: '#FF0000', t: '▶' },
+  { re: 'disney', n: 'Disney+', k: '🎬 بث وترفيه', c: '#113CCF', t: 'D' },
+  { re: 'starz', n: 'STARZPLAY', k: '🎬 بث وترفيه', c: '#222222', t: 'S' },
+  { re: 'prime ?video|amazon prime', n: 'Prime Video', k: '🎬 بث وترفيه', c: '#00A8E1', t: 'P' },
+  { re: 'apple\\.com|itunes|icloud', n: 'Apple', k: '☁️ تطبيقات', c: '#1C1C1E', t: '' },
+  { re: 'google', n: 'Google One', k: '☁️ تطبيقات', c: '#4285F4', t: 'G' },
+  { re: 'noon one|noon.*subscription', n: 'noon One', k: '☁️ تطبيقات', c: '#F5D300', t: 'n', dark: 1 },
+  { re: 'spaceship', n: 'Spaceship', k: '☁️ تطبيقات', c: '#5A35D6', t: 'S', cycle: 'y' },
+  { re: 'openai|chatgpt', n: 'ChatGPT', k: '☁️ تطبيقات', c: '#10A37F', t: 'AI' },
+  { re: 'anthropic|claude', n: 'Claude', k: '☁️ تطبيقات', c: '#D97757', t: 'C' },
+  { re: 'microsoft|xbox', n: 'Microsoft', k: '☁️ تطبيقات', c: '#00A4EF', t: 'MS' },
+  { re: 'adobe', n: 'Adobe', k: '☁️ تطبيقات', c: '#FA0F00', t: 'A' },
+  { re: 'canva', n: 'Canva', k: '☁️ تطبيقات', c: '#00C4CC', t: 'C' },
+  { re: 'playstation|\\bpsn\\b', n: 'PlayStation', k: '🎬 بث وترفيه', c: '#003791', t: 'PS' },
+  { re: 'tawuni|التعاونية', n: 'التعاونية', k: '🛡️ تأمين', c: '#0D5EAF', t: 'ت', cycle: 'y' },
+  { re: 'fitness time|وقت اللياقة', n: 'وقت اللياقة', k: '🏋️ رياضة', c: '#E86E0E', t: 'F' }
+];
+const SUB_CYC = { m: ['شهري', 1], q: ['كل 3 أشهر', 3], y: ['سنوي', 12] };
+
+function subKindColor(k){ const x = SUB_KINDS.find(z => z[0] === k); return x ? x[1] : '#7A7F99'; }
+function subRe(s){ try { return new RegExp(s.match, 'i'); } catch(e){ return { test: v => String(v).toLowerCase().indexOf(String(s.match).toLowerCase()) !== -1 }; } }
+function subBrand(s){ return SUB_BRANDS.find(b => b.re === s.match || b.n === s.name); }
+function subAvatar(s, size){
+  const b = subBrand(s), c = b ? b.c : subKindColor(s.kind), t = b ? (b.t || '') : String(s.name || '؟').trim().slice(0, 1);
+  const icon = b && b.n === 'Apple' ? '<svg viewBox="0 0 24 24" width="55%" height="55%" fill="#fff"><path d="M16.4 12.6c0-2.4 2-3.5 2-3.6-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9s-1.8-.9-3-.8c-1.6 0-3 .9-3.8 2.3-1.6 2.8-.4 6.9 1.2 9.2.8 1.1 1.7 2.3 2.9 2.3 1.2-.1 1.6-.8 3-.8s1.8.8 3 .7c1.3 0 2.1-1.1 2.8-2.3.9-1.3 1.3-2.6 1.3-2.6s-2.5-1-2.5-3.5zM14.1 5.6c.6-.8 1.1-1.9 1-3-.9 0-2.1.6-2.7 1.4-.6.7-1.1 1.8-1 2.9 1 .1 2.1-.5 2.7-1.3z"/></svg>' : esc(t);
+  return '<i class="sav" style="background:' + c + ';' + (b && b.dark ? 'color:#111;' : '') + (size ? 'width:' + size + 'px;height:' + size + 'px;font-size:' + Math.round(size * .36) + 'px' : '') + '">' + icon + '</i>';
+}
+function subActive(s){ return !/^(false|0|لا)$/i.test(String(s.active || '').trim()); }
+
+/* عمليات الاشتراك من المصاريف (آخر 13 شهر) */
+function subCharges(s){
+  const re = subRe(s), since = addDays(todayKey(), -400);
+  return S.data.tx.filter(t => String(t.date) >= since && num(t.amount) > 0 && t.merchant && re.test(t.merchant)).sort((a, b) => String(a.date).localeCompare(String(b.date)));
+}
+/* حساب كل اشتراك: المبلغ، الدورة، آخر خصم، القادم، والشهري المكافئ */
+function subInfo(s){
+  const ch = subCharges(s), last = ch[ch.length - 1], cyc = SUB_CYC[s.cycle] ? s.cycle : 'm', mo = SUB_CYC[cyc][1];
+  const recent = ch.slice(-3).map(t => num(t.amount)), auto = recent.length ? sum(recent, x => x) / recent.length : 0;
+  const amount = num(s.amount) || r2(auto), varies = !num(s.amount) && recent.length > 1 && Math.max.apply(null, recent) > Math.min.apply(null, recent) * 1.15;
+  const lastD = last ? String(last.date) : String(s.last || '');
+  let next = '';
+  const today = todayKey();
+  if(lastD){ next = shiftMonth(lastD.slice(0, 7), mo) + '-' + String(Math.min(28, +(s.day || lastD.slice(8)) || 1)).padStart(2, '0'); while(next < today) next = shiftMonth(next.slice(0, 7), mo) + next.slice(7); }
+  else if(+s.day){ next = today.slice(0, 7) + '-' + String(Math.min(28, +s.day)).padStart(2, '0'); if(next < today) next = shiftMonth(next.slice(0, 7), mo) + next.slice(7); }
+  const months = [];
+  for(let i = 5; i >= 0; i--){ const m = shiftMonth(monthKey(), -i); months.push(sum(ch.filter(t => String(t.date).slice(0, 7) === m), t => num(t.amount))); }
+  return { s, ch, last, amount, varies, cyc, monthly: amount / mo, next, months, paidYear: sum(ch.filter(t => String(t.date) >= addDays(today, -365)), t => num(t.amount)) };
+}
+function subsAll(){ return (S.data.subs || []).filter(subActive).map(subInfo).sort((a, b) => b.monthly - a.monthly); }
+
+/* ---------- الاكتشاف التلقائي ---------- */
+function subsDetect(){
+  const have = (S.data.subs || []), since = addDays(todayKey(), -400), out = [];
+  const known = s => have.some(h => h.match === s.match || normAr(h.name) === normAr(s.name));
+  const tx = S.data.tx.filter(t => String(t.date) >= since && num(t.amount) > 0 && t.merchant);
+  /* ١) العلامات المعروفة: تكفي عملية وحدة خلال آخر 3 أشهر */
+  SUB_BRANDS.forEach(b => {
+    const re = new RegExp(b.re, 'i'), l = tx.filter(t => re.test(t.merchant));
+    if(!l.length || String(l[l.length - 1].date) < addDays(todayKey(), b.cycle === 'y' ? -400 : -95)) return;
+    const s = { name: b.n, kind: b.k, match: b.re, cycle: b.cycle || 'm' };
+    if(!known(s)) out.push(s);
+  });
+  /* ٢) أي تاجر تصنيفه «اشتراكات»، أو يتكرر كل شهر بنفس المبلغ تقريباً */
+  const by = groupBy(tx.filter(t => !SUB_BRANDS.some(b => new RegExp(b.re, 'i').test(t.merchant))), t => normAr(t.merchant).replace(/\d+/g, '').replace(/riyadh|jeddah|- ?sa$/g, '').trim());
+  Object.keys(by).forEach(k => {
+    const l = by[k].sort((a, b) => String(a.date).localeCompare(String(b.date))), last = l[l.length - 1];
+    const isSubCat = /اشتراك/.test(last.category || '');
+    const months = uniq(l.map(t => String(t.date).slice(0, 7))), am = l.map(t => num(t.amount));
+    const steady = months.length >= 3 && l.length <= months.length * 1.3 && Math.max.apply(null, am) <= Math.min.apply(null, am) * 1.15 + 2 && !/بقال|مطاعم|وقود|تحويل|خدمات مالية|تبرع/.test(last.category || '');
+    if(!(isSubCat || steady) || String(last.date) < addDays(todayKey(), -70)) return;
+    const s = { name: last.merchant, kind: isSubCat ? '☁️ تطبيقات' : '🔁 أخرى', match: last.merchant.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), cycle: 'm' };
+    if(!known(s)) out.push(s);
+  });
+  return out;
+}
+/* يشتغل مرة بعد المزامنة: يعتمد الجديد مباشرة */
+function subsAuto(){
+  if(S._subsAuto || !S.data.tx.length) return;
+  S._subsAuto = 1;
+  const found = subsDetect();
+  if(!found.length) return;
+  const ops = found.map(s => { const i = subInfo(s); return { a: 'save', table: 'subs', row: { name: s.name, kind: s.kind, match: s.match, cycle: s.cycle, day: i.last ? String(+String(i.last.date).slice(8)) : '', source: 'auto', active: 'TRUE', last: i.last ? i.last.date : '' } }; });
+  batch(ops, ['subs'], '🔁 اكتشفت ' + found.length + ' ' + (found.length === 1 ? 'اشتراك جديد' : 'اشتراكات جديدة') + ' وضفتها');
+}
+
+/* ---------- الصفحة (مصاريفي ← الاشتراكات) ---------- */
+function expSubs(){
+  const L = subsAll(), today = todayKey(), mT = sum(L, x => x.monthly);
+  const byK = groupBy(L, x => x.s.kind || '🔁 أخرى');
+  const parts = Object.keys(byK).map(k => ({ n: k, v: sum(byK[k], x => x.monthly), c: subKindColor(k) })).sort((a, b) => b.v - a.v);
+  const soon = L.filter(x => x.next && x.next <= addDays(today, 10)).sort((a, b) => a.next.localeCompare(b.next));
+  const H = [];
+  H.push('<section class="subhero"><div class="sh-t"><span>🔁 اشتراكاتي وفواتيري</span><button class="sh-add" id="subAdd">＋ أضف</button></div>' +
+    '<div class="sh-b"><div><div class="sh-k">شهرياً</div><div class="sh-v num">' + money0(mT) + '<small> ر.س</small></div>' +
+    '<div class="sh-s">سنوياً تقريباً <b class="num">' + money0(mT * 12) + '</b> · ' + L.length + ' اشتراك</div></div>' +
+    (parts.length ? '<div class="sh-d">' + donut(parts, 108) + '</div>' : '') + '</div>' +
+    (parts.length ? '<div class="sh-leg">' + parts.map(p => '<span><i style="background:' + p.c + '"></i>' + esc(p.n) + ' <b class="num">' + money0(p.v) + '</b></span>').join('') + '</div>' : '') + '</section>');
+  if(soon.length) H.push('<section class="card"><h2>⏰ قريب <span>' + soon.length + '</span></h2><div class="subsoon">' + soon.map(x =>
+    '<button class="ss" data-sub="' + esc(x.s.id) + '">' + subAvatar(x.s, 40) + '<b>' + esc(x.s.name) + '</b><small>' + esc(x.next === today ? 'اليوم' : relDay(x.next)) + '</small><span class="num">' + (x.varies ? '≈' : '') + money0(x.amount) + '</span></button>').join('') + '</div></section>');
+  if(!L.length) H.push('<section class="card"><div class="empty">ما لقيت اشتراكات بعد. اضغط «＋ أضف» وسجّل أول واحد، وأي فاتورة أو اشتراك يوصلك بالرسائل بيتضاف تلقائياً.</div></section>');
+  SUB_KINDS.map(k => k[0]).concat(Object.keys(byK).filter(k => !SUB_KINDS.some(z => z[0] === k))).forEach(k => {
+    const l = byK[k]; if(!l) return;
+    H.push('<section class="card subk" style="--kc:' + subKindColor(k) + '"><h2><span>' + esc(k) + '</span><span class="num" style="color:var(--sub);font-size:13px">' + money0(sum(l, x => x.monthly)) + ' / شهر</span></h2><div class="list">' +
+      l.map(x => subRowHTML(x)).join('') + '</div></section>');
+  });
+  const hid = (S.data.subs || []).filter(s => !subActive(s));
+  if(hid.length) H.push('<section class="card"><details class="omore"><summary>مخفية (' + hid.length + ')</summary><div class="list">' + hid.map(s => '<div class="item act srow" data-sub="' + esc(s.id) + '">' + subAvatar(s, 36) + '<div class="sm"><div class="r1"><span class="n">' + esc(s.name) + '</span></div><div class="r2"><span>' + esc(s.kind || '') + ' · اضغط ترجعه</span></div></div></div>').join('') + '</div></details></section>');
+  return H.join('');
+}
+function subRowHTML(x){
+  const mx = Math.max.apply(null, x.months.concat([1]));
+  return '<div class="item act srow" data-sub="' + esc(x.s.id) + '">' + subAvatar(x.s, 42) +
+    '<div class="sm"><div class="r1"><span class="n">' + esc(x.s.name) + '</span><span class="a num">' + (x.varies ? '≈ ' : '') + money(x.amount) + '</span></div>' +
+    '<div class="r2"><span>' + SUB_CYC[x.cyc][0] + (x.next ? ' · القادم ' + esc(relDay(x.next)) : '') + (x.s.source === 'auto' ? ' · 🤖' : '') + '</span>' +
+    '<span class="spk">' + x.months.map(v => '<i style="height:' + Math.max(8, pct(v, mx)) + '%;' + (v ? '' : 'opacity:.25') + '"></i>').join('') + '</span></div></div></div>';
+}
+function bindSubs(root){
+  root.querySelectorAll('[data-sub]').forEach(el => el.onclick = () => subForm((S.data.subs || []).find(s => s.id === el.dataset.sub)));
+  const a = $('subAdd'); if(a) a.onclick = () => subForm(null);
+}
+
+/* ---------- نموذج الاشتراك: تعديل أو إضافة يدوي ---------- */
+function subForm(s){
+  const isNew = !s; s = s || { name: '', kind: '📱 اتصالات', amount: '', cycle: 'm', day: '', match: '', note: '', active: 'TRUE', source: 'manual' };
+  const I = s.id ? subInfo(s) : null;
+  let kind = s.kind || '🔁 أخرى', cyc = SUB_CYC[s.cycle] ? s.cycle : 'm', on = subActive(s);
+  const b = openSheet(sheetHead(isNew ? '＋ اشتراك أو فاتورة' : esc(s.name)) +
+    (I ? '<div class="subtop">' + subAvatar(s, 56) + '<div><div class="amt num" style="margin:0">' + (I.varies ? '≈ ' : '') + money(I.amount) + '</div><div class="hint" style="margin:0">' + SUB_CYC[I.cyc][0] + (I.next ? ' · القادم ' + esc(relDay(I.next)) : '') + ' · دفعت آخر سنة <b class="num">' + money0(I.paidYear) + '</b></div></div></div>' : '') +
+    '<div class="flabel">الاسم</div><input id="sbN" class="fin rtl" value="' + esc(s.name) + '" placeholder="مثلاً: نتفلكس، فاتورة الكهرباء">' +
+    '<div class="flabel">النوع</div><div class="pchips">' + SUB_KINDS.map(k => '<button class="chip' + (k[0] === kind ? ' on' : '') + '" data-sk="' + esc(k[0]) + '">' + esc(k[0]) + '</button>').join('') + '</div>' +
+    '<div class="row2"><div><div class="flabel">المبلغ (فاضي = من آخر الخصومات)</div><input id="sbA" class="fin" inputmode="decimal" value="' + esc(s.amount || '') + '" placeholder="' + (I ? r2(I.amount) : '0') + '"></div>' +
+    '<div><div class="flabel">يوم الخصم</div><input id="sbD" class="fin" inputmode="numeric" value="' + esc(s.day || '') + '" placeholder="1–28"></div></div>' +
+    '<div class="flabel">الدورة</div><div class="seg" id="sbC">' + Object.keys(SUB_CYC).map(k => '<button data-cy="' + k + '" class="' + (k === cyc ? 'on' : '') + '">' + SUB_CYC[k][0] + '</button>').join('') + '</div>' +
+    '<div class="flabel">كلمة من اسم التاجر في رسالة البنك</div><input id="sbM" class="fin" dir="ltr" value="' + esc(s.match || '') + '" placeholder="NETFLIX">' +
+    '<p class="hint" style="margin-top:4px">عن طريقها يربط دفتر الخصومات بالاشتراك. اتركها فاضية لو تدفعه بطريقة ثانية.</p>' +
+    '<div class="flabel">ملاحظة</div><input id="sbT" class="fin rtl" value="' + esc(s.note || '') + '">' +
+    (isNew ? '' : '<label class="chk"><input type="checkbox" id="sbOn"' + (on ? ' checked' : '') + '> مفعّل (لو تلغيه يختفي من الحسابات)</label>') +
+    '<button class="btn" id="sbSave">' + (isNew ? 'أضف' : 'حفظ') + '</button>' +
+    (I && I.ch.length ? '<div class="flabel" style="margin-top:16px">آخر الخصومات</div><div class="list">' + I.ch.slice(-8).reverse().map(t => '<div class="item"><div class="r1"><span class="n">' + esc(dayLabel(t.date)) + '</span><span class="a num">' + money(t.amount) + '</span></div><div class="r2"><span>' + esc(t.merchant) + '</span><span>' + esc(t.bank || '') + '</span></div></div>').join('') + '</div>' : '') +
+    (isNew ? '' : '<button class="btn ghost" id="sbDel">' + (s.source === 'auto' ? 'إخفاء (مو اشتراك)' : 'حذف') + '</button>'));
+  bindChips(b, 'data-sk', v => { kind = v; });
+  b.querySelectorAll('[data-cy]').forEach(x => x.onclick = () => { cyc = x.dataset.cy; b.querySelectorAll('[data-cy]').forEach(y => y.classList.toggle('on', y === x)); });
+  $('sbSave').onclick = () => {
+    const name = $('sbN').value.trim(); if(!name) return toast('اكتب الاسم');
+    const day = $('sbD').value.trim(); if(day && !(+day >= 1 && +day <= 31)) return toast('يوم الخصم من 1 إلى 31');
+    const row = { name, kind, amount: $('sbA').value.trim(), cycle: cyc, day, match: $('sbM').value.trim(), note: $('sbT').value.trim(), active: isNew || $('sbOn').checked ? 'TRUE' : 'FALSE', source: s.source || 'manual' };
+    if(s.id) row.id = s.id;
+    closeSheet(); save('subs', row, ['subs'], isNew ? '✅ انضاف ' + name : '✅ انحفظ');
+  };
+  const d = $('sbDel'); if(d) d.onclick = async () => {
+    if(s.source === 'auto'){ closeSheet(); save('subs', { id: s.id, active: 'FALSE' }, ['subs'], '🙈 انخفى · تقدر ترجعه من «مخفية»'); return; }
+    if(!await ask('حذف ' + s.name + '؟', '', 'احذف', true)) return;
+    closeSheet(); remove('subs', s.id, ['subs']);
+  };
+}
+
+/* =========================================================
+   الرئيسية — «وش وضعي اليوم؟»
+   بطاقة اليوم (تقدر تصرف كم + حلقة الشهر) ← شريط القرارات ← رسم الشهر
+   ← الأقسام بالألوان ← الأجندة والاشتراكات والقوائم والميزانية
+   ========================================================= */
+const HPAL = ['#6A3DE8', '#E86E0E', '#12897C', '#C2418C', '#3A6FD8', '#D9A21B'];
+
+/* حلقتان: الخارجية = نسبة الصرف من الميزانية، الداخلية = نسبة الأيام اللي مرت */
+function ring2(p1, p2, size){
+  const c = size / 2, r1 = c - 7, r2 = c - 19, C1 = 2 * Math.PI * r1, C2 = 2 * Math.PI * r2;
+  const a = Math.min(100, Math.max(0, p1)), b = Math.min(100, Math.max(0, p2));
+  return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 ' + size + ' ' + size + '" class="ring2">' +
+    '<circle cx="' + c + '" cy="' + c + '" r="' + r1 + '" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="10"/>' +
+    '<circle cx="' + c + '" cy="' + c + '" r="' + r1 + '" fill="none" stroke="' + (p1 > 100 ? '#FFB199' : '#FFB25C') + '" stroke-width="10" stroke-linecap="round" stroke-dasharray="' + (C1 * a / 100).toFixed(1) + ' ' + C1.toFixed(1) + '" transform="rotate(-90 ' + c + ' ' + c + ')"/>' +
+    '<circle cx="' + c + '" cy="' + c + '" r="' + r2 + '" fill="none" stroke="rgba(255,255,255,.14)" stroke-width="6"/>' +
+    '<circle cx="' + c + '" cy="' + c + '" r="' + r2 + '" fill="none" stroke="#fff" stroke-opacity=".85" stroke-width="6" stroke-linecap="round" stroke-dasharray="' + (C2 * b / 100).toFixed(1) + ' ' + C2.toFixed(1) + '" transform="rotate(-90 ' + c + ' ' + c + ')"/></svg>';
+}
+
+/* رسم تراكمي للشهر الحالي مقابل الشهر اللي قبله */
+function cumChart(st){
+  const W = 340, H = 120, P = st.P, prev = txBase(txIn(shiftMonth(P, -1))), ps = cycleStart(shiftMonth(P, -1));
+  const n = st.fullDays, cur = [], pre = [];
+  let a = 0, b = 0;
+  for(let i = 0; i < n; i++){
+    if(i < st.days){ a += st.daily[i] ? st.daily[i].v : 0; cur.push(a); }
+    const k = addDays(ps, i); b += sum(prev.filter(t => t.date === k), t => num(t.amount)); pre.push(b);
+  }
+  const mx = Math.max(1, a, b, st.forecast) * 1.08, x = i => (W * i / Math.max(1, n - 1)), y = v => (H - 6 - (H - 14) * v / mx);
+  const line = arr => arr.map((v, i) => (i ? 'L' : 'M') + x(i).toFixed(1) + ' ' + y(v).toFixed(1)).join(' ');
+  const area = cur.length ? line(cur) + ' L' + x(cur.length - 1).toFixed(1) + ' ' + H + ' L0 ' + H + ' Z' : '';
+  const fx = st.isCurrent && cur.length ? 'M' + x(cur.length - 1).toFixed(1) + ' ' + y(a).toFixed(1) + ' L' + x(n - 1).toFixed(1) + ' ' + y(st.forecast).toFixed(1) : '';
+  const lx = cur.length ? x(cur.length - 1) : 0, ly = y(a);
+  return '<svg class="cum" viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none"><defs><linearGradient id="cg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7B4BF0" stop-opacity=".32"/><stop offset="1" stop-color="#7B4BF0" stop-opacity="0"/></linearGradient>' +
+    '<linearGradient id="cl" x1="0" x2="1"><stop offset="0" stop-color="#6A3DE8"/><stop offset="1" stop-color="#FF8A2A"/></linearGradient></defs>' +
+    [0.25, 0.5, 0.75].map(f => '<line x1="0" x2="' + W + '" y1="' + (H * f) + '" y2="' + (H * f) + '" stroke="#ECE9F7" stroke-width="1"/>').join('') +
+    (pre.length ? '<path d="' + line(pre) + '" fill="none" stroke="#B9B3D9" stroke-width="2" stroke-dasharray="4 4" vector-effect="non-scaling-stroke"/>' : '') +
+    (area ? '<path d="' + area + '" fill="url(#cg)"/><path d="' + line(cur) + '" fill="none" stroke="url(#cl)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/>' : '') +
+    (fx ? '<path d="' + fx + '" fill="none" stroke="#FF8A2A" stroke-width="2" stroke-dasharray="2 5" stroke-linecap="round" vector-effect="non-scaling-stroke" opacity=".8"/>' : '') +
+    '</svg>' + (cur.length ? '<i class="cumdot" style="right:' + (lx / W * 100).toFixed(1) + '%;top:' + (ly / H * 100).toFixed(1) + '%"></i>' : '');
+}
+
+/* بلاطة قسم ملوّنة مع رسمة كبيرة */
+function sTile(go, cls, icon, title, val, sub, extra){
+  return '<button class="stile ' + cls + '" data-go="' + go + '"><svg class="sbig" viewBox="0 0 24 24">' + icon + '</svg><i class="sic2"><svg viewBox="0 0 24 24">' + icon + '</svg></i>' +
+    '<span class="st">' + title + '</span><b class="sv">' + val + '</b><small>' + sub + '</small>' + (extra || '') + '</button>';
+}
+
+VIEWS.home = () => {
+  const P = cycleKey(), st = periodStats(P), today = todayKey(), y = addDays(today, -1);
+  const B = budgetRows(), IB = inboxItems();
+  const todaySp = sum(txBase(S.data.tx.filter(t => t.date === today)), t => num(t.amount));
+  const ySp = sum(txBase(S.data.tx.filter(t => t.date === y)), t => num(t.amount));
+  const diff = st.prevTotal ? (st.total - st.prevTotal) / st.prevTotal * 100 : 0;
+  const C1 = [], C2 = [], C3 = [];
+
+  /* ١) بطاقة اليوم */
+  const daysLeft = Math.max(1, st.fullDays - st.days + 1);
+  let big, lab, note, ringP;
+  if(B.rows.length){
+    const budCats = B.rows.map(r => r.n), spToday = sum(txBase(S.data.tx.filter(t => t.date === today && budCats.indexOf(t.category) !== -1)), t => num(t.amount));
+    const left = B.tot - (B.spent - spToday), perDay = left / daysLeft, rem = perDay - spToday;
+    lab = rem >= 0 ? 'تقدر تصرف اليوم' : 'تعدّيت حد اليوم بـ';
+    big = money0(Math.abs(rem)); ringP = pct(B.spent, B.tot) * (B.spent > B.tot ? 1.01 : 1);
+    note = B.spent > B.tot ? 'تجاوزت الميزانية بـ <b class="num">' + money0(B.spent - B.tot) + '</b>' : 'باقي <b class="num">' + money0(B.tot - B.spent) + '</b> ر.س لـ ' + daysLeft + ' يوم';
+  } else { lab = 'صرفت اليوم'; big = money0(todaySp); ringP = st.prevTotal ? pct(st.total, st.prevTotal) : 0; note = 'حدّد ميزانيتك وأحسب لك كم تقدر تصرف كل يوم'; }
+  C1.push('<section class="hx-today" data-go="bud"><div class="ht-l"><span class="ht-k">' + lab + '</span><div class="ht-v"><b class="num">' + big + '</b><small>ر.س</small></div><div class="ht-n">' + note + '</div></div>' +
+    '<div class="ht-r">' + ring2(ringP, st.days / st.fullDays * 100, 116) + '<div class="ht-rc"><b class="num">' + Math.round(B.rows.length ? pct(B.spent, B.tot) : ringP) + '٪</b><small>' + (B.rows.length ? 'من الميزانية' : 'من الشهر الماضي') + '</small></div></div>' +
+    '<div class="ht-p"><span>اليوم<b class="num">' + money0(todaySp) + '</b></span><span>أمس<b class="num">' + money0(ySp) + '</b></span><span>' + shortMonth(P) + '<b class="num">' + money0(st.total) + '</b></span></div></section>');
+
+  /* ٢) شريط القرارات */
+  const tt = tasksOn(today, true).filter(t => !taskDone(t)), subsL = subsAll(), soon = subsL.filter(x => x.next && x.next <= addDays(today, 3));
+  const pills = [];
+  if(IB.length) pills.push('<button class="hpill hot" data-go="inbox"><b class="num">' + IB.length + '</b> تحتاج قرارك ›</button>');
+  pills.push('<button class="hpill" data-go="cal">📋 <b class="num">' + tt.length + '</b> ' + (tt.length === 1 ? 'مهمة' : 'مهام') + ' اليوم</button>');
+  if(soon.length) pills.push('<button class="hpill" data-go="subs">🔁 ' + esc(soon[0].s.name) + ' ' + esc(relDay(soon[0].next)) + (soon.length > 1 ? ' +' + (soon.length - 1) : '') + '</button>');
+  C1.push('<div class="hpills">' + pills.join('') + '</div>');
+  if(IB.length) C1.push(inboxHTML(false));
+  C1.push(agendaHTML());
+
+  /* ٣) رسم الشهر + توزيع التصنيفات */
+  const top = st.cats.slice(0, 5), rest = sum(st.cats.slice(5), x => x.v), segs = top.map((x, i) => ({ n: x.n, v: x.v, c: HPAL[i] })).concat(rest ? [{ n: 'الباقي', v: rest, c: '#CFCBE6' }] : []);
+  C2.push('<section class="card hx-chart" data-go="exp"><div class="hc-h"><div><span class="hc-k">مصاريف ' + monthName(P) + '</span><div class="hc-v"><b class="num">' + money0(st.total) + '</b><small>ر.س</small>' +
+    (st.prevTotal ? '<span class="dch ' + (diff > 0 ? 'up' : 'dn') + '">' + (diff > 0 ? '▲' : '▼') + ' ' + Math.abs(diff).toFixed(0) + '٪</span>' : '') + '</div></div>' +
+    '<div class="hc-f"><small>المتوقع</small><b class="num">' + money0(st.forecast) + '</b></div></div>' +
+    '<div class="cumw">' + cumChart(st) + '</div><div class="hc-lg"><span><i style="background:linear-gradient(90deg,#6A3DE8,#FF8A2A)"></i>هالشهر</span><span><i class="dash"></i>الشهر الماضي</span><span>يومياً <b class="num">' + money0(st.avg) + '</b></span></div>' +
+    (segs.length ? '<div class="stack">' + segs.map(p => '<i style="flex:' + p.v + ';background:' + p.c + '"></i>').join('') + '</div><div class="stleg">' + segs.map(p => '<span><i style="background:' + p.c + '"></i>' + esc(p.n.replace(/^\p{Extended_Pictographic}\S*\s*/u, '')) + ' <b class="num">' + Math.round(pct(p.v, st.total)) + '٪</b></span>').join('') + '</div>' : '') + '</section>');
+
+  /* ٤) الأقسام بالألوان */
+  const iv = S.data.sukuk.length ? invStats() : null, D = S.data.wbills.length ? wData() : null, wc = D && D.cur;
+  const own = S.data.items, wAct = own.filter(i => i.wEnd && String(i.wEnd) >= today);
+  const rc = S.data.receipts.slice().sort((a, b) => String(b.date).localeCompare(String(a.date)))[0];
+  const PL = S.plates ? pLive() : [];
+  C2.push('<div class="sgrid">' +
+    sTile('inv', 'g-inv', ICON.inv, 'استثماراتي', iv ? money0(iv.outstanding) : '—', iv ? '+' + money0(iv.distYear) + ' توزيعات ' + today.slice(0, 4) : 'أضف أول استثمار', iv && iv.late.length ? '<em>⏰ ' + iv.late.length + '</em>' : '') +
+    sTile('nwc', 'g-wat', ICON.wat, 'المياه', wc ? f2(wc.billProj) : '—', wc ? f2(wc.cons) + ' م³ هالفترة' : 'ما فيه بيانات', wc ? '<span class="sgauge"><i style="width:' + Math.min(100, pct(wc.cons, wc.lim2)) + '%"></i></span>' : '') +
+    sTile('subs', 'g-sub', ICON.sub, 'الاشتراكات', money0(sum(subsL, x => x.monthly)), subsL.length + ' اشتراك · شهرياً', '<span class="savs">' + subsL.slice(0, 4).map(x => subAvatar(x.s, 22)).join('') + '</span>') +
+    sTile('prs', 'g-pr', ICON.pr, 'كم سعره؟', S.data.products.length + ' منتج', rc ? 'آخر فاتورة ' + esc(rc.store) : 'صوّر أول فاتورة') +
+    sTile('own', 'g-own', ICON.shield, 'الضمانات', own.length + ' غرض', wAct.length + ' ضمان ساري') +
+    sTile('plt', 'g-plt', '<rect x="2.5" y="6.5" width="19" height="11" rx="2.5"/><path d="M7 10v4M10.5 10v4M14 10h3M14 14h3"/>', 'اللوحات', S.plates ? PL.length + ' جارية' : '…', PL[0] ? esc(PL[0].plate) : 'قائمة المراقبة') +
+    '</div>');
+
+  /* ٥) الاشتراكات */
+  if(subsL.length){
+    const nx = subsL.filter(x => x.next).sort((a, b) => a.next.localeCompare(b.next)).slice(0, 3);
+    C3.push('<section class="card hx-subs" data-go="subs"><h2><span>🔁 اشتراكاتي</span><span class="num" style="font-size:13px;color:var(--sub)">' + money0(sum(subsL, x => x.monthly)) + ' / شهر</span></h2>' +
+      '<div class="hsav">' + subsL.slice(0, 7).map(x => subAvatar(x.s, 38)).join('') + (subsL.length > 7 ? '<i class="sav more">+' + (subsL.length - 7) + '</i>' : '') + '</div>' +
+      nx.map(x => '<div class="hsn"><span>' + esc(x.s.name) + '</span><span>' + esc(relDay(x.next)) + '</span><b class="num">' + (x.varies ? '≈' : '') + money0(x.amount) + '</b></div>').join('') + '</section>');
+  }
+  /* ٦) القوائم */
+  const LN = listNames();
+  C3.push('<section class="card hx-lists"><h2><span>📝 قوائمي</span><button class="link" data-go="lists" style="margin:0;padding:0">الكل ›</button></h2>' +
+    (LN.length ? LN.slice(0, 4).map((n, i) => { const L = listItems().filter(t => t.list === n), o = L.filter(t => !taskDone(t)); return '<button class="hl" data-go="lists" style="--lc:' + LIST_COLORS[i % LIST_COLORS.length] + '"><span>' + esc(n) + '</span><b class="num">' + o.length + '</b><i><em style="width:' + pct(L.length - o.length, L.length) + '%"></em></i></button>'; }).join('')
+      : '<button class="hl" data-go="lists"><span>＋ سوّ أول قائمة (مذاكرة، أغراض…)</span></button>') + '</section>');
+  /* ٧) الميزانية */
+  if(B.rows.length) C3.push('<section class="card hx-bud" data-go="bud"><h2><span>🎯 الميزانية</span><span class="num" style="font-size:13px;color:var(--sub)">' + money0(B.spent) + ' / ' + money0(B.tot) + '</span></h2>' +
+    B.rows.slice(0, 4).map(r => '<div class="hb"><div><span>' + esc(r.n) + '</span><b class="num" style="color:' + r.st.c + '">' + Math.round(r.q) + '٪</b></div><i><em style="width:' + Math.min(100, r.q) + '%;background:' + (r.s > r.b ? '#E5484D' : r.q >= 80 ? '#E86E0E' : '#12897C') + '"></em><u style="right:' + Math.min(100, B.dp) + '%"></u></i></div>').join('') + '</section>');
+  /* ٨) آخر 6 أشهر */
+  const tr = trend6(P), mx = Math.max.apply(null, tr.map(m => m.v).concat([1]));
+  C3.push('<section class="card hx-tr" data-go="exp"><h2><span>📊 آخر 6 أشهر</span><span class="num" style="font-size:12px;color:var(--sub)">متوسط ' + money0(sum(tr.slice(0, 5), m => m.v) / 5) + '</span></h2><div class="trb">' +
+    tr.map((m, i) => '<div><span class="num">' + (m.v >= 1000 ? (m.v / 1000).toFixed(1) + 'k' : money0(m.v)) + '</span><i style="height:' + Math.max(4, pct(m.v, mx)) + '%;' + (i === tr.length - 1 ? 'background:linear-gradient(180deg,#FF8A2A,#E86E0E)' : '') + '"></i><small>' + MONTHS[+m.k.slice(5) - 1].slice(0, 3) + '</small></div>').join('') + '</div></section>');
+
+  return '<div class="hx"><div class="hx1">' + C1.join('') + '</div><div class="hx2">' + C2.join('') + '</div><div class="hx3">' + C3.join('') + '</div></div>';
+};
+VIEWS.home_after = root => {
+  bindInbox(root); bindTaskRows(root);
+  root.querySelectorAll('[data-ag]').forEach(el => el.onclick = e => { e.stopPropagation(); const x = S._ag[+el.dataset.ag]; if(x && x.go) x.go(); });
+  const ta = $('agAdd'); if(ta) ta.onclick = e => { e.stopPropagation(); taskForm(null, todayKey()); };
+  const act = {
+    exp: () => { S.period = cycleKey(); go('exp', 'sum'); }, inv: () => go('inv', 'sum'), nwc: () => go('nwc', 'now'),
+    prs: () => { S.sub.pr = 'search'; go('pr'); }, bud: () => { S.period = cycleKey(); go('exp', 'bud'); }, subs: () => go('exp', 'subs'),
+    own: () => go('pr', 'own'), plt: () => go('plt'), cal: () => go('cal'), lists: () => { S.calMode = 'lists'; go('cal'); }, inbox: () => go('inbox')
+  };
+  root.querySelectorAll('[data-go]').forEach(b => b.onclick = e => { if(e.target.closest('[data-ibx],[data-task],[data-tdone],.ibx button')) return; e.stopPropagation(); act[b.dataset.go] && act[b.dataset.go](); });
+};
 
 /* =========================================================
    🚗 اللوحات — تبويبات «مراقبة اللوحات / سجل اللوحات / متابعة اللوحات» في Bs-Dftr
@@ -3845,7 +4272,7 @@ if(DEMO) S.plates = PDemo('plates_data', {});
    ========================================================= */
 
 const Demo = (() => {
-  const KEYS = { wmeter:'id', wbills:'start', tx:'id', merchants:'name', categories:'name', transfers:'id', trules:'key', rules:'id', prices:'id', products:'pid', stores:'key', receipts:'id', sukuk:'id', ops:'id', dues:'id', zakat:'id', items:'id', tasks:'id' };
+  const KEYS = { wmeter:'id', wbills:'start', tx:'id', merchants:'name', categories:'name', transfers:'id', trules:'key', rules:'id', prices:'id', products:'pid', stores:'key', receipts:'id', sukuk:'id', ops:'id', dues:'id', zakat:'id', items:'id', tasks:'id', subs:'id' };
   let seed = 7;
   const rnd = () => { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; };
   const pick = a => a[Math.floor(rnd() * a.length)];
@@ -3873,6 +4300,8 @@ const Demo = (() => {
       d = addDays(d, 1);
     }
     for(let i = 5; i >= 0; i--){ const mk = shiftMonth(monthKey(), -i); [['NETFLIX','📦 اشتراكات',56,'05'],['STC','📱 اتصالات',230,'12'],['SHAHID VIP','📦 اشتراكات',29.9,'18'],['APPLE.COM/BILL','📦 اشتراكات',14.99,'22']].forEach(x => { const d = mk + '-' + x[3]; if(d <= today) D.tx.push({ id: nid('T'), date: d, time: '03:00', merchant: x[0], category: x[1], amount: x[2], currency: 'SAR', card: '0365', pay: 'Apple Pay', type: 'شراء إنترنت', bank: 'مصرف الإنماء', source: 'رسالة', note: '', created: d }); }); }
+    for(let i = 5; i >= 0; i--){ const d = shiftMonth(monthKey(), -i) + '-08'; if(d <= today) D.tx.push({ id: nid('T'), date: d, time: '10:00', merchant: 'SAUDI ELECTRICITY COMP - SA', category: '🏠 منزل', amount: [310, 420, 560, 610, 380, 290][i], currency: 'SAR', card: '0365', pay: 'سداد', type: 'سداد فاتورة', bank: 'مصرف الإنماء', source: 'رسالة', note: '', created: d }); }
+    D.subs = [];
     D.tx.push({ id: nid('T'), date: addDays(today, -2), time: '21:10', merchant: 'AL SAFWA TRADING EST', category: '❓ غير مصنف', amount: 145, currency: 'SAR', card: '0365', pay: 'مدى', type: 'شراء', bank: 'مصرف الإنماء', source: 'رسالة', note: '', created: today });
     D.tx.push({ id: nid('T'), date: addDays(today, -1), time: '13:40', merchant: 'GREEN LEAF CAFE', category: '🍔 مطاعم ومقاهي', amount: 38, currency: 'SAR', card: '1294', pay: 'Apple Pay', type: 'شراء', bank: 'مصرف الراجحي', source: 'رسالة', note: '', created: today });
     D.tx.push({ id: nid('T'), date: addDays(today, -20), time: '12:22', merchant: 'TRA FORUM', category: '🛍️ تسوق', amount: 450, currency: 'TRY', card: '1294', pay: 'Apple Pay', type: 'شراء دولي', bank: 'مصرف الراجحي', source: 'رسالة', note: '', created: today });
@@ -3926,7 +4355,8 @@ const Demo = (() => {
     while(md <= todayKey()){ const step = 1 + Math.floor(rnd() * 4); mv += step * (0.8 + rnd() * 0.3); if(md >= monthKey() + '-01' && mv < wv) mv = wv + 0.3; D.wmeter.push({ id: nid('M'), date: md, time: '20:00', value: Math.round(mv * 1000) / 1000, note: '', source: 'اختصار' }); md = addDays(md, step); }
     S.settings.WATER_ACCOUNT = '0000000000'; S.settings.MONTH_START_DAY = '1'; S.settings.WARRANTY_REMIND_DAYS = '30';
     const tk = (o, a, ti, k, f, e) => ({ id: nid('K'), date: addDays(today, o), time: f || '', end: e || '', title: ti, kind: k, note: '', done: a ? '✓' : '', added: today });
-    D.tasks = [tk(0, 0, 'محاضرات اونلاين', '📚 دراسة', '16:00', '22:00'), tk(2, 0, 'تجديد الإقامة للعاملة', '📌 أخرى'), tk(4, 0, 'إجازة', '🏖️ إجازة'), tk(11, 0, 'اختبار المالية الشهري', '📝 اختبار', '12:00', '21:00'), tk(-2, 0, 'دفع فاتورة الكهرباء', '📌 أخرى')];
+    const lt = (l, ti, a) => ({ id: nid('K'), date: '', time: '', end: '', title: ti, kind: '', note: '', done: a ? '✓' : '', added: today, list: l });
+    D.tasks = [lt('📚 مذاكرة', 'ملخص الفصل الخامس — المالية'), lt('📚 مذاكرة', 'حل أسئلة التسويق'), lt('📚 مذاكرة', 'مراجعة المحاسبة', 1), lt('🧸 بودي العيال', 'ألعاب ليغو'), lt('🧸 بودي العيال', 'سكوتر يارا'), lt('🧸 بودي العيال', 'كتب تلوين'), tk(0, 0, 'محاضرات اونلاين', '📚 دراسة', '16:00', '22:00'), tk(2, 0, 'تجديد الإقامة للعاملة', '📌 أخرى'), tk(4, 0, 'إجازة', '🏖️ إجازة'), tk(11, 0, 'اختبار المالية الشهري', '📝 اختبار', '12:00', '21:00'), tk(-2, 0, 'دفع فاتورة الكهرباء', '📌 أخرى')];
     /* مقتنيات البيت */
     const it = (n, c, st, d, p, w, pl, f) => ({ id: nid('I'), name: n, category: c, place: pl || '', store: st, date: d, price: p, qty: 1, warranty: w || '', wEnd: w ? addMonthsC(d, w) : '', serial: '', invoice: '', files: f || '', note: '', added: d });
     const img = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==';
@@ -3954,6 +4384,8 @@ const Demo = (() => {
   const MUT = { row_save:1, row_delete:1, batch:1, transfer_apply:1, merchant_set:1, rcpt_save:1, rcpt_delete:1, product_merge:1, water_reading:1, water_close:1, item_save:1 };
   async function handle(a, p){
     if(a === 'undo'){ await sleep(200); const snap = UND[p.token]; if(!snap) return { ok: false, error: 'UndoExpired' }; delete UND[p.token]; const o = JSON.parse(snap); Object.keys(o).forEach(k => { S.data[k] = o[k]; }); return { ok: true }; }
+    /* الحفظ بالخلفية يضيف صفوف مؤقتة (tmp…) بالجهاز؛ المعاينة هي «السكربت» هنا فنشيلها قبل ما تنحفظ صح */
+    if(MUT[a]) Object.keys(S.data).forEach(k => { if(Array.isArray(S.data[k]) && S.data[k].some(x => x && /^tmp/.test(x.id))) S.data[k] = S.data[k].filter(x => !(x && /^tmp/.test(x.id))); });
     if(MUT[a]){ const snap = JSON.stringify(S.data); const r = await handle1(a, p); if(r && r.ok){ const t = 'u' + (idn++); UND[t] = snap; r.undo = t; } return r; }
     return handle1(a, p);
   }
