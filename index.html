@@ -11,7 +11,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="دفتر">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="theme-color" content="#F7F4EE">
+<meta name="theme-color" content="#F6F5FC">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="icon" type="image/png" href="icon-192.png">
@@ -982,87 +982,60 @@ html.ds-glass .t-plt{--tc:var(--c-plt)}
 .phelp{background:var(--accentbg);border-radius:16px;padding:10px 12px;font-size:12.5px;line-height:1.9;margin-top:10px}
 .phelp code{font-family:var(--nf);background:var(--card);border-radius:6px;padding:0 5px;direction:ltr;unicode-bidi:isolate}
 
-/* ================= مظهر «السدو» — المظهر الوحيد لدفتر =================
-   ألوان ونقش مأخوذة من ميدالية سدو: كحلي، وردي أحمر، أصفر خردلي، فيروزي على أبيض دافئ.
-   --sd-band شريط العيون والمعينات · --sd-strip شريط المثلثات الملونة · --sd-med الميدالية كاملة */
+/* ================= مظهر دفتر — هوية ومض آرك (WAMD ARC) · فاتح =================
+   نفس ألوان wamdarc.com: خلفية بنفسجية فاتحة، بطاقات بيضاء بحد ناعم، بنفسجي للأساسي،
+   وبرتقالي للتنبيه. «القوس» (تدرّج بنفسجي ← برتقالي) هو التوقيع البصري الوحيد. */
 html.ds-glass{
-  --sd-band:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2240%22%20height%3D%2216%22%20viewBox%3D%220%200%2040%2016%22%3E%3Crect%20width%3D%2240%22%20height%3D%2216%22%20fill%3D%22%23FFFFFF%22%2F%3E%3Cpath%20d%3D%22M10%202%20L20%208%20L10%2014%20M30%202%20L20%208%20L30%2014%22%20fill%3D%22none%22%20stroke%3D%22%23F0AE3C%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%2F%3E%3Cpath%20d%3D%22M20%204.5l3.5%203.5-3.5%203.5-3.5-3.5z%22%20fill%3D%22%23D94060%22%2F%3E%3Cpath%20d%3D%22M0%200h7L0%206zM40%200h-7l7%206zM0%2016h7L0%2010zM40%2016h-7l7-6z%22%20fill%3D%22%232B3A6B%22%2F%3E%3Cpath%20d%3D%22M4%205.5%20L8%208%20L4%2010.5Z%22%20fill%3D%22%233DB3A6%22%2F%3E%3Cpath%20d%3D%22M36%205.5%20L32%208%20L36%2010.5Z%22%20fill%3D%22%233DB3A6%22%2F%3E%3C%2Fsvg%3E"); --sd-strip:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2232%22%20height%3D%226%22%20viewBox%3D%220%200%2032%206%22%3E%3Cpath%20d%3D%22M0%206%20L4%200%20L8%206Z%22%20fill%3D%22%232B3A6B%22%2F%3E%3Cpath%20d%3D%22M8%206%20L12%200%20L16%206Z%22%20fill%3D%22%23D94060%22%2F%3E%3Cpath%20d%3D%22M16%206%20L20%200%20L24%206Z%22%20fill%3D%22%23F0AE3C%22%2F%3E%3Cpath%20d%3D%22M24%206%20L28%200%20L32%206Z%22%20fill%3D%22%233DB3A6%22%2F%3E%3C%2Fsvg%3E"); --sd-med:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22100%22%20height%3D%22100%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cpath%20d%3D%22M50%202l8%208-8%208-8-8z%22%20fill%3D%22%23D94060%22%2F%3E%3Cpath%20d%3D%22M31%2032%20L21%2050%20L31%2068%20L37%2068%20L28%2050%20L37%2032Z%22%20fill%3D%22%23D94060%22%2F%3E%3Cpath%20d%3D%22M29%2035l-5%201%203%203-5%201%203%203-5%202%204%203-4%202%204%203-5%202%203%203-5%201%203%203-5%201%205%201z%22%20fill%3D%22%23D94060%22%20transform%3D%22translate%28-1%200%29%22%2F%3E%3Cpath%20d%3D%22M9%2042%20L17%2050%20L9%2058Z%22%20fill%3D%22%233DB3A6%22%2F%3E%3Cpath%20d%3D%22M6%2041%20Q1%2044%200.5%2050%20Q1%2056%206%2059Z%22%20fill%3D%22%23F0AE3C%22%2F%3E%3Cpath%20d%3D%22M9%2011%20Q8%209%2011%209%20L31%2010%20Q33%2011%2031%2013%20L14%2027%20Q11%2029%2010%2026Z%22%20fill%3D%22%232B3A6B%22%2F%3E%3Cpath%20d%3D%22M18%2030%20L33%2015%20M23%2034%20L38%2019%22%20stroke%3D%22%232B3A6B%22%20stroke-width%3D%223.4%22%20stroke-linecap%3D%22round%22%2F%3E%3Cpath%20d%3D%22M9%2089%20Q8%2091%2011%2091%20L31%2090%20Q33%2089%2031%2087%20L14%2073%20Q11%2071%2010%2074Z%22%20fill%3D%22%232B3A6B%22%2F%3E%3Cpath%20d%3D%22M18%2070%20L33%2085%20M23%2066%20L38%2081%22%20stroke%3D%22%232B3A6B%22%20stroke-width%3D%223.4%22%20stroke-linecap%3D%22round%22%2F%3E%3Cg%20transform%3D%22translate%28100%200%29%20scale%28-1%201%29%22%3E%3Cpath%20d%3D%22M31%2032%20L21%2050%20L31%2068%20L37%2068%20L28%2050%20L37%2032Z%22%20fill%3D%22%23D94060%22%2F%3E%3Cpath%20d%3D%22M29%2035l-5%201%203%203-5%201%203%203-5%202%204%203-4%202%204%203-5%202%203%203-5%201%203%203-5%201%205%201z%22%20fill%3D%22%23D94060%22%20transform%3D%22translate%28-1%200%29%22%2F%3E%3Cpath%20d%3D%22M9%2042%20L17%2050%20L9%2058Z%22%20fill%3D%22%233DB3A6%22%2F%3E%3Cpath%20d%3D%22M6%2041%20Q1%2044%200.5%2050%20Q1%2056%206%2059Z%22%20fill%3D%22%23F0AE3C%22%2F%3E%3Cpath%20d%3D%22M9%2011%20Q8%209%2011%209%20L31%2010%20Q33%2011%2031%2013%20L14%2027%20Q11%2029%2010%2026Z%22%20fill%3D%22%232B3A6B%22%2F%3E%3Cpath%20d%3D%22M18%2030%20L33%2015%20M23%2034%20L38%2019%22%20stroke%3D%22%232B3A6B%22%20stroke-width%3D%223.4%22%20stroke-linecap%3D%22round%22%2F%3E%3Cpath%20d%3D%22M9%2089%20Q8%2091%2011%2091%20L31%2090%20Q33%2089%2031%2087%20L14%2073%20Q11%2071%2010%2074Z%22%20fill%3D%22%232B3A6B%22%2F%3E%3Cpath%20d%3D%22M18%2070%20L33%2085%20M23%2066%20L38%2081%22%20stroke%3D%22%232B3A6B%22%20stroke-width%3D%223.4%22%20stroke-linecap%3D%22round%22%2F%3E%3C%2Fg%3E%3Cpath%20d%3D%22M50%2082l8%208-8%208-8-8z%22%20fill%3D%22%23D94060%22%2F%3E%3Cpath%20d%3D%22M37%2015%20L62%2050%20L37%2085%20M63%2015%20L38%2050%20L63%2085%22%20fill%3D%22none%22%20stroke%3D%22%23F0AE3C%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E");
-  --c-exp:#D94060; --c-exp2:#E5677F; --c-inv:#2E9C8F; --c-inv2:#4DB5A8; --c-wat:#2B3A6B; --c-wat2:#465894; --c-pr:#E39A23; --c-pr2:#F0AE3C;
-  --c-sub:#B23A68; --c-bud:#E39A23; --c-free:#3DB3A6; --c-ink:#1F2747; --c-plt:#2B3A6B; --c-plt2:#465894;
-  --bg:#F7F4EE; --card:#FFFFFF; --card2:#F3F0EA; --solid:#FFFFFF; --edge:#ECE6DC;
-  --ink:#1F2747; --sub:#5F6683; --faint:#9399AF; --line:rgba(31,39,71,.08); --bar:rgba(31,39,71,.08);
-  --accent:#2B3A6B; --accent2:#465894; --accentbg:rgba(43,58,107,.10);
-  --hdr:#1F2747; --hdrs:#5F6683; --btnbg:#FFFFFF;
-  --gl-bg:linear-gradient(180deg,#FBF9F5 0%,#F3EFE7 100%);
-  --gl-pat:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22180%22%20height%3D%22180%22%20viewBox%3D%22-40%20-40%20180%20180%22%3E%3Cg%20opacity%3D%22.09%22%3E%3Cpath%20d%3D%22M50%202l8%208-8%208-8-8z%22%20fill%3D%22%23D94060%22%2F%3E%3Cpath%20d%3D%22M31%2032%20L21%2050%20L31%2068%20L37%2068%20L28%2050%20L37%2032Z%22%20fill%3D%22%23D94060%22%2F%3E%3Cpath%20d%3D%22M29%2035l-5%201%203%203-5%201%203%203-5%202%204%203-4%202%204%203-5%202%203%203-5%201%203%203-5%201%205%201z%22%20fill%3D%22%23D94060%22%20transform%3D%22translate%28-1%200%29%22%2F%3E%3Cpath%20d%3D%22M9%2042%20L17%2050%20L9%2058Z%22%20fill%3D%22%233DB3A6%22%2F%3E%3Cpath%20d%3D%22M6%2041%20Q1%2044%200.5%2050%20Q1%2056%206%2059Z%22%20fill%3D%22%23F0AE3C%22%2F%3E%3Cpath%20d%3D%22M9%2011%20Q8%209%2011%209%20L31%2010%20Q33%2011%2031%2013%20L14%2027%20Q11%2029%2010%2026Z%22%20fill%3D%22%232B3A6B%22%2F%3E%3Cpath%20d%3D%22M18%2030%20L33%2015%20M23%2034%20L38%2019%22%20stroke%3D%22%232B3A6B%22%20stroke-width%3D%223.4%22%20stroke-linecap%3D%22round%22%2F%3E%3Cpath%20d%3D%22M9%2089%20Q8%2091%2011%2091%20L31%2090%20Q33%2089%2031%2087%20L14%2073%20Q11%2071%2010%2074Z%22%20fill%3D%22%232B3A6B%22%2F%3E%3Cpath%20d%3D%22M18%2070%20L33%2085%20M23%2066%20L38%2081%22%20stroke%3D%22%232B3A6B%22%20stroke-width%3D%223.4%22%20stroke-linecap%3D%22round%22%2F%3E%3Cg%20transform%3D%22translate%28100%200%29%20scale%28-1%201%29%22%3E%3Cpath%20d%3D%22M31%2032%20L21%2050%20L31%2068%20L37%2068%20L28%2050%20L37%2032Z%22%20fill%3D%22%23D94060%22%2F%3E%3Cpath%20d%3D%22M29%2035l-5%201%203%203-5%201%203%203-5%202%204%203-4%202%204%203-5%202%203%203-5%201%203%203-5%201%205%201z%22%20fill%3D%22%23D94060%22%20transform%3D%22translate%28-1%200%29%22%2F%3E%3Cpath%20d%3D%22M9%2042%20L17%2050%20L9%2058Z%22%20fill%3D%22%233DB3A6%22%2F%3E%3Cpath%20d%3D%22M6%2041%20Q1%2044%200.5%2050%20Q1%2056%206%2059Z%22%20fill%3D%22%23F0AE3C%22%2F%3E%3Cpath%20d%3D%22M9%2011%20Q8%209%2011%209%20L31%2010%20Q33%2011%2031%2013%20L14%2027%20Q11%2029%2010%2026Z%22%20fill%3D%22%232B3A6B%22%2F%3E%3Cpath%20d%3D%22M18%2030%20L33%2015%20M23%2034%20L38%2019%22%20stroke%3D%22%232B3A6B%22%20stroke-width%3D%223.4%22%20stroke-linecap%3D%22round%22%2F%3E%3Cpath%20d%3D%22M9%2089%20Q8%2091%2011%2091%20L31%2090%20Q33%2089%2031%2087%20L14%2073%20Q11%2071%2010%2074Z%22%20fill%3D%22%232B3A6B%22%2F%3E%3Cpath%20d%3D%22M18%2070%20L33%2085%20M23%2066%20L38%2081%22%20stroke%3D%22%232B3A6B%22%20stroke-width%3D%223.4%22%20stroke-linecap%3D%22round%22%2F%3E%3C%2Fg%3E%3Cpath%20d%3D%22M50%2082l8%208-8%208-8-8z%22%20fill%3D%22%23D94060%22%2F%3E%3Cpath%20d%3D%22M37%2015%20L62%2050%20L37%2085%20M63%2015%20L38%2050%20L63%2085%22%20fill%3D%22none%22%20stroke%3D%22%23F0AE3C%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
-  --gl-sh:0 10px 26px -16px rgba(31,39,71,.28);
+  --wa-violet:#6A3DE8; --wa-violet2:#7B4BF0; --wa-orange:#E86E0E; --wa-orange2:#FF8A2A;
+  --wa-arc:linear-gradient(90deg,#6A3DE8 0%,#9B5CF0 45%,#FF8A2A 100%);
+  --c-exp:#E86E0E; --c-exp2:#FF8A2A; --c-inv:#12897C; --c-inv2:#1FA593; --c-wat:#3A6FD8; --c-wat2:#5A8BEA; --c-pr:#D9A21B; --c-pr2:#EDB933;
+  --c-sub:#C2418C; --c-bud:#D9A21B; --c-free:#12897C; --c-ink:#1B1342; --c-plt:#6A3DE8; --c-plt2:#7B4BF0;
+  --bg:#F6F5FC; --card:#FFFFFF; --card2:#F2EFFC; --solid:#FFFFFF; --edge:#E4E0F3;
+  --ink:#1B1342; --sub:#5D5780; --faint:#9A95B8; --line:#ECE9F7; --bar:#EEEBF9;
+  --accent:#6A3DE8; --accent2:#7B4BF0; --accentbg:rgba(106,61,232,.09);
+  --hdr:#1B1342; --hdrs:#5D5780; --btnbg:#FFFFFF;
+  --gl-bg:radial-gradient(1100px 520px at 85% -8%,rgba(123,75,240,.10) 0%,transparent 62%),radial-gradient(900px 480px at 0% 108%,rgba(255,138,42,.08) 0%,transparent 60%),#F6F5FC;
+  --gl-pat:none;
+  --gl-sh:0 18px 44px -22px rgba(40,26,110,.22);
 }
-html.ds-glass body[data-view]{--accent:#2B3A6B;--accent2:#465894;--accentbg:rgba(43,58,107,.10)}
-html.ds-glass body::before{background-size:180px 180px;opacity:1}
+html.ds-glass body[data-view]{--accent:#6A3DE8;--accent2:#7B4BF0;--accentbg:rgba(106,61,232,.09)}
+html.ds-glass body::before{display:none}
 html.ds-glass .dline,html.ds-glass #fresh,html.ds-glass #greet{color:var(--sub)}
 
-/* الأسطح: نسيج أبيض بدل الزجاج، وشريط مثلثات فوق كل بطاقة */
+/* الأسطح: أبيض بحد بنفسجي ناعم وظل خفيف (مثل بطاقات الموقع) */
 html.ds-glass .card,html.ds-glass .kp,html.ds-glass .qc,html.ds-glass .tile,html.ds-glass .kpi,html.ds-glass .ibx{-webkit-backdrop-filter:none;backdrop-filter:none}
-html.ds-glass .card,html.ds-glass .tile,html.ds-glass .ibx{border-radius:20px!important;background:var(--sd-strip) top left/32px 6px repeat-x,var(--card)!important;padding-top:20px}
-html.ds-glass .tile{padding-top:22px}
-html.ds-glass .kp,html.ds-glass .qc,html.ds-glass .kpi{border-radius:18px!important}
-html.ds-glass .tile .ti{border-radius:8px;transform:rotate(45deg) scale(.86);background:color-mix(in srgb,var(--tc,var(--accent)) 13%,#fff)}
-html.ds-glass .tile .ti>*{transform:rotate(-45deg);transform-origin:50% 50%;transform-box:fill-box}
-html.ds-glass .card h2::before{content:"";display:inline-block;width:8px;height:8px;margin-inline-end:8px;background:#D94060;transform:rotate(45deg);vertical-align:2px;box-shadow:0 0 0 2.5px var(--card),0 0 0 4.5px #F0AE3C}
+html.ds-glass .card,html.ds-glass .tile,html.ds-glass .ibx,html.ds-glass .kp,html.ds-glass .qc,html.ds-glass .kpi{background:#FFFFFF!important;border:1px solid var(--edge)!important;box-shadow:var(--gl-sh)!important;border-radius:22px!important}
+html.ds-glass .tile .ti{border-radius:14px;background:color-mix(in srgb,var(--tc,var(--accent)) 11%,#fff)}
 
-/* المربعات الملوّنة (مثل «يحتاج إجراء» و«باقي من الميزانية» لما تتجاوز): الميدالية شفافة بالطرف، والنص فوقها واضح */
-html.ds-glass .kp.hot{position:relative;overflow:hidden;background:linear-gradient(135deg,#C9334F,#D94060)!important}
-html.ds-glass .kp.hot::after{content:"";position:absolute;inset-inline-end:-18px;bottom:-22px;width:104px;height:104px;background:var(--sd-med) center/contain no-repeat;opacity:.22;pointer-events:none}
+/* المربع الكبير: قوس ومض آرك تحت الأرقام */
+html.ds-glass .hbig{position:relative;overflow:hidden}
+html.ds-glass .hbig::after{content:"";position:absolute;inset-inline:0;bottom:0;height:4px;background:var(--wa-arc)}
+html.ds-glass .hero .mbar i,html.ds-glass .hbig .dbars i.t{background:var(--wa-arc)!important}
+
+/* المربعات الملوّنة (يحتاج إجراء، تجاوز الميزانية): برتقالي مع قوس أبيض شفاف بالطرف */
+html.ds-glass .kp.hot{position:relative;overflow:hidden;background:linear-gradient(135deg,#E86E0E,#FF8A2A)!important;border-color:transparent!important;box-shadow:0 16px 34px -18px rgba(232,110,14,.6)!important}
+html.ds-glass .kp.hot::after{content:"";position:absolute;inset-inline-end:-46px;bottom:-70px;width:150px;height:150px;border-radius:50%;border:18px solid rgba(255,255,255,.16);pointer-events:none}
 html.ds-glass .kp.hot>*{position:relative;z-index:1}
 
-html.ds-glass .btn{border-radius:12px}
-html.ds-glass .chip,html.ds-glass .subnav button{border-radius:10px}
-html.ds-glass .chip.on,html.ds-glass .subnav button.on{background:#2B3A6B!important;color:#fff!important}
-html.ds-glass .hero .mbar i,html.ds-glass .hbig .dbars i.t{background:linear-gradient(90deg,#D94060,#F0AE3C)!important}
-html.ds-glass .hbig{background:var(--sd-band) bottom left/40px 16px repeat-x,var(--sd-strip) top left/32px 6px repeat-x,var(--card)!important;padding-bottom:34px!important}
+html.ds-glass .card h2::before{content:"";display:inline-block;width:14px;height:4px;border-radius:4px;margin-inline-end:8px;background:var(--wa-arc);vertical-align:4px}
+html.ds-glass .btn{border-radius:999px}
+html.ds-glass .chip,html.ds-glass .subnav button{border-radius:999px}
+html.ds-glass .chip.on,html.ds-glass .subnav button.on{background:var(--wa-violet)!important;color:#fff!important;border-color:transparent!important}
 
-/* شريط السدو تحت الترويسة، وفوق التبويبات والنوافذ */
-html.ds-glass .dline{padding-bottom:16px;margin-bottom:6px;background:var(--sd-band) bottom left/30px 12px repeat-x}
-html.ds-glass .top .logo{border-radius:12px}
-html.ds-glass .top button{border-radius:12px;-webkit-backdrop-filter:none;backdrop-filter:none}
-html.ds-glass #tabbar{border-radius:18px!important;overflow:hidden;padding-top:14px!important;background:var(--sd-band) top left/30px 12px repeat-x,#FFFFFF!important;-webkit-backdrop-filter:none;backdrop-filter:none}
-html.ds-glass #tabbar button{border-radius:12px}
-html.ds-glass #tabbar button.on{background:#2B3A6B!important;color:#fff!important}
+/* الترويسة: خط القوس تحت التاريخ */
+html.ds-glass .dline{padding-bottom:12px;margin-bottom:6px;background:var(--wa-arc) bottom left/100% 3px no-repeat}
+html.ds-glass .top .logo{border-radius:14px}
+html.ds-glass .top button{border-radius:14px;background:#fff;border:1px solid var(--edge);-webkit-backdrop-filter:none;backdrop-filter:none}
+
+/* شريط التبويبات: زجاجي فاتح والنشط بنفسجي (معيار ومض آرك) */
+html.ds-glass #tabbar{border-radius:26px!important;background:rgba(255,255,255,.86)!important;border:1px solid var(--edge)!important;box-shadow:0 10px 30px -12px rgba(40,26,110,.25)!important;-webkit-backdrop-filter:blur(16px) saturate(1.3);backdrop-filter:blur(16px) saturate(1.3)}
+html.ds-glass #tabbar button{border-radius:20px}
+html.ds-glass #tabbar button.on{background:linear-gradient(180deg,#7B4BF0,#6A3DE8)!important;color:#fff!important;box-shadow:0 6px 14px rgba(106,61,232,.35)}
 html.ds-glass #tabbar button.on svg{stroke:#fff}
-html.ds-glass #fab{background:#D94060!important;border-color:#fff!important;border-radius:16px;transform:rotate(45deg);box-shadow:0 0 0 4px #F0AE3C,0 12px 24px -8px rgba(217,64,96,.5)}
-html.ds-glass #fab svg{stroke:#fff!important;transform:rotate(-45deg)}
-html.ds-glass #sheet .pn{background:var(--sd-band) top left/30px 12px repeat-x,#FFFFFF!important;padding-top:22px}
-
-/* ================= مظهر «زيتون» (اختياري من الإعدادات) — html.ds-glass.th-olive =================
-   أخضر زيتوني غالب + برتقالي للتنبيه + بني للكتابة، ونقش أرابيسك نباتي */
-html.ds-glass.th-olive{
-  --sd-band:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2232%22%20height%3D%2212%22%20viewBox%3D%220%200%2032%2012%22%3E%3Crect%20width%3D%2232%22%20height%3D%2212%22%20fill%3D%22%234A5826%22%2F%3E%3Cpath%20d%3D%22M0%206%20C6%200%2010%200%2016%206%20S26%2012%2032%206%22%20fill%3D%22none%22%20stroke%3D%22%23E8D9B5%22%20stroke-width%3D%221.1%22%2F%3E%3Cpath%20d%3D%22M8%202.6%20c-3%20-1%20-3%20-3%20-1%20-3%22%20fill%3D%22none%22%20stroke%3D%22%23A9B86A%22%20stroke-width%3D%22.9%22%2F%3E%3Ccircle%20cx%3D%2224%22%20cy%3D%229%22%20r%3D%221.6%22%20fill%3D%22%23F16619%22%2F%3E%3C%2Fsvg%3E"); --sd-strip:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%226%22%20viewBox%3D%220%200%2020%206%22%3E%3Cpath%20d%3D%22M0%203%20C4%200%206%200%2010%203%20S16%206%2020%203%22%20fill%3D%22none%22%20stroke%3D%22%23778A3F%22%20stroke-width%3D%221.2%22%2F%3E%3Ccircle%20cx%3D%2215%22%20cy%3D%224.5%22%20r%3D%221%22%20fill%3D%22%23F16619%22%2F%3E%3C%2Fsvg%3E"); --ol-hot:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22120%22%20height%3D%22120%22%20viewBox%3D%220%200%20120%20120%22%3E%3Cg%20opacity%3D%22.9%22%20fill%3D%22none%22%20stroke%3D%22%23FFFFFF%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%3E%3Cpath%20d%3D%22M0%2060%20C20%2020%2040%2020%2060%2060%20S100%20100%20120%2060%22%2F%3E%3Cpath%20d%3D%22M30%2033%20c-12%20-4%20-14%20-18%20-4%20-20%20c8%20-1%2010%208%204%2010%22%2F%3E%3Cpath%20d%3D%22M90%2087%20c12%204%2014%2018%204%2020%20c-8%201%20-10%20-8%20-4%20-10%22%2F%3E%3Cpath%20d%3D%22M60%2060%20c6%20-14%2020%20-16%2022%20-6%22%2F%3E%3Cpath%20d%3D%22M60%2060%20c-6%2014%20-20%2016%20-22%206%22%2F%3E%3C%2Fg%3E%3Cg%20opacity%3D%22.9%22%20fill%3D%22%23FFFFFF%22%3E%3Cpath%20d%3D%22M82%2054%20q6%20-6%2010%202%20q-6%204%20-10%20-2z%22%2F%3E%3Cpath%20d%3D%22M38%2066%20q-6%206%20-10%20-2%20q6%20-4%2010%202z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
-  --c-exp:#E0601C; --c-exp2:#F2853F; --c-inv:#5E7030; --c-inv2:#778A3F; --c-wat:#6E4B2C; --c-wat2:#8C6640; --c-pr:#C98A2E; --c-pr2:#DDA44A;
-  --c-sub:#A2542A; --c-bud:#C98A2E; --c-free:#778A3F; --c-ink:#3A2A1A; --c-plt:#6E4B2C; --c-plt2:#8C6640;
-  --bg:#66783A; --card:#FBF7EE; --card2:#F2ECDD; --solid:#FBF7EE; --edge:#E6DCC6;
-  --ink:#33261A; --sub:#7A6450; --faint:#A8957F; --line:rgba(58,42,26,.09); --bar:rgba(58,42,26,.09);
-  --accent:#5E7030; --accent2:#778A3F; --accentbg:rgba(119,138,63,.14);
-  --hdr:#FBF6EA; --hdrs:#E3E8CC; --btnbg:#FBF7EE;
-  --gl-bg:radial-gradient(900px 640px at 0% 100%,rgba(241,102,25,.28) 0%,transparent 60%),radial-gradient(700px 500px at 100% 0%,rgba(169,184,106,.35) 0%,transparent 60%),linear-gradient(165deg,#82964A 0%,#6A7D3B 45%,#4C5A2A 100%);
-  --gl-pat:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22120%22%20height%3D%22120%22%20viewBox%3D%220%200%20120%20120%22%3E%3Cg%20opacity%3D%22.10%22%20fill%3D%22none%22%20stroke%3D%22%23FBF6EA%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%3E%3Cpath%20d%3D%22M0%2060%20C20%2020%2040%2020%2060%2060%20S100%20100%20120%2060%22%2F%3E%3Cpath%20d%3D%22M30%2033%20c-12%20-4%20-14%20-18%20-4%20-20%20c8%20-1%2010%208%204%2010%22%2F%3E%3Cpath%20d%3D%22M90%2087%20c12%204%2014%2018%204%2020%20c-8%201%20-10%20-8%20-4%20-10%22%2F%3E%3Cpath%20d%3D%22M60%2060%20c6%20-14%2020%20-16%2022%20-6%22%2F%3E%3Cpath%20d%3D%22M60%2060%20c-6%2014%20-20%2016%20-22%206%22%2F%3E%3C%2Fg%3E%3Cg%20opacity%3D%22.10%22%20fill%3D%22%23FBF6EA%22%3E%3Cpath%20d%3D%22M82%2054%20q6%20-6%2010%202%20q-6%204%20-10%20-2z%22%2F%3E%3Cpath%20d%3D%22M38%2066%20q-6%206%20-10%20-2%20q6%20-4%2010%202z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
-  --gl-sh:0 14px 30px -18px rgba(30,25,10,.55);
-}
-html.ds-glass.th-olive body[data-view]{--accent:#5E7030;--accent2:#778A3F;--accentbg:rgba(119,138,63,.14)}
-html.ds-glass.th-olive .dline,html.ds-glass.th-olive #fresh,html.ds-glass.th-olive #greet{color:#EEF1DC}
-html.ds-glass.th-olive .top h1,html.ds-glass.th-olive #ttl{color:#FBF6EA}
-html.ds-glass.th-olive .card h2::before{background:#F16619;box-shadow:0 0 0 2.5px var(--card),0 0 0 4.5px #778A3F}
-html.ds-glass.th-olive .kp.hot{background:linear-gradient(135deg,#D9561A,#F16619)!important}
-html.ds-glass.th-olive .chip.on,html.ds-glass.th-olive .subnav button.on,html.ds-glass.th-olive #tabbar button.on{background:#5E7030!important;color:#fff!important}
-html.ds-glass.th-olive .hero .mbar i,html.ds-glass.th-olive .hbig .dbars i.t{background:linear-gradient(90deg,#778A3F,#F16619)!important}
-html.ds-glass.th-olive .hbig{background:var(--sd-band) bottom left/43px 16px repeat-x,var(--sd-strip) top left/20px 6px repeat-x,var(--card)!important}
-html.ds-glass.th-olive #tabbar{background:var(--sd-band) top left/32px 12px repeat-x,#FBF7EE!important}
-html.ds-glass.th-olive #sheet .pn{background:var(--sd-band) top left/32px 12px repeat-x,#FBF7EE!important}
-html.ds-glass.th-olive #fab{background:#F16619!important;box-shadow:0 0 0 4px #FBF6EA,0 12px 24px -8px rgba(241,102,25,.6)}
-html.ds-glass.th-olive .subnav button{background:rgba(251,247,238,.9)}
-html.ds-glass.th-olive body::before{background-size:120px 120px}
-html.ds-glass.th-olive .dline{background:var(--sd-band) bottom left/32px 12px repeat-x}
-html.ds-glass.th-olive .card,html.ds-glass.th-olive .tile,html.ds-glass.th-olive .ibx{background:var(--sd-strip) top left/20px 6px repeat-x,var(--card)!important}
-html.ds-glass.th-olive .kp.hot::after{background:var(--ol-hot) center/110px no-repeat}
+html.ds-glass #fab{background:linear-gradient(135deg,#FF8A2A,#E86E0E)!important;border:0!important;border-radius:20px;box-shadow:0 12px 26px -8px rgba(232,110,14,.55)}
+html.ds-glass #fab svg{stroke:#fff!important}
+html.ds-glass #sheet .pn{background:#FFFFFF!important;border-top:4px solid transparent;border-image:var(--wa-arc) 1}
+#selbar{max-width:calc(100vw - 20px);white-space:nowrap}
 
 </style>
 </head>
@@ -1104,7 +1077,7 @@ html.ds-glass.th-olive .kp.hot::after{background:var(--ol-hot) center/110px no-r
 <script src="config.js"></script>
 <script>
 'use strict';
-const VERSION = 'V1.10.0';
+const VERSION = 'V1.11.0';
 const APP_NAME = 'دفتر | DFTR';
 const API_URL = String(window.DFTR_API_URL || '').trim();
 const LS = {
@@ -1366,12 +1339,7 @@ function donut(parts, size){
 /* =========================================================
    الهيكل: المظهر، الدخول، التنقل
    ========================================================= */
-/* المظهر: «سدو» الأساسي، و«زيتون» اختياري من الإعدادات */
-function applyTheme(){
-  const ol = prefs.theme === 'olive', h = document.documentElement;
-  h.classList.add('ds-glass'); h.classList.toggle('th-olive', ol);
-  const m = document.querySelector('meta[name=theme-color]'); if(m) m.setAttribute('content', ol ? '#6A7D3B' : '#F7F4EE');
-}
+function applyTheme(){ document.documentElement.classList.add('ds-glass'); }
 
 const TAB_C = { home: '#F1F2F5', exp: '#FF8A45', pr: '#9B82FF', inv: '#2FC48A', nwc: '#4FA3FF', cal: '#F0508A' };
 document.title = APP_NAME;
@@ -1418,6 +1386,7 @@ function render(){
   $('dline').innerHTML = dateLine();
   $('ttl').textContent = { home:APP_NAME, exp:'مصاريفي', pr:'الأسعار', inv:'استثماراتي', nwc:'المياه', plt:'اللوحات', set:'الإعدادات', inbox:'يحتاج إجراء', cal:'التقويم' }[S.view] || 'دفتر';
   if(S.sel && S.view !== 'exp') S.sel = null;
+  if(S.trSel && (S.view !== 'exp' || S.sub.exp !== 'rev')) S.trSel = null;
   selBar();
 }
 
@@ -1618,7 +1587,14 @@ VIEWS.exp_after = root => {
   });
   const so = $('selOn'); if(so) so.onclick = () => { S.sel = S.sel ? null : new Set(); render(); };
   const sa = $('selAll'); if(sa) sa.onclick = () => { const all = S._shown.every(id => S.sel.has(id)); S._shown.forEach(id => all ? S.sel.delete(id) : S.sel.add(id)); render(); };
-  root.querySelectorAll('[data-tr]').forEach(el => el.onclick = () => transferSheet(el.dataset.tr));
+  root.querySelectorAll('[data-tr]').forEach(el => el.onclick = () => {
+    const id = el.dataset.tr, T = S.trSel;
+    if(!T || !el.classList.contains('selm')) return transferSheet(id);
+    T.has(id) ? T.delete(id) : T.add(id);
+    el.classList.toggle('sel', T.has(id)); selBar();
+  });
+  const tso = $('trSelOn'); if(tso) tso.onclick = () => { S.trSel = S.trSel ? null : new Set(); render(); };
+  const tsa = $('trSelAll'); if(tsa) tsa.onclick = () => { const pt = pendingTransfers(), all = pt.every(t => S.trSel.has(t.id)); pt.forEach(t => all ? S.trSel.delete(t.id) : S.trSel.add(t.id)); render(); };
   root.querySelectorAll('[data-mer]').forEach(el => el.onclick = () => merchantSheet(el.dataset.mer));
   root.querySelectorAll('[data-catf]').forEach(el => el.onclick = () => { S.q = el.dataset.catf; S.sub.exp = 'tx'; render(); });
   root.querySelectorAll('[data-tabs]').forEach(g => g.querySelectorAll('button').forEach(b => b.onclick = () => { S[g.dataset.tabs] = b.dataset.v; render(); }));
@@ -1820,8 +1796,12 @@ function budgetForm(){
 /* ---------- المراجعة: الحوالات والتجار ---------- */
 function expReview(){
   const pt = pendingTransfers(), rm = reviewMerchants(), H = [];
-  H.push('<section class="card"><h2>🔁 حوالات بانتظارك <span>' + pt.length + '</span></h2><div class="list">' + (pt.length ? pt.map(t =>
-    '<div class="item act" data-tr="' + esc(t.id) + '"><div class="r1"><span class="n">' + esc(t.party || 'بدون اسم') + '</span><span class="a num">' + money(t.amount) + '</span></div><div class="r2"><span>' + esc(t.dir || 'حوالة') + ' · ' + esc(t.bank) + ' · ' + esc(dayLabel(t.date)) + '</span>' + (t.suggested ? '<span class="go">💡 ' + esc(t.suggested) + '</span>' : '<span class="go">حدد الغرض ›</span>') + '</div></div>').join('') : '<div class="empty">✨ ما فيه حوالات معلّقة</div>') + '</div></section>');
+  const TS = S.trSel;
+  H.push('<section class="card"><h2>🔁 حوالات بانتظارك <span>' + pt.length + '</span>' +
+    (pt.length > 1 ? '<button class="link" id="trSelOn" style="margin-inline-start:auto">' + (TS ? 'إلغاء التحديد' : '☑️ تحديد') + '</button>' : '') + '</h2>' +
+    (TS ? '<div class="txsum"><button class="link" id="trSelAll" style="margin:0;padding:0">' + (pt.every(t => TS.has(t.id)) ? 'إلغاء الكل' : 'تحديد الكل (' + pt.length + ')') + '</button><span>اضغط على الحوالات اللي تبيها</span></div>' : '') +
+    '<div class="list">' + (pt.length ? pt.map(t =>
+    '<div class="item act' + (TS ? ' selm' + (TS.has(t.id) ? ' sel' : '') : '') + '" data-tr="' + esc(t.id) + '"><div class="r1"><span class="n">' + esc(t.party || 'بدون اسم') + '</span><span class="a num">' + money(t.amount) + '</span></div><div class="r2"><span>' + esc(t.dir || 'حوالة') + ' · ' + esc(t.bank) + ' · ' + esc(dayLabel(t.date)) + '</span>' + (t.suggested ? '<span class="go">💡 ' + esc(t.suggested) + '</span>' : '<span class="go">حدد الغرض ›</span>') + '</div></div>').join('') : '<div class="empty">✨ ما فيه حوالات معلّقة</div>') + '</div></section>');
   H.push('<section class="card"><h2>🏪 تجار يحتاجون تصنيف <span>' + rm.length + '</span></h2><div class="list">' + (rm.length ? rm.map(m => {
     const n = S.data.tx.filter(t => t.merchant === m.name);
     return '<div class="item act" data-mer="' + esc(m.name) + '"><div class="r1"><span class="n">' + esc(m.name) + '</span><span class="a num">' + money(sum(n, t => num(t.amount))) + '</span></div><div class="r2"><span>' + (isUnclassified(m.category) ? '<span class="badge bad">غير مصنف</span>' : 'مقترح: ' + esc(m.category)) + '</span><span>' + n.length + ' عملية</span></div></div>';
@@ -3129,9 +3109,29 @@ function daySheet(d){
 
 
 /* ---------- التحديد الجماعي في العمليات ---------- */
+/* ---------- تحديد الحوالات في المراجعة: تجاهل أو اعتماد المقترح دفعة وحدة ---------- */
+function ignorePurpose(){ const p = (S.purposes || []).find(x => x.mode === 'ignore'); return p ? p.label : '🗑️ تجاهل'; }
+function trBulk(mode){
+  const list = pendingTransfers().filter(t => S.trSel.has(t.id) && (mode === 'ignore' || t.suggested));
+  if(!list.length) return toast('ما فيه حوالات محددة لها اقتراح');
+  const ig = ignorePurpose();
+  S.trSel = null;
+  list.forEach(t => { const pu = mode === 'ignore' ? ig : t.suggested; bg('transfer_apply', { id: t.id, purpose: pu, amount: t.amount, party: t.party }, () => locTransfer(t, pu)); });
+  toast(mode === 'ignore' ? '🙈 تجاهلت ' + list.length + ' حوالة' : '✅ انعتمدت ' + list.length + ' حوالة حسب الاقتراح');
+}
+function trSelBar(bar){
+  const T = S.trSel, list = pendingTransfers().filter(t => T.has(t.id)), n = list.length, ns = list.filter(t => t.suggested).length;
+  bar.innerHTML = '<button id="sbX">✕</button><span><b class="num">' + n + '</b> محددة</span>' +
+    '<button id="sbSug"' + (ns ? '' : ' disabled') + '>💡 المقترح' + (ns && ns < n ? ' (' + ns + ')' : '') + '</button><button id="sbIgn" class="p"' + (n ? '' : ' disabled') + '>🙈 تجاهل</button>';
+  $('sbX').onclick = () => { S.trSel = null; render(); };
+  $('sbIgn').onclick = async () => { if(n > 3 && !await ask('تجاهل ' + n + ' حوالة؟', 'ما تنحسب في المصاريف، وتقدر تغيّرها بعدين من «آخر الحوالات المعتمدة»', 'تجاهل')) return; trBulk('ignore'); };
+  $('sbSug').onclick = () => trBulk('sug');
+}
+
 function selBar(){
-  const n = S.sel ? S.sel.size : 0;
   let bar = $('selbar');
+  if(S.trSel && S.view === 'exp' && S.sub.exp === 'rev'){ if(!bar){ bar = document.createElement('div'); bar.id = 'selbar'; document.body.appendChild(bar); } return trSelBar(bar); }
+  const n = S.sel ? S.sel.size : 0;
   if(!S.sel || S.view !== 'exp'){ if(bar) bar.remove(); return; }
   if(!bar){ bar = document.createElement('div'); bar.id = 'selbar'; document.body.appendChild(bar); }
   bar.innerHTML = '<button id="sbX">إلغاء</button><span><b class="num">' + n + '</b> محددة · <span class="num">' + money(sum(S.data.tx.filter(t => S.sel.has(t.id)), t => num(t.amount))) + '</span></span><button id="sbDel"' + (n ? '' : ' disabled') + '>🗑️</button><button id="sbCat" class="p"' + (n ? '' : ' disabled') + '>صنّف</button>';
@@ -4048,7 +4048,6 @@ VIEWS.set = () => {
   H.push('<section class="card"><h2>🛟 النسخ الاحتياطي</h2><div id="bkBox"><div class="hint">…</div></div></section>');
 
   H.push('<section class="card"><h2>⚙️ التفضيلات</h2>' +
-    '<div class="opt"><div class="ol">المظهر</div><div class="seg" id="pTheme">' + [['sadu','سدو'],['olive','زيتون']].map(x => '<button data-th="' + x[0] + '" class="' + ((prefs.theme === 'olive' ? 'olive' : 'sadu') === x[0] ? 'on' : '') + '">' + x[1] + '</button>').join('') + '</div></div>' +
     '<div class="opt"><div><div class="ol">إخفاء المبالغ عند الفتح</div><div class="os">تظهر بالضغط على 👁</div></div><input type="checkbox" class="tg" id="pPriv"' + (prefs.privacy ? ' checked' : '') + '></div>' +
     '<div class="opt"><div><div class="ol">🔒 قفل التطبيق بالرقم السري</div><div class="os">يطلبه كل ما فتحت التطبيق أو رجعت له بعد 3 دقائق</div></div><input type="checkbox" class="tg" id="pLock"' + (prefs.lock ? ' checked' : '') + '></div>' +
     '<div class="opt"><div><div class="ol">الهللات</div><div class="os">12.50 أو 13</div></div><input type="checkbox" class="tg" id="pDec"' + (prefs.decimals ? ' checked' : '') + '></div></section>');
@@ -4087,7 +4086,6 @@ VIEWS.set_after = root => {
   pltSettingsBind();
   $('sKey').onclick = keySheet;
   $('pPriv').onchange = () => { prefs.privacy = $('pPriv').checked; savePrefs(); };
-  root.querySelectorAll('[data-th]').forEach(b => b.onclick = () => { prefs.theme = b.dataset.th; savePrefs(); applyTheme(); render(); });
   $('pDec').onchange = () => { prefs.decimals = $('pDec').checked; savePrefs(); };
   $('pLock').onchange = () => { prefs.lock = $('pLock').checked; savePrefs(); };
   const setS = async o => { const r = await api('settings_save', { settings: o }); if(r.ok){ S.settings = r.settings; saveCache(); toast('✅ انحفظ'); render(); } else toast('⚠️ ' + errText(r)); };
